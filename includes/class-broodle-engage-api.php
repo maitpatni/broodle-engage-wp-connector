@@ -547,7 +547,7 @@ class Broodle_Engage_API {
      * @return string Media type (image, video, document).
      */
     private function detect_media_type( $url ) {
-        $extension = strtolower( pathinfo( parse_url( $url, PHP_URL_PATH ), PATHINFO_EXTENSION ) );
+        $extension = strtolower( pathinfo( wp_parse_url( $url, PHP_URL_PATH ), PATHINFO_EXTENSION ) );
         
         $image_extensions = array( 'jpg', 'jpeg', 'png', 'gif', 'webp' );
         $video_extensions = array( 'mp4', 'avi', 'mov', 'webm' );
@@ -1024,6 +1024,7 @@ class Broodle_Engage_API {
         if ( $status_code !== 200 ) {
             return new WP_Error(
                 'api_error',
+                /* translators: %s: error message */
                 sprintf( __( 'Failed to fetch templates: %s', 'broodle-engage-wp-connector' ), $data['error'] ?? 'Unknown error' )
             );
         }

@@ -538,7 +538,7 @@ class Broodle_Engage_Admin {
     public function admin_page() {
         // Check user permissions
         if ( ! $this->user_can_access() ) {
-            wp_die( __( 'You do not have sufficient permissions to access this page.', 'broodle-engage-wp-connector' ) );
+            wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'broodle-engage-wp-connector' ) );
         }
 
         $active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : 'settings';
@@ -2615,7 +2615,7 @@ class Broodle_Engage_Admin {
                     type: 'POST',
                     data: {
                         action: 'broodle_engage_fetch_templates',
-                        nonce: '<?php echo wp_create_nonce( 'broodle_engage_admin_nonce' ); ?>'
+                        nonce: '<?php echo esc_js( wp_create_nonce( 'broodle_engage_admin_nonce' ) ); ?>'
                     },
                     success: function(response) {
                         $('#loading-overlay').removeClass('visible');
@@ -3120,7 +3120,7 @@ class Broodle_Engage_Admin {
                     type: 'POST',
                     data: {
                         action: 'broodle_engage_save_template_config',
-                        nonce: '<?php echo wp_create_nonce( 'broodle_engage_admin_nonce' ); ?>',
+                        nonce: '<?php echo esc_js( wp_create_nonce( 'broodle_engage_admin_nonce' ) ); ?>',
                         config: config,
                         custom_statuses: customStatusList
                     },
@@ -3869,7 +3869,7 @@ class Broodle_Engage_Admin {
             $total_pages = ceil( $logs_data['total'] / $per_page );
             if ( $total_pages > 1 ) {
                 echo '<div class="logs-pagination">';
-                echo paginate_links(
+                echo wp_kses_post( paginate_links(
                     array(
                         'base' => add_query_arg( 'paged', '%#%' ),
                         'format' => '',
@@ -4394,7 +4394,7 @@ class Broodle_Engage_Admin {
         check_ajax_referer( 'broodle_engage_admin_nonce', 'nonce' );
 
         if ( ! current_user_can( 'manage_woocommerce' ) ) {
-            wp_die( __( 'You do not have sufficient permissions to access this page.', 'broodle-engage-wp-connector' ) );
+            wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'broodle-engage-wp-connector' ) );
         }
 
         $api_key = sanitize_text_field( $_POST['api_key'] ?? '' );
@@ -4434,7 +4434,7 @@ class Broodle_Engage_Admin {
         check_ajax_referer( 'broodle_engage_admin_nonce', 'nonce' );
 
         if ( ! current_user_can( 'manage_woocommerce' ) ) {
-            wp_die( __( 'You do not have sufficient permissions to access this page.', 'broodle-engage-wp-connector' ) );
+            wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'broodle-engage-wp-connector' ) );
         }
 
         $status = sanitize_text_field( $_POST['status'] ?? '' );
@@ -4455,7 +4455,7 @@ class Broodle_Engage_Admin {
         check_ajax_referer( 'broodle_engage_admin_nonce', 'nonce' );
 
         if ( ! current_user_can( 'manage_woocommerce' ) ) {
-            wp_die( __( 'You do not have sufficient permissions to access this page.', 'broodle-engage-wp-connector' ) );
+            wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'broodle-engage-wp-connector' ) );
         }
 
         // Get phone number from request
@@ -4508,6 +4508,7 @@ class Broodle_Engage_Admin {
         }
 
         // Get detailed response information
+        /* translators: %s: phone number */
         $message = sprintf( __( 'Test message sent successfully to %s!', 'broodle-engage-wp-connector' ), $phone_number );
         if ( isset( $response['status_message'] ) && ! empty( $response['status_message'] ) ) {
             $message .= ' ' . $response['status_message'];
@@ -4601,7 +4602,7 @@ class Broodle_Engage_Admin {
                     $icon = '❌ '; // Problem statuses
                 }
 
-                echo '<li>' . $icon . '<strong>' . esc_html( $label ) . '</strong> <code>(' . esc_html( $clean_key ) . ')</code></li>';
+                echo '<li>' . esc_html( $icon ) . '<strong>' . esc_html( $label ) . '</strong> <code>(' . esc_html( $clean_key ) . ')</code></li>';
             }
 
             echo '</ul>';
@@ -4614,7 +4615,7 @@ class Broodle_Engage_Admin {
             echo '<li>Test by changing an order to the exact status you selected in the dropdown</li>';
             echo '</ul>';
 
-            echo '<p><a href="' . remove_query_arg( 'wa_diagnostic' ) . '" class="button button-primary">Got it, hide this help</a></p>';
+            echo '<p><a href="' . esc_url( remove_query_arg( 'wa_diagnostic' ) ) . '" class="button button-primary">Got it, hide this help</a></p>';
             echo '</div>';
         }
     }

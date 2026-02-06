@@ -1313,7 +1313,7 @@ class Broodle_Engage_Notifications {
     private function get_clean_order_total( $order ) {
         // Get formatted total and strip HTML tags
         $formatted_total = $order->get_formatted_order_total();
-        $clean_total = strip_tags( $formatted_total );
+        $clean_total = wp_strip_all_tags( $formatted_total );
 
         // Remove any extra whitespace and decode HTML entities
         $clean_total = trim( html_entity_decode( $clean_total, ENT_QUOTES, 'UTF-8' ) );

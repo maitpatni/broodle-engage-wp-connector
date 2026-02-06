@@ -123,14 +123,15 @@ class Broodle_Engage_Logger {
         $offset = absint( $args['offset'] );
 
         // Build main query
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- $table_name uses wpdb prefix, $orderby/$order are from allow-lists, $where_clause built from prepare placeholders.
         if ( ! empty( $where_values ) ) {
             $query = $wpdb->prepare(
-                "SELECT * FROM {$table_name} WHERE {$where_clause} ORDER BY {$orderby} {$order} LIMIT %d OFFSET %d",
+                "SELECT * FROM `" . esc_sql( $table_name ) . "` WHERE {$where_clause} ORDER BY {$orderby} {$order} LIMIT %d OFFSET %d",
                 array_merge( $where_values, array( $limit, $offset ) )
             );
         } else {
             $query = $wpdb->prepare(
-                "SELECT * FROM {$table_name} WHERE {$where_clause} ORDER BY {$orderby} {$order} LIMIT %d OFFSET %d",
+                "SELECT * FROM `" . esc_sql( $table_name ) . "` WHERE {$where_clause} ORDER BY {$orderby} {$order} LIMIT %d OFFSET %d",
                 $limit,
                 $offset
             );
@@ -139,15 +140,16 @@ class Broodle_Engage_Logger {
         $results = $wpdb->get_results( $query );
 
         // Get total count
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Same safe values as above.
         if ( ! empty( $where_values ) ) {
             $count_query = $wpdb->prepare(
-                "SELECT COUNT(*) FROM {$table_name} WHERE {$where_clause}",
+                "SELECT COUNT(*) FROM `" . esc_sql( $table_name ) . "` WHERE {$where_clause}",
                 $where_values
             );
         } else {
-            $count_query = "SELECT COUNT(*) FROM {$table_name} WHERE {$where_clause}";
+            $count_query = "SELECT COUNT(*) FROM `" . esc_sql( $table_name ) . "` WHERE {$where_clause}";
         }
-        $total = $wpdb->get_var( $count_query );
+        $total = $wpdb->get_var( $count_query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
         return array(
             'logs' => $results,
