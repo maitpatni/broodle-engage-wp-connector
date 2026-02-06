@@ -97,6 +97,7 @@ class Broodle_Engage_Connector {
         require_once BROODLE_ENGAGE_PLUGIN_DIR . 'includes/class-broodle-engage-notifications.php';
         require_once BROODLE_ENGAGE_PLUGIN_DIR . 'includes/class-broodle-engage-logger.php';
         require_once BROODLE_ENGAGE_PLUGIN_DIR . 'includes/class-broodle-engage-settings.php';
+        require_once BROODLE_ENGAGE_PLUGIN_DIR . 'includes/class-broodle-engage-updater.php';
     }
 
     /**
@@ -110,6 +111,11 @@ class Broodle_Engage_Connector {
 
         // Initialize notifications handler
         new Broodle_Engage_Notifications();
+
+        // Initialize GitHub updater
+        if ( is_admin() ) {
+            new Broodle_Engage_Updater();
+        }
 
         // Clean up any duplicate shipped statuses
         add_action( 'init', array( $this, 'cleanup_duplicate_statuses' ), 15 );
