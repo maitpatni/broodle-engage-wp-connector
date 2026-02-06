@@ -2886,10 +2886,43 @@ class Broodle_Engage_Admin {
                     });
                     if (template) {
                         templateLang = template.language;
-                        templateBody = (template.header ? template.header + '\n\n' : '') + (template.body || '');
-                        if (template.footer) {
-                            templateBody += '\n\n' + template.footer;
+
+                        // Check for image header
+                        var hasImageHeader = false;
+                        template.components.forEach(function(comp) {
+                            if (comp.type === 'HEADER' && comp.format === 'IMAGE') {
+                                hasImageHeader = true;
+                            }
+                        });
+
+                        // Build full message body
+                        if (hasImageHeader) {
+                            templateBody = '🖼️ [Image]\n\n';
+                        } else if (template.header) {
+                            templateBody = template.header + '\n\n';
                         }
+
+                        templateBody += (template.body || '');
+
+                        if (template.footer) {
+                            templateBody += '\n\n_' + template.footer + '_';
+                        }
+
+                        // Add buttons
+                        template.components.forEach(function(comp) {
+                            if (comp.type === 'BUTTONS' && comp.buttons) {
+                                templateBody += '\n';
+                                comp.buttons.forEach(function(btn) {
+                                    if (btn.type === 'URL') {
+                                        templateBody += '\n🔗 ' + btn.text + (btn.url ? ' — ' + btn.url : '');
+                                    } else if (btn.type === 'PHONE_NUMBER') {
+                                        templateBody += '\n📞 ' + btn.text + (btn.phone_number ? ' — ' + btn.phone_number : '');
+                                    } else if (btn.type === 'QUICK_REPLY') {
+                                        templateBody += '\n↩️ ' + btn.text;
+                                    }
+                                });
+                            }
+                        });
                     }
 
                     // Get variable mappings and custom text
