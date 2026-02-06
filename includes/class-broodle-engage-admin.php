@@ -4620,7 +4620,7 @@ class Broodle_Engage_Admin {
     public function add_dashboard_widget() {
         wp_add_dashboard_widget(
             'broodle_engage_dashboard_widget',
-            __( 'Broodle WhatsApp Notifications', 'broodle-engage-connector' ),
+            __( 'Broodle Engage Connector', 'broodle-engage-connector' ),
             array( $this, 'render_dashboard_widget' ),
             null,
             null,
@@ -4642,10 +4642,11 @@ class Broodle_Engage_Admin {
             .broodle-dashboard-widget { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
             .broodle-widget-header {
                 display: flex;
+                flex-direction: column;
                 align-items: center;
-                justify-content: space-between;
+                justify-content: center;
                 margin-bottom: 18px;
-                padding: 16px 18px;
+                padding: 18px;
                 background: linear-gradient(135deg, #0E5ECE 0%, #0a4aa3 100%);
                 border-radius: 12px;
                 position: relative;
@@ -4664,10 +4665,10 @@ class Broodle_Engage_Admin {
                 pointer-events: none;
             }
             .broodle-widget-title {
-                font-size: 14px;
+                font-size: 16px;
                 font-weight: 600;
                 color: white;
-                margin: 0;
+                margin: 0 0 8px 0;
                 display: flex;
                 align-items: center;
                 gap: 8px;
@@ -4675,10 +4676,10 @@ class Broodle_Engage_Admin {
                 z-index: 1;
             }
             .broodle-widget-title .dashicons {
-                font-size: 20px;
-                width: 20px;
-                height: 20px;
-                color: rgba(255,255,255,0.9);
+                font-size: 22px;
+                width: 22px;
+                height: 22px;
+                color: white;
             }
             .broodle-widget-status {
                 font-size: 12px;
@@ -4747,12 +4748,14 @@ class Broodle_Engage_Admin {
             }
             .broodle-btn-secondary:hover { background: rgba(100, 105, 112, 0.1); color: #1d2327; }
             .broodle-btn-whatsapp {
-                background: rgba(37, 211, 102, 0.08);
-                color: #128C7E;
-                border: 1px solid rgba(37, 211, 102, 0.15);
+                background: linear-gradient(135deg, #0E5ECE 0%, #0a4aa3 100%);
+                color: white;
+                border: none;
                 grid-column: 1 / -1;
+                box-shadow: 0 2px 8px rgba(14, 94, 206, 0.25);
             }
-            .broodle-btn-whatsapp:hover { background: rgba(37, 211, 102, 0.14); color: #128C7E; }
+            .broodle-btn-whatsapp .dashicons { color: white; }
+            .broodle-btn-whatsapp:hover { background: linear-gradient(135deg, #0a4aa3 0%, #083d8a 100%); color: white; box-shadow: 0 4px 16px rgba(14, 94, 206, 0.35); }
             .broodle-error-notice {
                 margin-top: 15px;
                 padding: 12px 16px;
@@ -4778,7 +4781,7 @@ class Broodle_Engage_Admin {
             <div class="broodle-widget-header">
                 <h3 class="broodle-widget-title">
                     <span class="dashicons dashicons-whatsapp"></span>
-                    <?php esc_html_e( 'Broodle Engage', 'broodle-engage-connector' ); ?>
+                    <?php esc_html_e( 'Broodle Engage API', 'broodle-engage-connector' ); ?>
                 </h3>
                 <div class="broodle-widget-status">
                     <span class="broodle-status-indicator broodle-status-<?php echo esc_attr( $stats['status'] ); ?>"></span>
