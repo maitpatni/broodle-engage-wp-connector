@@ -750,6 +750,7 @@ class Broodle_Engage_Notifications {
                 $variable_map = $template_config['variable_map'] ?? array();
                 $custom_text_values = $template_config['custom_text'] ?? array();
                 $config_image_id = $template_config['image_id'] ?? 0;
+                $use_product_image = ! empty( $template_config['use_product_image'] );
             } else {
                 // Fallback to old configuration structure
                 $notification_enabled = $settings['enabled_notifications'][ $notification_type ] ?? 'no';
@@ -762,6 +763,7 @@ class Broodle_Engage_Notifications {
                 $variable_map = null;
                 $custom_text_values = array();
                 $config_image_id = 0;
+                $use_product_image = false;
             }
 
             if ( empty( $template_name ) ) {
@@ -813,9 +815,14 @@ class Broodle_Engage_Notifications {
 
             // Check if this notification type has an image attached
             $image_url = '';
-            
-            // First check new config image_id
-            if ( ! empty( $config_image_id ) ) {
+
+            // If use_product_image is enabled, get the featured image of the first product
+            if ( $use_product_image ) {
+                $image_url = $this->get_product_featured_image_url( $order );
+            }
+
+            // Otherwise use uploaded image
+            if ( empty( $image_url ) && ! empty( $config_image_id ) ) {
                 $image_url = wp_get_attachment_url( $config_image_id );
             }
             
@@ -1356,6 +1363,49 @@ class Broodle_Engage_Notifications {
 
         // Fallback to shop URL if product URL not found
         return wc_get_page_permalink( 'shop' );
+    }
+
+    /**
+     * Get the featured image URL of the first product in the order
+     *
+     * @param WC_Order $order Order object.
+     * @return string Featured image URL or empty string.
+     */
+    private function get_product_featured_image_url( $order ) {
+        $items = $order->get_items();
+
+        if ( empty( $items ) ) {
+            return '';
+        }
+
+        $first_item = reset( $items );
+        $product_id = $first_item->get_product_id();
+
+        if ( ! $product_id ) {
+            return '';
+        }
+
+        $thumbnail_id = get_post_thumbnail_id( $product_id );
+
+        if ( ! $thumbnail_id ) {
+            // Try parent product for variations
+            $product = wc_get_product( $product_id );
+            if ( $product && $product->is_type( 'variation' ) ) {
+                $parent_id = $product->get_parent_id();
+                if ( $parent_id ) {
+                    $thumbnail_id = get_post_thumbnail_id( $parent_id );
+                }
+            }
+        }
+
+        if ( $thumbnail_id ) {
+            $image_url = wp_get_attachment_url( $thumbnail_id );
+            if ( $image_url ) {
+                return $image_url;
+            }
+        }
+
+        return '';
     }
 
     /**

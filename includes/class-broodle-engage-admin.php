@@ -2174,6 +2174,11 @@ class Broodle_Engage_Admin {
                                     <input type="hidden" class="image-id-input" data-status="<?php echo esc_attr( $status ); ?>" value="">
                                 </div>
                             </div>
+                            <label class="use-product-image-label">
+                                <input type="checkbox" class="use-product-image-check" data-status="<?php echo esc_attr( $status ); ?>">
+                                <span class="dashicons dashicons-products"></span>
+                                <?php esc_html_e( 'Use featured image from order product', 'broodle-engage-connector' ); ?>
+                            </label>
                         </div>
 
                         <!-- Variable Mapping Section -->
@@ -2268,6 +2273,11 @@ class Broodle_Engage_Admin {
                                     <input type="hidden" class="image-id-input" data-status="<?php echo esc_attr( $custom_status['id'] ); ?>" value="">
                                 </div>
                             </div>
+                            <label class="use-product-image-label">
+                                <input type="checkbox" class="use-product-image-check" data-status="<?php echo esc_attr( $custom_status['id'] ); ?>">
+                                <span class="dashicons dashicons-products"></span>
+                                <?php esc_html_e( 'Use featured image from order product', 'broodle-engage-connector' ); ?>
+                            </label>
                         </div>
                         <div class="config-section variable-mapping" data-status="<?php echo esc_attr( $custom_status['id'] ); ?>" style="display: none;">
                             <h4 class="config-section-title">
@@ -2398,6 +2408,16 @@ class Broodle_Engage_Admin {
                     customInput.addClass('visible');
                 } else {
                     customInput.removeClass('visible');
+                }
+            });
+
+            // Toggle upload disabled when use-product-image checkbox changes
+            $(document).on('change', '.use-product-image-check', function() {
+                var card = $(this).closest('.status-card');
+                if ($(this).is(':checked')) {
+                    card.find('.image-preview-box').addClass('disabled');
+                } else {
+                    card.find('.image-preview-box').removeClass('disabled');
                 }
             });
 
@@ -2641,6 +2661,13 @@ class Broodle_Engage_Admin {
                             }
                         });
                     }
+
+                    // Restore use_product_image checkbox state
+                    var useProductImage = savedConfig[status] ? savedConfig[status].use_product_image : false;
+                    if (useProductImage) {
+                        card.find('.use-product-image-check').prop('checked', true);
+                        card.find('.image-preview-box').addClass('disabled');
+                    }
                 } else {
                     preview.find('.preview-image').hide();
                     imageSelection.removeClass('visible');
@@ -2843,6 +2870,11 @@ class Broodle_Engage_Admin {
                                     <input type="hidden" class="image-id-input" data-status="${id}" value="">
                                 </div>
                             </div>
+                            <label class="use-product-image-label">
+                                <input type="checkbox" class="use-product-image-check" data-status="${id}">
+                                <span class="dashicons dashicons-products"></span>
+                                <?php esc_html_e( 'Use featured image from order product', 'broodle-engage-connector' ); ?>
+                            </label>
                         </div>
                         <div class="config-section variable-mapping" data-status="${id}" style="display: none;">
                             <h4 class="config-section-title">
@@ -2900,6 +2932,7 @@ class Broodle_Engage_Admin {
                     var variableMap = {};
                     var customText = {};
                     var imageId = card.find('.image-id-input').val();
+                    var useProductImage = card.find('.use-product-image-check').is(':checked');
 
                     // Get template info
                     var templateBody = '';
@@ -2989,6 +3022,7 @@ class Broodle_Engage_Admin {
                         variable_map: variableMap,
                         custom_text: customText,
                         image_id: imageId,
+                        use_product_image: useProductImage,
                         button_variables: buttonVariablesList,
                         body_variable_count: bodyVariableCount
                     };
@@ -4348,6 +4382,7 @@ class Broodle_Engage_Admin {
                 'variable_map'  => array_map( 'sanitize_text_field', $template_data['variable_map'] ?? array() ),
                 'custom_text'   => array_map( 'sanitize_text_field', $template_data['custom_text'] ?? array() ),
                 'image_id'      => absint( $template_data['image_id'] ?? 0 ),
+                'use_product_image' => filter_var( $template_data['use_product_image'] ?? false, FILTER_VALIDATE_BOOLEAN ),
                 'button_variables' => self::sanitize_button_variables( $template_data['button_variables'] ?? array() ),
                 'body_variable_count' => absint( $template_data['body_variable_count'] ?? 0 ),
             );
