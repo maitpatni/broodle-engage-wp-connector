@@ -1001,7 +1001,7 @@ class Broodle_Engage_Admin {
                         </script>
                         <p class="description">
                             <?php esc_html_e( 'Your Broodle API Access Token. Get it from your Broodle dashboard at', 'broodle-engage-connector' ); ?>
-                            <a href="https://wa.broodle.one" target="_blank">wa.broodle.one</a>
+                            <a href="https://engage.broodle.one" target="_blank">engage.broodle.one</a>
                         </p>
                     </td>
                 </tr>
@@ -4862,9 +4862,9 @@ class Broodle_Engage_Admin {
         // Get current date/time
         $now = current_time( 'mysql' );
         $today = current_time( 'Y-m-d' );
-        $seven_days_ago = date( 'Y-m-d H:i:s', strtotime( '-7 days', current_time( 'timestamp' ) ) );
-        $thirty_days_ago = date( 'Y-m-d H:i:s', strtotime( '-30 days', current_time( 'timestamp' ) ) );
-        $twenty_four_hours_ago = date( 'Y-m-d H:i:s', strtotime( '-24 hours', current_time( 'timestamp' ) ) );
+        $seven_days_ago = gmdate( 'Y-m-d H:i:s', strtotime( '-7 days', time() ) );
+        $thirty_days_ago = gmdate( 'Y-m-d H:i:s', strtotime( '-30 days', time() ) );
+        $twenty_four_hours_ago = gmdate( 'Y-m-d H:i:s', strtotime( '-24 hours', time() ) );
 
         // Get statistics
         $today_count = $wpdb->get_var( $wpdb->prepare(

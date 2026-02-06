@@ -38,7 +38,7 @@ Broodle Engage Connector seamlessly integrates your WooCommerce store with Whats
 **Requirements:**
 
 * WooCommerce 5.0 or higher
-* Broodle WhatsApp API account ([Register here](https://wa.broodle.one))
+* Broodle WhatsApp API account ([Register here](https://engage.broodle.one))
 * Pre-approved WhatsApp Business API templates
 
 **Compatibility:**
@@ -61,7 +61,7 @@ Broodle Engage Connector seamlessly integrates your WooCommerce store with Whats
 
 **API Setup:**
 
-1. Register for a Broodle WhatsApp API account at [https://wa.broodle.one](https://wa.broodle.one)
+1. Register for a Broodle WhatsApp API account at [https://engage.broodle.one](https://engage.broodle.one)
 2. Obtain your API key and token from your Broodle dashboard
 3. Enter these credentials in the plugin settings
 
@@ -82,7 +82,7 @@ Broodle Engage Connector seamlessly integrates your WooCommerce store with Whats
 
 = Do I need a WhatsApp Business API account? =
 
-Yes, you need a Broodle WhatsApp API account to use this plugin. You can register at [https://wa.broodle.one](https://wa.broodle.one).
+Yes, you need a Broodle WhatsApp API account to use this plugin. You can register at [https://engage.broodle.one](https://engage.broodle.one).
 
 = Can I customize the message templates? =
 

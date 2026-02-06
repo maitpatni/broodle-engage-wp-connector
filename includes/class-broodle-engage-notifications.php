@@ -192,10 +192,10 @@ class Broodle_Engage_Notifications {
         if ( $delay_minutes > 0 ) {
             // Schedule delayed notification
             $timestamp = time() + ( $delay_minutes * 60 ); // Convert minutes to seconds
-            $scheduled_time = date( 'Y-m-d H:i:s', $timestamp );
+            $scheduled_time = gmdate( 'Y-m-d H:i:s', $timestamp );
 
             // Get phone number for logging
-            $phone = $this->get_phone_number( $order );
+            $phone = $this->get_customer_phone( $order );
 
             // Log the scheduled notification immediately
             $log_id = Broodle_Engage_Logger::log_scheduled( $order_id, $phone, $notification_type, $scheduled_time, $delay_minutes );
@@ -716,7 +716,7 @@ class Broodle_Engage_Notifications {
      * @param string   $notification_type Notification type.
      * @param WC_Order $order Order object.
      */
-    private function send_notification_safe( $order_id, $notification_type, $order = null ) {
+    public function send_notification_safe( $order_id, $notification_type, $order = null ) {
 
         try {
             // Extra safety checks
