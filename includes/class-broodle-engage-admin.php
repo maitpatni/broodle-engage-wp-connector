@@ -2940,6 +2940,25 @@ class Broodle_Engage_Admin {
                         }
                     });
 
+                    // Collect button variable info
+                    var buttonVariablesList = [];
+                    var bodyVariableCount = 0;
+                    if (template) {
+                        bodyVariableCount = (template.variables || []).length;
+                        template.components.forEach(function(comp) {
+                            if (comp.type === 'BUTTONS' && comp.buttons) {
+                                comp.buttons.forEach(function(btn, idx) {
+                                    if (btn.type === 'URL' && btn.url && btn.url.indexOf('{{') > -1) {
+                                        var match = btn.url.match(/\{\{(\d+)\}\}/);
+                                        if (match) {
+                                            buttonVariablesList.push({index: idx, type: 'url', var_num: match[1]});
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
+
                     config[status] = {
                         enabled: isEnabled,
                         template_name: templateName,
@@ -2947,7 +2966,9 @@ class Broodle_Engage_Admin {
                         template_body: templateBody,
                         variable_map: variableMap,
                         custom_text: customText,
-                        image_id: imageId
+                        image_id: imageId,
+                        button_variables: buttonVariablesList,
+                        body_variable_count: bodyVariableCount
                     };
 
                     // Collect custom statuses
@@ -4305,6 +4326,8 @@ class Broodle_Engage_Admin {
                 'variable_map'  => array_map( 'sanitize_text_field', $template_data['variable_map'] ?? array() ),
                 'custom_text'   => array_map( 'sanitize_text_field', $template_data['custom_text'] ?? array() ),
                 'image_id'      => absint( $template_data['image_id'] ?? 0 ),
+                'button_variables' => self::sanitize_button_variables( $template_data['button_variables'] ?? array() ),
+                'body_variable_count' => absint( $template_data['body_variable_count'] ?? 0 ),
             );
             
             // Also update the old templates array for backward compatibility
@@ -4368,5 +4391,31 @@ class Broodle_Engage_Admin {
             'site_name'           => __( 'Site Name', 'broodle-engage-connector' ),
             'custom_text'         => __( 'Custom Text (enter below)', 'broodle-engage-connector' ),
         );
+    }
+
+    /**
+     * Sanitize button variables array
+     *
+     * @param array $button_variables Raw button variables data.
+     * @return array Sanitized button variables.
+     */
+    public static function sanitize_button_variables( $button_variables ) {
+        if ( ! is_array( $button_variables ) ) {
+            return array();
+        }
+
+        $sanitized = array();
+        foreach ( $button_variables as $bv ) {
+            if ( ! is_array( $bv ) ) {
+                continue;
+            }
+            $sanitized[] = array(
+                'index'   => absint( $bv['index'] ?? 0 ),
+                'type'    => sanitize_text_field( $bv['type'] ?? 'url' ),
+                'var_num' => sanitize_text_field( $bv['var_num'] ?? '1' ),
+            );
+        }
+
+        return $sanitized;
     }
 }

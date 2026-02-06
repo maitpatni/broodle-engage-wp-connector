@@ -302,7 +302,7 @@ class Broodle_Engage_API {
         $template_params = $this->build_template_params( $template_name, $template_vars, $media_uri, $template_lang );
 
         // Build content message (displayed in inbox)
-        $content = $this->build_content_message( $template_name, $template_vars, $template_body, $media_uri );
+        $content = $this->build_content_message( $template_name, $template_vars, $template_body );
 
         $data = array(
             'source_id'  => $source_id,
@@ -348,14 +348,37 @@ class Broodle_Engage_API {
             'language' => $template_lang,
         );
 
+        // Look up button variable info from template config
+        $template_config = $settings['template_config'] ?? array();
+        $button_variables = array();
+        $body_var_count = null;
+
+        foreach ( $template_config as $status => $config ) {
+            if ( ( $config['template_name'] ?? '' ) === $template_name ) {
+                $button_variables = $config['button_variables'] ?? array();
+                if ( isset( $config['body_variable_count'] ) ) {
+                    $body_var_count = intval( $config['body_variable_count'] );
+                }
+                break;
+            }
+        }
+
+        // Determine body-only variable count
+        if ( null === $body_var_count ) {
+            $body_var_count = count( $template_vars );
+        }
+
         // Build processed_params
         $processed_params = array();
 
-        // Add body parameters (numbered 1, 2, 3, etc.)
+        // Add body parameters (only body variables, not button-only ones)
         if ( ! empty( $template_vars ) && is_array( $template_vars ) ) {
             $body_params = array();
             $index = 1;
-            foreach ( $template_vars as $value ) {
+            foreach ( $template_vars as $i => $value ) {
+                if ( $i >= $body_var_count ) {
+                    break;
+                }
                 if ( ! empty( $value ) || $value === '0' ) {
                     $body_params[ (string) $index ] = (string) $value;
                     $index++;
@@ -373,6 +396,23 @@ class Broodle_Engage_API {
                 'media_url'  => $media_uri,
                 'media_type' => $media_type,
             );
+        }
+
+        // Add button parameters if template has URL buttons with variables
+        if ( ! empty( $button_variables ) && is_array( $button_variables ) ) {
+            $buttons = array();
+            foreach ( $button_variables as $btn_var ) {
+                $var_num   = intval( $btn_var['var_num'] ?? 0 );
+                $var_index = $var_num - 1;
+                $value     = isset( $template_vars[ $var_index ] ) ? (string) $template_vars[ $var_index ] : '';
+                $buttons[] = array(
+                    'type'      => $btn_var['type'] ?? 'url',
+                    'parameter' => $value,
+                );
+            }
+            if ( ! empty( $buttons ) ) {
+                $processed_params['buttons'] = $buttons;
+            }
         }
 
         if ( ! empty( $processed_params ) ) {
@@ -413,7 +453,7 @@ class Broodle_Engage_API {
      * @param array  $template_vars Template variables.
      * @return string Content message.
      */
-    private function build_content_message( $template_name, $template_vars = array(), $template_body = '', $media_uri = '' ) {
+    private function build_content_message( $template_name, $template_vars = array(), $template_body = '' ) {
         // Use the actual template body text if provided
         $message = '';
 
@@ -452,11 +492,6 @@ class Broodle_Engage_API {
             
             // Remove any remaining unreplaced placeholders
             $message = preg_replace( '/\{\{\d+\}\}/', '', $message );
-
-            // Prepend image URL if present so it displays in Chatwoot
-            if ( ! empty( $media_uri ) && filter_var( $media_uri, FILTER_VALIDATE_URL ) ) {
-                $message = $media_uri . "\n\n" . trim( $message );
-            }
             
             return trim( $message );
         }

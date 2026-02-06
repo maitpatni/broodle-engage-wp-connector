@@ -252,6 +252,8 @@ class Broodle_Engage_Settings {
                     'variable_map'  => array_map( 'sanitize_text_field', (array) ( $tc['variable_map'] ?? array() ) ),
                     'custom_text'   => array_map( 'sanitize_text_field', (array) ( $tc['custom_text'] ?? array() ) ),
                     'image_id'      => absint( $tc['image_id'] ?? 0 ),
+                    'button_variables' => Broodle_Engage_Admin::sanitize_button_variables( $tc['button_variables'] ?? array() ),
+                    'body_variable_count' => absint( $tc['body_variable_count'] ?? 0 ),
                 );
             }
         }
