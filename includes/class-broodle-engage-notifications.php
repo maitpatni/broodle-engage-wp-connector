@@ -1134,10 +1134,10 @@ class Broodle_Engage_Notifications {
 
             case 'payment_url':
                 $payment_url = $order->get_checkout_payment_url();
-                return ! empty( $payment_url ) ? $payment_url : get_site_url();
+                return $this->add_engage_tracking( ! empty( $payment_url ) ? $payment_url : get_site_url() );
 
             case 'product_url':
-                return $this->get_product_url( $order );
+                return $this->add_engage_tracking( $this->get_product_url( $order ) );
 
             default:
                 return '';
@@ -1270,9 +1270,9 @@ class Broodle_Engage_Notifications {
                     ?: $order->get_meta( 'tracking_url' )
                     ?: $order->get_meta( '_wc_shipment_tracking_items' );
                 if ( is_array( $tracking_url ) && ! empty( $tracking_url[0]['tracking_link'] ) ) {
-                    return $tracking_url[0]['tracking_link'];
+                    return $this->add_engage_tracking( $tracking_url[0]['tracking_link'] );
                 }
-                return $tracking_url ?: get_site_url() . '/track-order/';
+                return $this->add_engage_tracking( $tracking_url ?: get_site_url() . '/track-order/' );
                 
             case 'tracking_number':
                 $tracking = $order->get_meta( '_tracking_number' ) 
@@ -1284,16 +1284,16 @@ class Broodle_Engage_Notifications {
                 return ! empty( $coupons ) ? implode( ', ', $coupons ) : '';
                 
             case 'product_url':
-                return $this->get_product_url( $order );
+                return $this->add_engage_tracking( $this->get_product_url( $order ) );
                 
             case 'cart_url':
-                return wc_get_cart_url();
+                return $this->add_engage_tracking( wc_get_cart_url() );
                 
             case 'shop_url':
-                return wc_get_page_permalink( 'shop' );
+                return $this->add_engage_tracking( wc_get_page_permalink( 'shop' ) );
                 
             case 'my_account_url':
-                return wc_get_page_permalink( 'myaccount' );
+                return $this->add_engage_tracking( wc_get_page_permalink( 'myaccount' ) );
                 
             case 'site_name':
                 return get_bloginfo( 'name' );
@@ -1363,6 +1363,28 @@ class Broodle_Engage_Notifications {
 
         // Fallback to shop URL if product URL not found
         return wc_get_page_permalink( 'shop' );
+    }
+
+    /**
+     * Add engage tracking parameter to a URL.
+     *
+     * Appends ?engage=whatsapp (or &engage=whatsapp) so clicks
+     * from WhatsApp messages can be identified in analytics.
+     *
+     * @param string $url The original URL.
+     * @return string URL with engage tracking parameter.
+     */
+    private function add_engage_tracking( $url ) {
+        if ( empty( $url ) || ! is_string( $url ) ) {
+            return $url;
+        }
+
+        // Only add to valid HTTP(S) URLs
+        if ( strpos( $url, 'http' ) !== 0 ) {
+            return $url;
+        }
+
+        return add_query_arg( 'engage', 'whatsapp', $url );
     }
 
     /**
