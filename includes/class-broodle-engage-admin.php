@@ -3878,7 +3878,7 @@ class Broodle_Engage_Admin {
                         'total' => $total_pages,
                         'current' => $page,
                     )
-                );
+                ) );
                 echo '</div>';
             }
             ?>
