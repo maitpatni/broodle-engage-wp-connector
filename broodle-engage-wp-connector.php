@@ -214,7 +214,9 @@ class Broodle_Engage_Connector {
             'https://engage.broodle.one',
             esc_html__( 'Login to Dashboard', 'broodle-engage-wp-connector' )
         );
-        array_unshift( $links, $settings_link, $signup_link, $login_link );
+        array_unshift( $links, $settings_link );
+        $links[] = $signup_link;
+        $links[] = $login_link;
         return $links;
     }
 
