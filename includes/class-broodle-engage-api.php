@@ -119,7 +119,29 @@ class Broodle_Engage_API {
             return $source_id;
         }
 
-        // Step 3: Create conversation with template message
+        // Step 3: Try to find an existing conversation for this contact in the same inbox
+        $existing_conversation_id = $this->find_existing_conversation( $contact_id );
+
+        if ( $existing_conversation_id ) {
+            // Send template message to existing conversation
+            $result = $this->send_template_to_conversation(
+                $existing_conversation_id,
+                $template_name,
+                $template_vars,
+                $media_uri,
+                $template_lang,
+                $template_body
+            );
+
+            if ( ! is_wp_error( $result ) ) {
+                return $result;
+            }
+
+            // If sending to existing conversation failed, fall through to create new one
+            error_log( 'Broodle Engage: Failed to send to existing conversation #' . $existing_conversation_id . ', creating new one. Error: ' . $result->get_error_message() );
+        }
+
+        // Step 4: Create new conversation with template message
         $result = $this->create_conversation_with_template(
             $contact_id,
             $source_id,
@@ -280,6 +302,102 @@ class Broodle_Engage_API {
         $url = self::API_BASE_URL . $endpoint;
 
         return $this->make_request( $url, 'GET' );
+    }
+
+    /**
+     * Find an existing conversation for a contact in the current WhatsApp inbox.
+     *
+     * @param int $contact_id Contact ID.
+     * @return int|false Conversation ID if found, false otherwise.
+     */
+    private function find_existing_conversation( $contact_id ) {
+        $endpoint = "/api/v1/accounts/{$this->account_id}/contacts/{$contact_id}/conversations";
+        $url = self::API_BASE_URL . $endpoint;
+
+        $response = $this->make_request( $url, 'GET' );
+
+        if ( is_wp_error( $response ) ) {
+            return false;
+        }
+
+        $conversations = $response['payload'] ?? $response;
+        if ( ! is_array( $conversations ) ) {
+            return false;
+        }
+
+        // Look for a conversation in the same inbox, prefer open ones
+        $best_match = null;
+        foreach ( $conversations as $conversation ) {
+            $conv_inbox_id = $conversation['inbox_id'] ?? 0;
+            if ( absint( $conv_inbox_id ) !== $this->inbox_id ) {
+                continue;
+            }
+
+            $status = $conversation['status'] ?? '';
+
+            // Prefer open conversations
+            if ( $status === 'open' ) {
+                return $conversation['id'];
+            }
+
+            // Accept resolved conversations as fallback (they get re-opened on new message)
+            if ( null === $best_match && in_array( $status, array( 'resolved', 'pending' ), true ) ) {
+                $best_match = $conversation['id'];
+            }
+        }
+
+        return $best_match ? $best_match : false;
+    }
+
+    /**
+     * Send a template message to an existing conversation.
+     *
+     * @param int    $conversation_id Conversation ID.
+     * @param string $template_name Template name.
+     * @param array  $template_vars Template variables.
+     * @param string $media_uri Optional media URI.
+     * @param string $template_lang Template language code.
+     * @param string $template_body Template body text with placeholders.
+     * @return array|WP_Error Result or error.
+     */
+    private function send_template_to_conversation( $conversation_id, $template_name, $template_vars, $media_uri = '', $template_lang = '', $template_body = '' ) {
+        $endpoint = "/api/v1/accounts/{$this->account_id}/conversations/{$conversation_id}/messages";
+        $url = self::API_BASE_URL . $endpoint;
+
+        // Build template_params the same way as for new conversations
+        $template_params = $this->build_template_params( $template_name, $template_vars, $media_uri, $template_lang );
+        $content = $this->build_content_message( $template_name, $template_vars, $template_body );
+
+        $data = array(
+            'content'          => $content,
+            'message_type'     => 'outgoing',
+            'template_params'  => $template_params,
+        );
+
+        $response = $this->make_request( $url, 'POST', $data );
+
+        if ( is_wp_error( $response ) ) {
+            return $response;
+        }
+
+        // Parse message-level response
+        if ( isset( $response['error'] ) || isset( $response['errors'] ) ) {
+            $error_msg = isset( $response['error'] )
+                ? ( is_array( $response['error'] ) ? ( $response['error']['message'] ?? wp_json_encode( $response['error'] ) ) : $response['error'] )
+                : ( is_array( $response['errors'] ) ? implode( ', ', $response['errors'] ) : $response['errors'] );
+            return new WP_Error( 'api_error', $error_msg );
+        }
+
+        $message_id = $response['id'] ?? '';
+
+        return array(
+            'success'         => true,
+            'conversation_id' => $conversation_id,
+            'message_id'      => $message_id,
+            'status'          => 'sent',
+            'status_message'  => sprintf( 'Message sent to conversation #%d', $conversation_id ),
+            'response_data'   => $response,
+        );
     }
 
     /**
