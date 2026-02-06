@@ -1276,6 +1276,9 @@ class Broodle_Engage_Notifications {
                 $coupons = $order->get_coupon_codes();
                 return ! empty( $coupons ) ? implode( ', ', $coupons ) : '';
                 
+            case 'product_url':
+                return $this->get_product_url( $order );
+                
             case 'cart_url':
                 return wc_get_cart_url();
                 

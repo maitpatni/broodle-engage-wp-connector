@@ -4362,6 +4362,7 @@ class Broodle_Engage_Admin {
             'tracking_number'     => __( 'Tracking Number', 'broodle-engage-connector' ),
             'coupon_code'         => __( 'Coupon Code', 'broodle-engage-connector' ),
             'cart_url'            => __( 'Cart URL', 'broodle-engage-connector' ),
+            'product_url'         => __( 'Product URL (first item)', 'broodle-engage-connector' ),
             'shop_url'            => __( 'Shop URL', 'broodle-engage-connector' ),
             'my_account_url'      => __( 'My Account URL', 'broodle-engage-connector' ),
             'site_name'           => __( 'Site Name', 'broodle-engage-connector' ),
