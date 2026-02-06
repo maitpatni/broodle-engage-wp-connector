@@ -6,7 +6,7 @@
  * Version: 3.0.1
  * Author: Broodle
  * Author URI: https://broodle.host
- * Text Domain: broodle-engage-connector
+ * Text Domain: broodle-engage-wp-connector
  * Domain Path: /languages
  * Requires at least: 5.0
  * Tested up to: 6.7
@@ -79,7 +79,7 @@ class Broodle_Engage_Connector {
         add_action( 'before_woocommerce_init', array( $this, 'declare_hpos_compatibility' ) );
 
         // Load text domain
-        load_plugin_textdomain( 'broodle-engage-connector', false, dirname( BROODLE_ENGAGE_PLUGIN_BASENAME ) . '/languages' );
+        load_plugin_textdomain( 'broodle-engage-wp-connector', false, dirname( BROODLE_ENGAGE_PLUGIN_BASENAME ) . '/languages' );
 
         // Include required files
         $this->includes();
@@ -152,8 +152,8 @@ class Broodle_Engage_Connector {
                 <?php
                 printf(
                     /* translators: %s: Plugin name */
-                    esc_html__( '%s requires WooCommerce to be installed and active.', 'broodle-engage-connector' ),
-                    '<strong>' . esc_html__( 'Broodle Engage Connector', 'broodle-engage-connector' ) . '</strong>'
+                    esc_html__( '%s requires WooCommerce to be installed and active.', 'broodle-engage-wp-connector' ),
+                    '<strong>' . esc_html__( 'Broodle Engage Connector', 'broodle-engage-wp-connector' ) . '</strong>'
                 );
                 ?>
             </p>
@@ -201,8 +201,8 @@ class Broodle_Engage_Connector {
     public function add_settings_link( $links ) {
         $settings_link = sprintf(
             '<a href="%s">%s</a>',
-            admin_url( 'admin.php?page=broodle-engage-connector' ),
-            esc_html__( 'Settings', 'broodle-engage-connector' )
+            admin_url( 'admin.php?page=broodle-engage-wp-connector' ),
+            esc_html__( 'Settings', 'broodle-engage-wp-connector' )
         );
         array_unshift( $links, $settings_link );
         return $links;

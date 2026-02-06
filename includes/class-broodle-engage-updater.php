@@ -27,7 +27,7 @@ class Broodle_Engage_Updater {
     /**
      * Plugin slug (folder name)
      */
-    const PLUGIN_SLUG = 'broodle-engage-connector';
+    const PLUGIN_SLUG = 'broodle-engage-wp-connector';
 
     /**
      * Transient key for caching GitHub response
@@ -40,7 +40,7 @@ class Broodle_Engage_Updater {
     const CACHE_DURATION = 21600;
 
     /**
-     * Plugin basename (e.g. broodle-engage-connector/broodle-engage-connector.php)
+     * Plugin basename (e.g. broodle-engage-wp-connector/broodle-engage-wp-connector.php)
      *
      * @var string
      */
@@ -278,7 +278,7 @@ class Broodle_Engage_Updater {
             'rename_failed',
             sprintf(
                 /* translators: 1: Source folder, 2: Destination folder */
-                __( 'Could not rename plugin folder from %1$s to %2$s.', 'broodle-engage-connector' ),
+                __( 'Could not rename plugin folder from %1$s to %2$s.', 'broodle-engage-wp-connector' ),
                 $source,
                 $new_source
             )

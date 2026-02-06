@@ -679,7 +679,7 @@ class Broodle_Engage_Notifications {
                 Broodle_Engage_Logger::LOG_ERROR,
                 array(),
                 array(),
-                __( 'Customer phone number not found.', 'broodle-engage-connector' )
+                __( 'Customer phone number not found.', 'broodle-engage-wp-connector' )
             );
             return;
         }

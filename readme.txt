@@ -50,7 +50,7 @@ Broodle Engage Connector seamlessly integrates your WooCommerce store with Whats
 
 == Installation ==
 
-1. Upload the plugin files to the `/wp-content/plugins/broodle-engage-connector` directory, or install the plugin through the WordPress plugins screen directly.
+1. Upload the plugin files to the `/wp-content/plugins/broodle-engage-wp-connector` directory, or install the plugin through the WordPress plugins screen directly.
 2. Activate the plugin through the 'Plugins' screen in WordPress.
 3. Navigate to WooCommerce > Broodle Engage Connector to configure the plugin.
 4. Enter your Broodle WhatsApp API credentials.

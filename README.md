@@ -218,7 +218,7 @@ Full support for WooCommerce High-Performance Order Storage:
 
 ```bash
 cd /path/to/wordpress/wp-content/plugins/
-git clone https://github.com/maitpatni/broodle-engage-wp-connector.git broodle-engage-connector
+git clone https://github.com/maitpatni/broodle-engage-wp-connector.git broodle-engage-wp-connector
 ```
 
 Then activate from **Plugins** in WordPress admin.
@@ -252,8 +252,8 @@ Then activate from **Plugins** in WordPress admin.
 ## Plugin Structure
 
 ```
-broodle-engage-connector/
-├── broodle-engage-connector.php    # Main plugin file
+broodle-engage-wp-connector/
+├── broodle-engage-wp-connector.php    # Main plugin file
 ├── uninstall.php                   # Clean uninstall handler
 ├── readme.txt                      # WordPress.org readme
 ├── CHANGELOG.md                    # Version history

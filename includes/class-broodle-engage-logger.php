@@ -340,7 +340,7 @@ class Broodle_Engage_Logger {
     public static function log_scheduled( $order_id, $phone, $notification_type, $scheduled_time, $delay_minutes ) {
         $message = sprintf(
             /* translators: %1$s: delay minutes, %2$s: scheduled time */
-            __( 'Notification scheduled to send in %1$s minutes at %2$s', 'broodle-engage-connector' ),
+            __( 'Notification scheduled to send in %1$s minutes at %2$s', 'broodle-engage-wp-connector' ),
             $delay_minutes,
             $scheduled_time
         );

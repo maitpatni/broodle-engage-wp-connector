@@ -64,10 +64,10 @@ class Broodle_Engage_Admin {
      */
     public function add_admin_menu() {
         add_menu_page(
-            __( 'Broodle Engage', 'broodle-engage-connector' ),
-            __( 'Broodle Engage', 'broodle-engage-connector' ),
+            __( 'Broodle Engage', 'broodle-engage-wp-connector' ),
+            __( 'Broodle Engage', 'broodle-engage-wp-connector' ),
             'manage_woocommerce',
-            'broodle-engage-connector',
+            'broodle-engage-wp-connector',
             array( $this, 'admin_page' ),
             $this->get_whatsapp_icon(),
             56 // Position after WooCommerce (which is at 55.5)
@@ -75,11 +75,11 @@ class Broodle_Engage_Admin {
 
         // Add submenu pages with proper callback handling
         add_submenu_page(
-            'broodle-engage-connector',
-            __( 'Settings', 'broodle-engage-connector' ),
-            __( 'Settings', 'broodle-engage-connector' ),
+            'broodle-engage-wp-connector',
+            __( 'Settings', 'broodle-engage-wp-connector' ),
+            __( 'Settings', 'broodle-engage-wp-connector' ),
             'manage_woocommerce',
-            'broodle-engage-connector',
+            'broodle-engage-wp-connector',
             array( $this, 'admin_page' )
         );
     }
@@ -101,7 +101,7 @@ class Broodle_Engage_Admin {
      * @param string $hook_suffix Current admin page hook suffix.
      */
     public function enqueue_admin_scripts( $hook_suffix ) {
-        if ( 'toplevel_page_broodle-engage-connector' !== $hook_suffix ) {
+        if ( 'toplevel_page_broodle-engage-wp-connector' !== $hook_suffix ) {
             return;
         }
 
@@ -122,13 +122,13 @@ class Broodle_Engage_Admin {
 
         // Add custom menu styling and WhatsApp icon
         wp_add_inline_style( 'broodle-wa-admin', '
-            #adminmenu .menu-icon-broodle-engage-connector div.wp-menu-image img {
+            #adminmenu .menu-icon-broodle-engage-wp-connector div.wp-menu-image img {
                 width: 20px;
                 height: 20px;
                 opacity: 0.6;
             }
-            #adminmenu .menu-icon-broodle-engage-connector:hover div.wp-menu-image img,
-            #adminmenu .menu-icon-broodle-engage-connector.wp-has-current-submenu div.wp-menu-image img {
+            #adminmenu .menu-icon-broodle-engage-wp-connector:hover div.wp-menu-image img,
+            #adminmenu .menu-icon-broodle-engage-wp-connector.wp-has-current-submenu div.wp-menu-image img {
                 opacity: 1;
             }
             .dashicons-whatsapp:before {
@@ -521,12 +521,12 @@ class Broodle_Engage_Admin {
                 'ajax_url' => admin_url( 'admin-ajax.php' ),
                 'nonce' => wp_create_nonce( 'broodle_engage_admin_nonce' ),
                 'strings' => array(
-                    'testing_api' => __( 'Testing API connection...', 'broodle-engage-connector' ),
-                    'api_test_success' => __( 'API connection successful!', 'broodle-engage-connector' ),
-                    'api_test_failed' => __( 'API connection failed. Please check your credentials.', 'broodle-engage-connector' ),
-                    'sending_test' => __( 'Sending test message...', 'broodle-engage-connector' ),
-                    'test_sent' => __( 'Test message sent successfully!', 'broodle-engage-connector' ),
-                    'test_failed' => __( 'Failed to send test message.', 'broodle-engage-connector' ),
+                    'testing_api' => __( 'Testing API connection...', 'broodle-engage-wp-connector' ),
+                    'api_test_success' => __( 'API connection successful!', 'broodle-engage-wp-connector' ),
+                    'api_test_failed' => __( 'API connection failed. Please check your credentials.', 'broodle-engage-wp-connector' ),
+                    'sending_test' => __( 'Sending test message...', 'broodle-engage-wp-connector' ),
+                    'test_sent' => __( 'Test message sent successfully!', 'broodle-engage-wp-connector' ),
+                    'test_failed' => __( 'Failed to send test message.', 'broodle-engage-wp-connector' ),
                 ),
             )
         );
@@ -538,7 +538,7 @@ class Broodle_Engage_Admin {
     public function admin_page() {
         // Check user permissions
         if ( ! $this->user_can_access() ) {
-            wp_die( __( 'You do not have sufficient permissions to access this page.', 'broodle-engage-connector' ) );
+            wp_die( __( 'You do not have sufficient permissions to access this page.', 'broodle-engage-wp-connector' ) );
         }
 
         $active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : 'settings';
@@ -548,21 +548,21 @@ class Broodle_Engage_Admin {
                 <img src="<?php echo esc_url( BROODLE_ENGAGE_PLUGIN_URL . 'assets/images/broodle-logo.png' ); ?>"
                      alt="Broodle Logo"
                      style="max-width: 80px; height: auto; margin-right: 12px; vertical-align: middle;" />
-                <?php esc_html_e( 'Broodle Engage Connector', 'broodle-engage-connector' ); ?>
+                <?php esc_html_e( 'Broodle Engage Connector', 'broodle-engage-wp-connector' ); ?>
             </h1>
 
             <h2 class="nav-tab-wrapper">
-                <a href="?page=broodle-engage-connector&tab=settings" class="nav-tab <?php echo esc_attr( 'settings' === $active_tab ? 'nav-tab-active' : '' ); ?>">
-                    <?php esc_html_e( 'Settings', 'broodle-engage-connector' ); ?>
+                <a href="?page=broodle-engage-wp-connector&tab=settings" class="nav-tab <?php echo esc_attr( 'settings' === $active_tab ? 'nav-tab-active' : '' ); ?>">
+                    <?php esc_html_e( 'Settings', 'broodle-engage-wp-connector' ); ?>
                 </a>
-                <a href="?page=broodle-engage-connector&tab=templates" class="nav-tab <?php echo esc_attr( 'templates' === $active_tab ? 'nav-tab-active' : '' ); ?>">
-                    <?php esc_html_e( 'Templates', 'broodle-engage-connector' ); ?>
+                <a href="?page=broodle-engage-wp-connector&tab=templates" class="nav-tab <?php echo esc_attr( 'templates' === $active_tab ? 'nav-tab-active' : '' ); ?>">
+                    <?php esc_html_e( 'Templates', 'broodle-engage-wp-connector' ); ?>
                 </a>
-                <a href="?page=broodle-engage-connector&tab=logs" class="nav-tab <?php echo esc_attr( 'logs' === $active_tab ? 'nav-tab-active' : '' ); ?>">
-                    <?php esc_html_e( 'Logs', 'broodle-engage-connector' ); ?>
+                <a href="?page=broodle-engage-wp-connector&tab=logs" class="nav-tab <?php echo esc_attr( 'logs' === $active_tab ? 'nav-tab-active' : '' ); ?>">
+                    <?php esc_html_e( 'Logs', 'broodle-engage-wp-connector' ); ?>
                 </a>
-                <a href="?page=broodle-engage-connector&tab=help" class="nav-tab <?php echo esc_attr( 'help' === $active_tab ? 'nav-tab-active' : '' ); ?>">
-                    <?php esc_html_e( 'Help', 'broodle-engage-connector' ); ?>
+                <a href="?page=broodle-engage-wp-connector&tab=help" class="nav-tab <?php echo esc_attr( 'help' === $active_tab ? 'nav-tab-active' : '' ); ?>">
+                    <?php esc_html_e( 'Help', 'broodle-engage-wp-connector' ); ?>
                 </a>
             </h2>
 
@@ -933,10 +933,10 @@ class Broodle_Engage_Admin {
         <div class="settings-page-header">
             <h2 class="settings-page-title">
                 <span class="dashicons dashicons-whatsapp"></span>
-                <?php esc_html_e( 'Broodle WhatsApp API Settings', 'broodle-engage-connector' ); ?>
+                <?php esc_html_e( 'Broodle WhatsApp API Settings', 'broodle-engage-wp-connector' ); ?>
             </h2>
             <p class="settings-page-description">
-                <?php esc_html_e( 'Configure your Broodle WhatsApp API connection to send automated order notifications. Enter your API Access Token, Account ID, and WhatsApp Inbox ID to get started.', 'broodle-engage-connector' ); ?>
+                <?php esc_html_e( 'Configure your Broodle WhatsApp API connection to send automated order notifications. Enter your API Access Token, Account ID, and WhatsApp Inbox ID to get started.', 'broodle-engage-wp-connector' ); ?>
             </p>
         </div>
 
@@ -951,37 +951,37 @@ class Broodle_Engage_Admin {
                     <th scope="row" colspan="2" style="background: #e8f4f8; padding: 15px 24px !important;">
                         <h3 style="margin: 0; color: #1d2327; font-size: 16px;">
                             <span class="dashicons dashicons-admin-network" style="color: #2271b1;"></span>
-                            <?php esc_html_e( 'Broodle WhatsApp API Configuration', 'broodle-engage-connector' ); ?>
+                            <?php esc_html_e( 'Broodle WhatsApp API Configuration', 'broodle-engage-wp-connector' ); ?>
                         </h3>
                     </th>
                 </tr>
                 <tr>
                     <th scope="row">
-                        <label for="api_key"><?php esc_html_e( 'API Access Token', 'broodle-engage-connector' ); ?></label>
+                        <label for="api_key"><?php esc_html_e( 'API Access Token', 'broodle-engage-wp-connector' ); ?></label>
                     </th>
                     <td>
                         <div class="broodle-api-key-section">
                             <div class="api-key-row">
                                 <input type="password" id="api_key" name="broodle_engage_settings[api_key]" value="<?php echo esc_attr( $settings['api_key'] ); ?>" class="broodle-api-input" />
                                 <button type="button" id="toggle-api-key" class="button button-secondary broodle-toggle-btn" onclick="broodleToggleApiKey()">
-                                    <?php esc_html_e( 'Show', 'broodle-engage-connector' ); ?>
+                                    <?php esc_html_e( 'Show', 'broodle-engage-wp-connector' ); ?>
                                 </button>
                             </div>
                             <div class="api-test-section">
                                 <div class="api-test-row">
                                     <button type="button" id="test-api-connection" class="button button-secondary">
-                                        <?php esc_html_e( 'Test Connection', 'broodle-engage-connector' ); ?>
+                                        <?php esc_html_e( 'Test Connection', 'broodle-engage-wp-connector' ); ?>
                                     </button>
                                     <span id="api-test-result"></span>
                                 </div>
                                 <div class="api-test-row" style="margin-top: 12px;">
                                     <input type="text" id="quick-test-phone" placeholder="+919876543210" style="width: 180px; padding: 8px 12px; border: 1px solid #8c8f94; border-radius: 4px;" />
                                     <button type="button" id="quick-test-message" class="button button-secondary">
-                                        <?php esc_html_e( 'Send Test Message', 'broodle-engage-connector' ); ?>
+                                        <?php esc_html_e( 'Send Test Message', 'broodle-engage-wp-connector' ); ?>
                                     </button>
                                     <span id="quick-test-result"></span>
                                 </div>
-                                <p class="description" style="margin-top: 8px;"><?php esc_html_e( 'Enter phone number with country code to send a test "hello_world" template message.', 'broodle-engage-connector' ); ?></p>
+                                <p class="description" style="margin-top: 8px;"><?php esc_html_e( 'Enter phone number with country code to send a test "hello_world" template message.', 'broodle-engage-wp-connector' ); ?></p>
                             </div>
                         </div>
 
@@ -1000,32 +1000,32 @@ class Broodle_Engage_Admin {
                         }
                         </script>
                         <p class="description">
-                            <?php esc_html_e( 'Your Broodle API Access Token. Get it from your Broodle dashboard at', 'broodle-engage-connector' ); ?>
+                            <?php esc_html_e( 'Your Broodle API Access Token. Get it from your Broodle dashboard at', 'broodle-engage-wp-connector' ); ?>
                             <a href="https://engage.broodle.one" target="_blank">engage.broodle.one</a>
                         </p>
                     </td>
                 </tr>
                 <tr>
                     <th scope="row">
-                        <label for="chatwoot_account_id"><?php esc_html_e( 'Account ID', 'broodle-engage-connector' ); ?></label>
+                        <label for="chatwoot_account_id"><?php esc_html_e( 'Account ID', 'broodle-engage-wp-connector' ); ?></label>
                     </th>
                     <td>
                         <input type="number" id="chatwoot_account_id" name="broodle_engage_settings[chatwoot_account_id]" value="<?php echo esc_attr( $settings['chatwoot_account_id'] ?? '' ); ?>" class="regular-text" min="1" />
-                        <p class="description"><?php esc_html_e( 'Your Broodle Account ID. Find it in your Broodle dashboard.', 'broodle-engage-connector' ); ?></p>
+                        <p class="description"><?php esc_html_e( 'Your Broodle Account ID. Find it in your Broodle dashboard.', 'broodle-engage-wp-connector' ); ?></p>
                     </td>
                 </tr>
                 <tr>
                     <th scope="row">
-                        <label for="chatwoot_inbox_id"><?php esc_html_e( 'WhatsApp Inbox ID', 'broodle-engage-connector' ); ?></label>
+                        <label for="chatwoot_inbox_id"><?php esc_html_e( 'WhatsApp Inbox ID', 'broodle-engage-wp-connector' ); ?></label>
                     </th>
                     <td>
                         <input type="number" id="chatwoot_inbox_id" name="broodle_engage_settings[chatwoot_inbox_id]" value="<?php echo esc_attr( $settings['chatwoot_inbox_id'] ?? '' ); ?>" class="regular-text" min="1" />
-                        <p class="description"><?php esc_html_e( 'The ID of your WhatsApp inbox. Find it in Settings → Inboxes in your Broodle dashboard.', 'broodle-engage-connector' ); ?></p>
+                        <p class="description"><?php esc_html_e( 'The ID of your WhatsApp inbox. Find it in Settings → Inboxes in your Broodle dashboard.', 'broodle-engage-wp-connector' ); ?></p>
                     </td>
                 </tr>
                 <tr>
                     <th scope="row">
-                        <label for="template_language"><?php esc_html_e( 'Template Language', 'broodle-engage-connector' ); ?></label>
+                        <label for="template_language"><?php esc_html_e( 'Template Language', 'broodle-engage-wp-connector' ); ?></label>
                     </th>
                     <td>
                         <select id="template_language" name="broodle_engage_settings[template_language]">
@@ -1041,12 +1041,12 @@ class Broodle_Engage_Admin {
                             <option value="hi" <?php selected( $settings['template_language'] ?? 'en_US', 'hi' ); ?>>Hindi (hi)</option>
                             <option value="id" <?php selected( $settings['template_language'] ?? 'en_US', 'id' ); ?>>Indonesian (id)</option>
                         </select>
-                        <p class="description"><?php esc_html_e( 'Default language code for WhatsApp templates.', 'broodle-engage-connector' ); ?></p>
+                        <p class="description"><?php esc_html_e( 'Default language code for WhatsApp templates.', 'broodle-engage-wp-connector' ); ?></p>
                     </td>
                 </tr>
                 <tr>
                     <th scope="row">
-                        <label for="template_category"><?php esc_html_e( 'Template Category', 'broodle-engage-connector' ); ?></label>
+                        <label for="template_category"><?php esc_html_e( 'Template Category', 'broodle-engage-wp-connector' ); ?></label>
                     </th>
                     <td>
                         <select id="template_category" name="broodle_engage_settings[template_category]">
@@ -1054,20 +1054,20 @@ class Broodle_Engage_Admin {
                             <option value="MARKETING" <?php selected( $settings['template_category'] ?? 'UTILITY', 'MARKETING' ); ?>>Marketing</option>
                             <option value="AUTHENTICATION" <?php selected( $settings['template_category'] ?? 'UTILITY', 'AUTHENTICATION' ); ?>>Authentication</option>
                         </select>
-                        <p class="description"><?php esc_html_e( 'Default category for WhatsApp templates. Use UTILITY for order notifications.', 'broodle-engage-connector' ); ?></p>
+                        <p class="description"><?php esc_html_e( 'Default category for WhatsApp templates. Use UTILITY for order notifications.', 'broodle-engage-wp-connector' ); ?></p>
                     </td>
                 </tr>
                 <tr>
                     <th scope="row" colspan="2" style="background: #f0f6fc; padding: 15px 24px !important;">
                         <h3 style="margin: 0; color: #1d2327; font-size: 16px;">
                             <span class="dashicons dashicons-admin-generic" style="color: #2271b1;"></span>
-                            <?php esc_html_e( 'General Settings', 'broodle-engage-connector' ); ?>
+                            <?php esc_html_e( 'General Settings', 'broodle-engage-wp-connector' ); ?>
                         </h3>
                     </th>
                 </tr>
                 <tr>
                     <th scope="row">
-                        <label for="phone_field"><?php esc_html_e( 'Phone Number Field', 'broodle-engage-connector' ); ?></label>
+                        <label for="phone_field"><?php esc_html_e( 'Phone Number Field', 'broodle-engage-wp-connector' ); ?></label>
                     </th>
                     <td>
                         <select id="phone_field" name="broodle_engage_settings[phone_field]">
@@ -1077,49 +1077,49 @@ class Broodle_Engage_Admin {
                                 </option>
                             <?php endforeach; ?>
                         </select>
-                        <p class="description"><?php esc_html_e( 'Choose which phone number field to use for WhatsApp notifications.', 'broodle-engage-connector' ); ?></p>
+                        <p class="description"><?php esc_html_e( 'Choose which phone number field to use for WhatsApp notifications.', 'broodle-engage-wp-connector' ); ?></p>
                     </td>
                 </tr>
                 <tr>
                     <th scope="row">
-                        <label for="country_code"><?php esc_html_e( 'Default Country Code', 'broodle-engage-connector' ); ?></label>
+                        <label for="country_code"><?php esc_html_e( 'Default Country Code', 'broodle-engage-wp-connector' ); ?></label>
                     </th>
                     <td>
                         <input type="text" id="country_code" name="broodle_engage_settings[country_code]" value="<?php echo esc_attr( $settings['country_code'] ); ?>" class="small-text" placeholder="+1" />
-                        <p class="description"><?php esc_html_e( 'Default country code to use if not specified in phone number.', 'broodle-engage-connector' ); ?></p>
+                        <p class="description"><?php esc_html_e( 'Default country code to use if not specified in phone number.', 'broodle-engage-wp-connector' ); ?></p>
                     </td>
                 </tr>
                 <tr>
                     <th scope="row">
-                        <label for="retry_attempts"><?php esc_html_e( 'Retry Attempts', 'broodle-engage-connector' ); ?></label>
+                        <label for="retry_attempts"><?php esc_html_e( 'Retry Attempts', 'broodle-engage-wp-connector' ); ?></label>
                     </th>
                     <td>
                         <input type="number" id="retry_attempts" name="broodle_engage_settings[retry_attempts]" value="<?php echo esc_attr( $settings['retry_attempts'] ); ?>" min="0" max="10" class="small-text" />
-                        <p class="description"><?php esc_html_e( 'Number of times to retry failed notifications.', 'broodle-engage-connector' ); ?></p>
+                        <p class="description"><?php esc_html_e( 'Number of times to retry failed notifications.', 'broodle-engage-wp-connector' ); ?></p>
                     </td>
                 </tr>
                 <tr>
                     <th scope="row">
-                        <label for="retry_delay"><?php esc_html_e( 'Retry Delay (seconds)', 'broodle-engage-connector' ); ?></label>
+                        <label for="retry_delay"><?php esc_html_e( 'Retry Delay (seconds)', 'broodle-engage-wp-connector' ); ?></label>
                     </th>
                     <td>
                         <input type="number" id="retry_delay" name="broodle_engage_settings[retry_delay]" value="<?php echo esc_attr( $settings['retry_delay'] ); ?>" min="60" max="3600" class="small-text" />
-                        <p class="description"><?php esc_html_e( 'Delay between retry attempts in seconds.', 'broodle-engage-connector' ); ?></p>
+                        <p class="description"><?php esc_html_e( 'Delay between retry attempts in seconds.', 'broodle-engage-wp-connector' ); ?></p>
                     </td>
                 </tr>
                 <tr>
                     <th scope="row">
-                        <label for="log_retention_days"><?php esc_html_e( 'Log Retention (days)', 'broodle-engage-connector' ); ?></label>
+                        <label for="log_retention_days"><?php esc_html_e( 'Log Retention (days)', 'broodle-engage-wp-connector' ); ?></label>
                     </th>
                     <td>
                         <input type="number" id="log_retention_days" name="broodle_engage_settings[log_retention_days]" value="<?php echo esc_attr( $settings['log_retention_days'] ); ?>" min="1" max="365" class="small-text" />
-                        <p class="description"><?php esc_html_e( 'Number of days to keep notification logs.', 'broodle-engage-connector' ); ?></p>
+                        <p class="description"><?php esc_html_e( 'Number of days to keep notification logs.', 'broodle-engage-wp-connector' ); ?></p>
                     </td>
                 </tr>
             </table>
 
             <div class="settings-submit-section">
-                <?php submit_button( __( 'Save Settings', 'broodle-engage-connector' ), 'primary', 'submit', false ); ?>
+                <?php submit_button( __( 'Save Settings', 'broodle-engage-wp-connector' ), 'primary', 'submit', false ); ?>
             </div>
         </form>
         <?php
@@ -2090,16 +2090,16 @@ class Broodle_Engage_Admin {
             <div class="templates-header">
                 <h2>
                     <span class="dashicons dashicons-whatsapp"></span>
-                    <?php esc_html_e( 'WhatsApp Template Configuration', 'broodle-engage-connector' ); ?>
+                    <?php esc_html_e( 'WhatsApp Template Configuration', 'broodle-engage-wp-connector' ); ?>
                 </h2>
-                <p><?php esc_html_e( 'Configure which WhatsApp templates to send for each order status. Templates are automatically fetched from your Broodle Engage inbox.', 'broodle-engage-connector' ); ?></p>
+                <p><?php esc_html_e( 'Configure which WhatsApp templates to send for each order status. Templates are automatically fetched from your Broodle Engage inbox.', 'broodle-engage-wp-connector' ); ?></p>
             </div>
 
             <!-- Loading Overlay -->
             <div class="loading-overlay" id="loading-overlay">
                 <div class="loading-content">
                     <div class="loading-spinner"></div>
-                    <div class="loading-text"><?php esc_html_e( 'Loading templates...', 'broodle-engage-connector' ); ?></div>
+                    <div class="loading-text"><?php esc_html_e( 'Loading templates...', 'broodle-engage-wp-connector' ); ?></div>
                 </div>
             </div>
 
@@ -2108,23 +2108,23 @@ class Broodle_Engage_Admin {
                 <div class="connection-info">
                     <div class="status-indicator" id="connection-indicator"></div>
                     <div class="connection-text">
-                        <h4 id="connection-title"><?php esc_html_e( 'Checking connection...', 'broodle-engage-connector' ); ?></h4>
-                        <p id="connection-subtitle"><?php esc_html_e( 'Fetching templates from Broodle Engage', 'broodle-engage-connector' ); ?></p>
+                        <h4 id="connection-title"><?php esc_html_e( 'Checking connection...', 'broodle-engage-wp-connector' ); ?></h4>
+                        <p id="connection-subtitle"><?php esc_html_e( 'Fetching templates from Broodle Engage', 'broodle-engage-wp-connector' ); ?></p>
                     </div>
                 </div>
                 <div style="display: flex; align-items: center; gap: 12px;">
                     <span class="templates-count" id="templates-count">0 templates</span>
                     <button type="button" class="button refresh-btn" id="refresh-templates">
                         <span class="dashicons dashicons-update" style="vertical-align: middle;"></span>
-                        <?php esc_html_e( 'Refresh', 'broodle-engage-connector' ); ?>
+                        <?php esc_html_e( 'Refresh', 'broodle-engage-wp-connector' ); ?>
                     </button>
                 </div>
             </div>
 
             <!-- No Templates Notice -->
             <div class="no-templates-notice" id="no-templates-notice" style="display: none;">
-                <h4><span class="dashicons dashicons-warning"></span> <?php esc_html_e( 'No Templates Found', 'broodle-engage-connector' ); ?></h4>
-                <p><?php esc_html_e( 'Make sure your API settings are configured correctly and your WhatsApp inbox has approved templates.', 'broodle-engage-connector' ); ?></p>
+                <h4><span class="dashicons dashicons-warning"></span> <?php esc_html_e( 'No Templates Found', 'broodle-engage-wp-connector' ); ?></h4>
+                <p><?php esc_html_e( 'Make sure your API settings are configured correctly and your WhatsApp inbox has approved templates.', 'broodle-engage-wp-connector' ); ?></p>
             </div>
 
             <!-- Status Cards -->
@@ -2154,14 +2154,14 @@ class Broodle_Engage_Admin {
                 );
 
                 $status_descriptions = array(
-                    'order_received'   => __( 'Sends when a new order is placed', 'broodle-engage-connector' ),
-                    'order_processing' => __( 'Sends when order is being prepared', 'broodle-engage-connector' ),
-                    'order_shipped'    => __( 'Sends when order is dispatched', 'broodle-engage-connector' ),
-                    'order_delivered'  => __( 'Sends when order is delivered', 'broodle-engage-connector' ),
-                    'order_completed'  => __( 'Sends when order is completed', 'broodle-engage-connector' ),
-                    'order_cancelled'  => __( 'Sends when order is cancelled', 'broodle-engage-connector' ),
-                    'order_failed'     => __( 'Sends when payment fails', 'broodle-engage-connector' ),
-                    'order_refunded'   => __( 'Sends when order is refunded', 'broodle-engage-connector' ),
+                    'order_received'   => __( 'Sends when a new order is placed', 'broodle-engage-wp-connector' ),
+                    'order_processing' => __( 'Sends when order is being prepared', 'broodle-engage-wp-connector' ),
+                    'order_shipped'    => __( 'Sends when order is dispatched', 'broodle-engage-wp-connector' ),
+                    'order_delivered'  => __( 'Sends when order is delivered', 'broodle-engage-wp-connector' ),
+                    'order_completed'  => __( 'Sends when order is completed', 'broodle-engage-wp-connector' ),
+                    'order_cancelled'  => __( 'Sends when order is cancelled', 'broodle-engage-wp-connector' ),
+                    'order_failed'     => __( 'Sends when payment fails', 'broodle-engage-wp-connector' ),
+                    'order_refunded'   => __( 'Sends when order is refunded', 'broodle-engage-wp-connector' ),
                 );
 
                 // Render default status cards
@@ -2179,9 +2179,9 @@ class Broodle_Engage_Admin {
                             </div>
                         </div>
                         <div style="display: flex; align-items: center;">
-                            <button type="button" class="expand-btn" title="<?php esc_attr_e( 'Expand/Collapse', 'broodle-engage-connector' ); ?>">
-                                <span class="expand-text"><?php esc_html_e( 'Expand', 'broodle-engage-connector' ); ?></span>
-                                <span class="collapse-text"><?php esc_html_e( 'Collapse', 'broodle-engage-connector' ); ?></span>
+                            <button type="button" class="expand-btn" title="<?php esc_attr_e( 'Expand/Collapse', 'broodle-engage-wp-connector' ); ?>">
+                                <span class="expand-text"><?php esc_html_e( 'Expand', 'broodle-engage-wp-connector' ); ?></span>
+                                <span class="collapse-text"><?php esc_html_e( 'Collapse', 'broodle-engage-wp-connector' ); ?></span>
                                 <span class="dashicons dashicons-arrow-down-alt2"></span>
                             </button>
                             <label class="toggle-switch">
@@ -2195,17 +2195,17 @@ class Broodle_Engage_Admin {
                         <div class="config-section">
                             <h4 class="config-section-title">
                                 <span class="dashicons dashicons-format-aside"></span>
-                                <?php esc_html_e( 'Select Template', 'broodle-engage-connector' ); ?>
+                                <?php esc_html_e( 'Select Template', 'broodle-engage-wp-connector' ); ?>
                             </h4>
                             <select class="template-select" data-status="<?php echo esc_attr( $status ); ?>">
-                                <option value=""><?php esc_html_e( '-- Select a template --', 'broodle-engage-connector' ); ?></option>
+                                <option value=""><?php esc_html_e( '-- Select a template --', 'broodle-engage-wp-connector' ); ?></option>
                             </select>
                             
                             <!-- Template Preview -->
                             <div class="template-preview" data-status="<?php echo esc_attr( $status ); ?>">
                                 <div class="preview-header">
                                     <span class="dashicons dashicons-visibility"></span>
-                                    <h4><?php esc_html_e( 'Template Preview', 'broodle-engage-connector' ); ?></h4>
+                                    <h4><?php esc_html_e( 'Template Preview', 'broodle-engage-wp-connector' ); ?></h4>
                                     <span class="preview-badge template-language">EN</span>
                                     <span class="preview-badge template-category">UTILITY</span>
                                 </div>
@@ -2213,8 +2213,8 @@ class Broodle_Engage_Admin {
                                     <div class="preview-image" style="display: none;">
                                         <span class="dashicons dashicons-format-image"></span>
                                         <div class="preview-image-info">
-                                            <h5><?php esc_html_e( 'Header Image', 'broodle-engage-connector' ); ?></h5>
-                                            <p><?php esc_html_e( 'This template includes an image header', 'broodle-engage-connector' ); ?></p>
+                                            <h5><?php esc_html_e( 'Header Image', 'broodle-engage-wp-connector' ); ?></h5>
+                                            <p><?php esc_html_e( 'This template includes an image header', 'broodle-engage-wp-connector' ); ?></p>
                                         </div>
                                     </div>
                                     <div class="preview-message"></div>
@@ -2228,7 +2228,7 @@ class Broodle_Engage_Admin {
                         <div class="image-selection" data-status="<?php echo esc_attr( $status ); ?>">
                             <div class="image-selection-header">
                                 <span class="dashicons dashicons-format-image"></span>
-                                <h5><?php esc_html_e( 'Header Image (Optional)', 'broodle-engage-connector' ); ?></h5>
+                                <h5><?php esc_html_e( 'Header Image (Optional)', 'broodle-engage-wp-connector' ); ?></h5>
                             </div>
                             <div class="image-selection-row">
                                 <div class="image-preview-box">
@@ -2237,10 +2237,10 @@ class Broodle_Engage_Admin {
                                     </div>
                                     <div>
                                         <button type="button" class="button select-image-btn" data-status="<?php echo esc_attr( $status ); ?>">
-                                            <?php esc_html_e( 'Select Image', 'broodle-engage-connector' ); ?>
+                                            <?php esc_html_e( 'Select Image', 'broodle-engage-wp-connector' ); ?>
                                         </button>
                                         <button type="button" class="button remove-image-btn" data-status="<?php echo esc_attr( $status ); ?>" style="display: none;">
-                                            <?php esc_html_e( 'Remove', 'broodle-engage-connector' ); ?>
+                                            <?php esc_html_e( 'Remove', 'broodle-engage-wp-connector' ); ?>
                                         </button>
                                         <input type="hidden" class="image-id-input" data-status="<?php echo esc_attr( $status ); ?>" value="">
                                     </div>
@@ -2248,7 +2248,7 @@ class Broodle_Engage_Admin {
                                 <label class="use-product-image-label">
                                     <input type="checkbox" class="use-product-image-check" data-status="<?php echo esc_attr( $status ); ?>">
                                     <span class="dashicons dashicons-products"></span>
-                                    <?php esc_html_e( 'Use product image', 'broodle-engage-connector' ); ?>
+                                    <?php esc_html_e( 'Use product image', 'broodle-engage-wp-connector' ); ?>
                                 </label>
                             </div>
                         </div>
@@ -2257,7 +2257,7 @@ class Broodle_Engage_Admin {
                         <div class="config-section variable-mapping" data-status="<?php echo esc_attr( $status ); ?>" style="display: none;">
                             <h4 class="config-section-title">
                                 <span class="dashicons dashicons-admin-generic"></span>
-                                <?php esc_html_e( 'Map Template Variables', 'broodle-engage-connector' ); ?>
+                                <?php esc_html_e( 'Map Template Variables', 'broodle-engage-wp-connector' ); ?>
                             </h4>
                             <div class="variable-grid"></div>
                         </div>
@@ -2282,16 +2282,16 @@ class Broodle_Engage_Admin {
                             </div>
                         </div>
                         <div style="display: flex; align-items: center;">
-                            <button type="button" class="expand-btn" title="<?php esc_attr_e( 'Expand/Collapse', 'broodle-engage-connector' ); ?>">
-                                <span class="expand-text"><?php esc_html_e( 'Expand', 'broodle-engage-connector' ); ?></span>
-                                <span class="collapse-text"><?php esc_html_e( 'Collapse', 'broodle-engage-connector' ); ?></span>
+                            <button type="button" class="expand-btn" title="<?php esc_attr_e( 'Expand/Collapse', 'broodle-engage-wp-connector' ); ?>">
+                                <span class="expand-text"><?php esc_html_e( 'Expand', 'broodle-engage-wp-connector' ); ?></span>
+                                <span class="collapse-text"><?php esc_html_e( 'Collapse', 'broodle-engage-wp-connector' ); ?></span>
                                 <span class="dashicons dashicons-arrow-down-alt2"></span>
                             </button>
                             <label class="toggle-switch">
                                 <input type="checkbox" class="status-toggle" data-status="<?php echo esc_attr( $custom_status['id'] ); ?>" <?php checked( $is_enabled ); ?>>
                                 <span class="toggle-slider"></span>
                             </label>
-                            <button type="button" class="delete-status-btn" data-status="<?php echo esc_attr( $custom_status['id'] ); ?>" title="<?php esc_attr_e( 'Delete', 'broodle-engage-connector' ); ?>">
+                            <button type="button" class="delete-status-btn" data-status="<?php echo esc_attr( $custom_status['id'] ); ?>" title="<?php esc_attr_e( 'Delete', 'broodle-engage-wp-connector' ); ?>">
                                 <span class="dashicons dashicons-trash"></span>
                             </button>
                         </div>
@@ -2300,15 +2300,15 @@ class Broodle_Engage_Admin {
                         <div class="config-section">
                             <h4 class="config-section-title">
                                 <span class="dashicons dashicons-format-aside"></span>
-                                <?php esc_html_e( 'Select Template', 'broodle-engage-connector' ); ?>
+                                <?php esc_html_e( 'Select Template', 'broodle-engage-wp-connector' ); ?>
                             </h4>
                             <select class="template-select" data-status="<?php echo esc_attr( $custom_status['id'] ); ?>">
-                                <option value=""><?php esc_html_e( '-- Select a template --', 'broodle-engage-connector' ); ?></option>
+                                <option value=""><?php esc_html_e( '-- Select a template --', 'broodle-engage-wp-connector' ); ?></option>
                             </select>
                             <div class="template-preview" data-status="<?php echo esc_attr( $custom_status['id'] ); ?>">
                                 <div class="preview-header">
                                     <span class="dashicons dashicons-visibility"></span>
-                                    <h4><?php esc_html_e( 'Template Preview', 'broodle-engage-connector' ); ?></h4>
+                                    <h4><?php esc_html_e( 'Template Preview', 'broodle-engage-wp-connector' ); ?></h4>
                                     <span class="preview-badge template-language">EN</span>
                                     <span class="preview-badge template-category">UTILITY</span>
                                 </div>
@@ -2316,8 +2316,8 @@ class Broodle_Engage_Admin {
                                     <div class="preview-image" style="display: none;">
                                         <span class="dashicons dashicons-format-image"></span>
                                         <div class="preview-image-info">
-                                            <h5><?php esc_html_e( 'Header Image', 'broodle-engage-connector' ); ?></h5>
-                                            <p><?php esc_html_e( 'This template includes an image header', 'broodle-engage-connector' ); ?></p>
+                                            <h5><?php esc_html_e( 'Header Image', 'broodle-engage-wp-connector' ); ?></h5>
+                                            <p><?php esc_html_e( 'This template includes an image header', 'broodle-engage-wp-connector' ); ?></p>
                                         </div>
                                     </div>
                                     <div class="preview-message"></div>
@@ -2329,7 +2329,7 @@ class Broodle_Engage_Admin {
                         <div class="image-selection" data-status="<?php echo esc_attr( $custom_status['id'] ); ?>">
                             <div class="image-selection-header">
                                 <span class="dashicons dashicons-format-image"></span>
-                                <h5><?php esc_html_e( 'Header Image (Optional)', 'broodle-engage-connector' ); ?></h5>
+                                <h5><?php esc_html_e( 'Header Image (Optional)', 'broodle-engage-wp-connector' ); ?></h5>
                             </div>
                             <div class="image-selection-row">
                                 <div class="image-preview-box">
@@ -2338,10 +2338,10 @@ class Broodle_Engage_Admin {
                                     </div>
                                     <div>
                                         <button type="button" class="button select-image-btn" data-status="<?php echo esc_attr( $custom_status['id'] ); ?>">
-                                            <?php esc_html_e( 'Select Image', 'broodle-engage-connector' ); ?>
+                                            <?php esc_html_e( 'Select Image', 'broodle-engage-wp-connector' ); ?>
                                         </button>
                                         <button type="button" class="button remove-image-btn" data-status="<?php echo esc_attr( $custom_status['id'] ); ?>" style="display: none;">
-                                            <?php esc_html_e( 'Remove', 'broodle-engage-connector' ); ?>
+                                            <?php esc_html_e( 'Remove', 'broodle-engage-wp-connector' ); ?>
                                         </button>
                                         <input type="hidden" class="image-id-input" data-status="<?php echo esc_attr( $custom_status['id'] ); ?>" value="">
                                     </div>
@@ -2349,14 +2349,14 @@ class Broodle_Engage_Admin {
                                 <label class="use-product-image-label">
                                     <input type="checkbox" class="use-product-image-check" data-status="<?php echo esc_attr( $custom_status['id'] ); ?>">
                                     <span class="dashicons dashicons-products"></span>
-                                    <?php esc_html_e( 'Use product image', 'broodle-engage-connector' ); ?>
+                                    <?php esc_html_e( 'Use product image', 'broodle-engage-wp-connector' ); ?>
                                 </label>
                             </div>
                         </div>
                         <div class="config-section variable-mapping" data-status="<?php echo esc_attr( $custom_status['id'] ); ?>" style="display: none;">
                             <h4 class="config-section-title">
                                 <span class="dashicons dashicons-admin-generic"></span>
-                                <?php esc_html_e( 'Map Template Variables', 'broodle-engage-connector' ); ?>
+                                <?php esc_html_e( 'Map Template Variables', 'broodle-engage-wp-connector' ); ?>
                             </h4>
                             <div class="variable-grid"></div>
                         </div>
@@ -2369,7 +2369,7 @@ class Broodle_Engage_Admin {
             <div class="add-status-section">
                 <button type="button" class="add-status-btn" id="add-status-btn">
                     <span class="dashicons dashicons-plus-alt"></span>
-                    <?php esc_html_e( 'Add Custom Notification Type', 'broodle-engage-connector' ); ?>
+                    <?php esc_html_e( 'Add Custom Notification Type', 'broodle-engage-wp-connector' ); ?>
                 </button>
             </div>
 
@@ -2377,11 +2377,11 @@ class Broodle_Engage_Admin {
             <div class="save-section">
                 <div class="save-status" id="save-status">
                     <span class="dashicons dashicons-yes-alt"></span>
-                    <?php esc_html_e( 'Configuration saved successfully!', 'broodle-engage-connector' ); ?>
+                    <?php esc_html_e( 'Configuration saved successfully!', 'broodle-engage-wp-connector' ); ?>
                 </div>
                 <button type="button" class="save-btn" id="save-templates">
                     <span class="dashicons dashicons-cloud-saved" style="vertical-align: middle; margin-right: 8px;"></span>
-                    <?php esc_html_e( 'Save Configuration', 'broodle-engage-connector' ); ?>
+                    <?php esc_html_e( 'Save Configuration', 'broodle-engage-wp-connector' ); ?>
                 </button>
             </div>
         </div>
@@ -2390,18 +2390,18 @@ class Broodle_Engage_Admin {
         <div class="modal-overlay" id="add-status-modal">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3><span class="dashicons dashicons-plus-alt2"></span> <?php esc_html_e( 'Add Custom Notification', 'broodle-engage-connector' ); ?></h3>
+                    <h3><span class="dashicons dashicons-plus-alt2"></span> <?php esc_html_e( 'Add Custom Notification', 'broodle-engage-wp-connector' ); ?></h3>
                     <button type="button" class="modal-close" id="close-modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <label for="custom-notification-type"><?php esc_html_e( 'Notification Type', 'broodle-engage-connector' ); ?></label>
+                    <label for="custom-notification-type"><?php esc_html_e( 'Notification Type', 'broodle-engage-wp-connector' ); ?></label>
                     <select id="custom-notification-type" style="width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid var(--border-color); border-radius: 8px;">
-                        <option value="order_event"><?php esc_html_e( 'Order Status Event', 'broodle-engage-connector' ); ?></option>
-                        <option value="user_event"><?php esc_html_e( 'User Event', 'broodle-engage-connector' ); ?></option>
+                        <option value="order_event"><?php esc_html_e( 'Order Status Event', 'broodle-engage-wp-connector' ); ?></option>
+                        <option value="user_event"><?php esc_html_e( 'User Event', 'broodle-engage-wp-connector' ); ?></option>
                     </select>
                     
                     <div id="order-event-fields">
-                        <label for="custom-wc-status"><?php esc_html_e( 'WooCommerce Order Status', 'broodle-engage-connector' ); ?></label>
+                        <label for="custom-wc-status"><?php esc_html_e( 'WooCommerce Order Status', 'broodle-engage-wp-connector' ); ?></label>
                         <select id="custom-wc-status" style="width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid var(--border-color); border-radius: 8px;">
                             <?php
                             $wc_statuses = $this->get_woocommerce_order_statuses();
@@ -2413,23 +2413,23 @@ class Broodle_Engage_Admin {
                     </div>
                     
                     <div id="user-event-fields" style="display: none;">
-                        <label for="custom-user-event"><?php esc_html_e( 'User Event Type', 'broodle-engage-connector' ); ?></label>
+                        <label for="custom-user-event"><?php esc_html_e( 'User Event Type', 'broodle-engage-wp-connector' ); ?></label>
                         <select id="custom-user-event" style="width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid var(--border-color); border-radius: 8px;">
-                            <option value="user_registered"><?php esc_html_e( 'User Account Registered', 'broodle-engage-connector' ); ?></option>
-                            <option value="password_reset"><?php esc_html_e( 'Password Reset Request', 'broodle-engage-connector' ); ?></option>
-                            <option value="user_login"><?php esc_html_e( 'User Login', 'broodle-engage-connector' ); ?></option>
+                            <option value="user_registered"><?php esc_html_e( 'User Account Registered', 'broodle-engage-wp-connector' ); ?></option>
+                            <option value="password_reset"><?php esc_html_e( 'Password Reset Request', 'broodle-engage-wp-connector' ); ?></option>
+                            <option value="user_login"><?php esc_html_e( 'User Login', 'broodle-engage-wp-connector' ); ?></option>
                         </select>
                     </div>
                     
-                    <label for="custom-status-name"><?php esc_html_e( 'Display Name', 'broodle-engage-connector' ); ?></label>
-                    <input type="text" id="custom-status-name" placeholder="<?php esc_attr_e( 'e.g., Abandoned Cart Recovery', 'broodle-engage-connector' ); ?>">
+                    <label for="custom-status-name"><?php esc_html_e( 'Display Name', 'broodle-engage-wp-connector' ); ?></label>
+                    <input type="text" id="custom-status-name" placeholder="<?php esc_attr_e( 'e.g., Abandoned Cart Recovery', 'broodle-engage-wp-connector' ); ?>">
                     
-                    <label for="custom-status-desc"><?php esc_html_e( 'Description (Optional)', 'broodle-engage-connector' ); ?></label>
-                    <textarea id="custom-status-desc" rows="2" placeholder="<?php esc_attr_e( 'Brief description of this notification...', 'broodle-engage-connector' ); ?>"></textarea>
+                    <label for="custom-status-desc"><?php esc_html_e( 'Description (Optional)', 'broodle-engage-wp-connector' ); ?></label>
+                    <textarea id="custom-status-desc" rows="2" placeholder="<?php esc_attr_e( 'Brief description of this notification...', 'broodle-engage-wp-connector' ); ?>"></textarea>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="modal-btn modal-btn-secondary" id="cancel-add-status"><?php esc_html_e( 'Cancel', 'broodle-engage-connector' ); ?></button>
-                    <button type="button" class="modal-btn modal-btn-primary" id="confirm-add-status"><?php esc_html_e( 'Add Notification', 'broodle-engage-connector' ); ?></button>
+                    <button type="button" class="modal-btn modal-btn-secondary" id="cancel-add-status"><?php esc_html_e( 'Cancel', 'broodle-engage-wp-connector' ); ?></button>
+                    <button type="button" class="modal-btn modal-btn-primary" id="confirm-add-status"><?php esc_html_e( 'Add Notification', 'broodle-engage-wp-connector' ); ?></button>
                 </div>
             </div>
         </div>
@@ -2505,8 +2505,8 @@ class Broodle_Engage_Admin {
                 }
                 
                 mediaFrame = wp.media({
-                    title: '<?php esc_html_e( 'Select Header Image', 'broodle-engage-connector' ); ?>',
-                    button: { text: '<?php esc_html_e( 'Use this image', 'broodle-engage-connector' ); ?>' },
+                    title: '<?php esc_html_e( 'Select Header Image', 'broodle-engage-wp-connector' ); ?>',
+                    button: { text: '<?php esc_html_e( 'Use this image', 'broodle-engage-wp-connector' ); ?>' },
                     multiple: false
                 });
                 
@@ -2586,7 +2586,7 @@ class Broodle_Engage_Admin {
                 }
                 
                 if (!name) {
-                    alert('<?php esc_html_e( 'Please enter a notification name.', 'broodle-engage-connector' ); ?>');
+                    alert('<?php esc_html_e( 'Please enter a notification name.', 'broodle-engage-wp-connector' ); ?>');
                     return;
                 }
                 
@@ -2599,7 +2599,7 @@ class Broodle_Engage_Admin {
 
             // Delete custom status
             $(document).on('click', '.delete-status-btn', function() {
-                if (confirm('<?php esc_html_e( 'Are you sure you want to delete this notification type?', 'broodle-engage-connector' ); ?>')) {
+                if (confirm('<?php esc_html_e( 'Are you sure you want to delete this notification type?', 'broodle-engage-wp-connector' ); ?>')) {
                     $(this).closest('.status-card').remove();
                 }
             });
@@ -2608,7 +2608,7 @@ class Broodle_Engage_Admin {
             function fetchTemplates() {
                 $('#loading-overlay').addClass('visible');
                 $('#connection-indicator').removeClass('connected');
-                $('#connection-title').text('<?php esc_html_e( 'Fetching templates...', 'broodle-engage-connector' ); ?>');
+                $('#connection-title').text('<?php esc_html_e( 'Fetching templates...', 'broodle-engage-wp-connector' ); ?>');
 
                 $.ajax({
                     url: ajaxurl,
@@ -2624,22 +2624,22 @@ class Broodle_Engage_Admin {
                             templatesData = response.data.templates;
                             
                             $('#connection-indicator').addClass('connected');
-                            $('#connection-title').text('<?php esc_html_e( 'Connected to Broodle Engage', 'broodle-engage-connector' ); ?>');
-                            $('#connection-subtitle').text('<?php esc_html_e( 'Templates synced successfully', 'broodle-engage-connector' ); ?>');
+                            $('#connection-title').text('<?php esc_html_e( 'Connected to Broodle Engage', 'broodle-engage-wp-connector' ); ?>');
+                            $('#connection-subtitle').text('<?php esc_html_e( 'Templates synced successfully', 'broodle-engage-wp-connector' ); ?>');
                             $('#templates-count').text(response.data.count + ' templates');
                             $('#no-templates-notice').hide();
 
                             populateTemplateDropdowns();
                         } else {
-                            $('#connection-title').text('<?php esc_html_e( 'Connection Failed', 'broodle-engage-connector' ); ?>');
-                            $('#connection-subtitle').text(response.data.message || '<?php esc_html_e( 'Check your API settings', 'broodle-engage-connector' ); ?>');
+                            $('#connection-title').text('<?php esc_html_e( 'Connection Failed', 'broodle-engage-wp-connector' ); ?>');
+                            $('#connection-subtitle').text(response.data.message || '<?php esc_html_e( 'Check your API settings', 'broodle-engage-wp-connector' ); ?>');
                             $('#no-templates-notice').show();
                         }
                     },
                     error: function() {
                         $('#loading-overlay').removeClass('visible');
-                        $('#connection-title').text('<?php esc_html_e( 'Connection Error', 'broodle-engage-connector' ); ?>');
-                        $('#connection-subtitle').text('<?php esc_html_e( 'Unable to reach server', 'broodle-engage-connector' ); ?>');
+                        $('#connection-title').text('<?php esc_html_e( 'Connection Error', 'broodle-engage-wp-connector' ); ?>');
+                        $('#connection-subtitle').text('<?php esc_html_e( 'Unable to reach server', 'broodle-engage-wp-connector' ); ?>');
                     }
                 });
             }
@@ -2822,7 +2822,7 @@ class Broodle_Engage_Admin {
                         var header = $('<div class="variable-item-header"></div>');
                         var label = $('<label></label>').html(
                             '<span class="var-num">{{' + varNum + '}}</span> ' +
-                            '<?php esc_html_e( 'maps to:', 'broodle-engage-connector' ); ?>'
+                            '<?php esc_html_e( 'maps to:', 'broodle-engage-wp-connector' ); ?>'
                         );
                         
                         var select = $('<select></select>')
@@ -2843,8 +2843,8 @@ class Broodle_Engage_Admin {
 
                         // Custom text input
                         var customTextDiv = $('<div class="custom-text-input ' + (isCustomText ? 'visible' : '') + '"></div>');
-                        customTextDiv.append('<label><?php esc_html_e( 'Enter custom value:', 'broodle-engage-connector' ); ?></label>');
-                        var customInput = $('<input type="text" class="custom-text-value" data-var="' + varNum + '" placeholder="<?php esc_attr_e( 'Enter coupon code or custom text...', 'broodle-engage-connector' ); ?>">')
+                        customTextDiv.append('<label><?php esc_html_e( 'Enter custom value:', 'broodle-engage-wp-connector' ); ?></label>');
+                        var customInput = $('<input type="text" class="custom-text-value" data-var="' + varNum + '" placeholder="<?php esc_attr_e( 'Enter coupon code or custom text...', 'broodle-engage-wp-connector' ); ?>">')
                             .val(savedCustom);
                         customTextDiv.append(customInput);
 
@@ -2880,16 +2880,16 @@ class Broodle_Engage_Admin {
                             </div>
                         </div>
                         <div style="display: flex; align-items: center;">
-                            <button type="button" class="expand-btn" title="<?php esc_attr_e( 'Expand/Collapse', 'broodle-engage-connector' ); ?>">
-                                <span class="expand-text"><?php esc_html_e( 'Expand', 'broodle-engage-connector' ); ?></span>
-                                <span class="collapse-text"><?php esc_html_e( 'Collapse', 'broodle-engage-connector' ); ?></span>
+                            <button type="button" class="expand-btn" title="<?php esc_attr_e( 'Expand/Collapse', 'broodle-engage-wp-connector' ); ?>">
+                                <span class="expand-text"><?php esc_html_e( 'Expand', 'broodle-engage-wp-connector' ); ?></span>
+                                <span class="collapse-text"><?php esc_html_e( 'Collapse', 'broodle-engage-wp-connector' ); ?></span>
                                 <span class="dashicons dashicons-arrow-down-alt2"></span>
                             </button>
                             <label class="toggle-switch">
                                 <input type="checkbox" class="status-toggle" data-status="${id}">
                                 <span class="toggle-slider"></span>
                             </label>
-                            <button type="button" class="delete-status-btn" data-status="${id}" title="<?php esc_attr_e( 'Delete', 'broodle-engage-connector' ); ?>">
+                            <button type="button" class="delete-status-btn" data-status="${id}" title="<?php esc_attr_e( 'Delete', 'broodle-engage-wp-connector' ); ?>">
                                 <span class="dashicons dashicons-trash"></span>
                             </button>
                         </div>
@@ -2898,15 +2898,15 @@ class Broodle_Engage_Admin {
                         <div class="config-section">
                             <h4 class="config-section-title">
                                 <span class="dashicons dashicons-format-aside"></span>
-                                <?php esc_html_e( 'Select Template', 'broodle-engage-connector' ); ?>
+                                <?php esc_html_e( 'Select Template', 'broodle-engage-wp-connector' ); ?>
                             </h4>
                             <select class="template-select" data-status="${id}">
-                                <option value=""><?php esc_html_e( '-- Select a template --', 'broodle-engage-connector' ); ?></option>
+                                <option value=""><?php esc_html_e( '-- Select a template --', 'broodle-engage-wp-connector' ); ?></option>
                             </select>
                             <div class="template-preview" data-status="${id}">
                                 <div class="preview-header">
                                     <span class="dashicons dashicons-visibility"></span>
-                                    <h4><?php esc_html_e( 'Template Preview', 'broodle-engage-connector' ); ?></h4>
+                                    <h4><?php esc_html_e( 'Template Preview', 'broodle-engage-wp-connector' ); ?></h4>
                                     <span class="preview-badge template-language">EN</span>
                                     <span class="preview-badge template-category">UTILITY</span>
                                 </div>
@@ -2914,8 +2914,8 @@ class Broodle_Engage_Admin {
                                     <div class="preview-image" style="display: none;">
                                         <span class="dashicons dashicons-format-image"></span>
                                         <div class="preview-image-info">
-                                            <h5><?php esc_html_e( 'Header Image', 'broodle-engage-connector' ); ?></h5>
-                                            <p><?php esc_html_e( 'This template includes an image header', 'broodle-engage-connector' ); ?></p>
+                                            <h5><?php esc_html_e( 'Header Image', 'broodle-engage-wp-connector' ); ?></h5>
+                                            <p><?php esc_html_e( 'This template includes an image header', 'broodle-engage-wp-connector' ); ?></p>
                                         </div>
                                     </div>
                                     <div class="preview-message"></div>
@@ -2927,7 +2927,7 @@ class Broodle_Engage_Admin {
                         <div class="image-selection" data-status="${id}">
                             <div class="image-selection-header">
                                 <span class="dashicons dashicons-format-image"></span>
-                                <h5><?php esc_html_e( 'Header Image (Optional)', 'broodle-engage-connector' ); ?></h5>
+                                <h5><?php esc_html_e( 'Header Image (Optional)', 'broodle-engage-wp-connector' ); ?></h5>
                             </div>
                             <div class="image-selection-row">
                                 <div class="image-preview-box">
@@ -2936,10 +2936,10 @@ class Broodle_Engage_Admin {
                                     </div>
                                     <div>
                                         <button type="button" class="button select-image-btn" data-status="${id}">
-                                            <?php esc_html_e( 'Select Image', 'broodle-engage-connector' ); ?>
+                                            <?php esc_html_e( 'Select Image', 'broodle-engage-wp-connector' ); ?>
                                         </button>
                                         <button type="button" class="button remove-image-btn" data-status="${id}" style="display: none;">
-                                            <?php esc_html_e( 'Remove', 'broodle-engage-connector' ); ?>
+                                            <?php esc_html_e( 'Remove', 'broodle-engage-wp-connector' ); ?>
                                         </button>
                                         <input type="hidden" class="image-id-input" data-status="${id}" value="">
                                     </div>
@@ -2947,14 +2947,14 @@ class Broodle_Engage_Admin {
                                 <label class="use-product-image-label">
                                     <input type="checkbox" class="use-product-image-check" data-status="${id}">
                                     <span class="dashicons dashicons-products"></span>
-                                    <?php esc_html_e( 'Use product image', 'broodle-engage-connector' ); ?>
+                                    <?php esc_html_e( 'Use product image', 'broodle-engage-wp-connector' ); ?>
                                 </label>
                             </div>
                         </div>
                         <div class="config-section variable-mapping" data-status="${id}" style="display: none;">
                             <h4 class="config-section-title">
                                 <span class="dashicons dashicons-admin-generic"></span>
-                                <?php esc_html_e( 'Map Template Variables', 'broodle-engage-connector' ); ?>
+                                <?php esc_html_e( 'Map Template Variables', 'broodle-engage-wp-connector' ); ?>
                             </h4>
                             <div class="variable-grid"></div>
                         </div>
@@ -2991,7 +2991,7 @@ class Broodle_Engage_Admin {
                 var btn = $('#save-templates');
                 btn.prop('disabled', true).html(
                     '<span class="dashicons dashicons-update spin" style="vertical-align: middle; margin-right: 8px;"></span>' +
-                    '<?php esc_html_e( 'Saving...', 'broodle-engage-connector' ); ?>'
+                    '<?php esc_html_e( 'Saving...', 'broodle-engage-wp-connector' ); ?>'
                 );
 
                 var config = {};
@@ -3127,7 +3127,7 @@ class Broodle_Engage_Admin {
                     success: function(response) {
                         btn.prop('disabled', false).html(
                             '<span class="dashicons dashicons-cloud-saved" style="vertical-align: middle; margin-right: 8px;"></span>' +
-                            '<?php esc_html_e( 'Save Configuration', 'broodle-engage-connector' ); ?>'
+                            '<?php esc_html_e( 'Save Configuration', 'broodle-engage-wp-connector' ); ?>'
                         );
                         
                         if (response.success) {
@@ -3137,15 +3137,15 @@ class Broodle_Engage_Admin {
                                 $('#save-status').removeClass('visible');
                             }, 4000);
                         } else {
-                            alert(response.data.message || '<?php esc_html_e( 'Error saving configuration', 'broodle-engage-connector' ); ?>');
+                            alert(response.data.message || '<?php esc_html_e( 'Error saving configuration', 'broodle-engage-wp-connector' ); ?>');
                         }
                     },
                     error: function() {
                         btn.prop('disabled', false).html(
                             '<span class="dashicons dashicons-cloud-saved" style="vertical-align: middle; margin-right: 8px;"></span>' +
-                            '<?php esc_html_e( 'Save Configuration', 'broodle-engage-connector' ); ?>'
+                            '<?php esc_html_e( 'Save Configuration', 'broodle-engage-wp-connector' ); ?>'
                         );
-                        alert('<?php esc_html_e( 'Network error. Please try again.', 'broodle-engage-connector' ); ?>');
+                        alert('<?php esc_html_e( 'Network error. Please try again.', 'broodle-engage-wp-connector' ); ?>');
                     }
                 });
             }
@@ -3654,31 +3654,31 @@ class Broodle_Engage_Admin {
         <div class="logs-page-header">
             <h2 class="logs-page-title">
                 <span class="dashicons dashicons-chart-line"></span>
-                <?php esc_html_e( 'Notification Logs', 'broodle-engage-connector' ); ?>
+                <?php esc_html_e( 'Notification Logs', 'broodle-engage-wp-connector' ); ?>
             </h2>
-            <p class="logs-page-subtitle"><?php esc_html_e( 'Track all WhatsApp notification activity, API responses, and message delivery status.', 'broodle-engage-connector' ); ?></p>
+            <p class="logs-page-subtitle"><?php esc_html_e( 'Track all WhatsApp notification activity, API responses, and message delivery status.', 'broodle-engage-wp-connector' ); ?></p>
         </div>
 
         <div class="logs-stats-grid">
             <div class="logs-stat-box">
                 <h3><?php echo esc_html( $stats['total'] ); ?></h3>
-                <p><?php esc_html_e( 'Total (30 Days)', 'broodle-engage-connector' ); ?></p>
+                <p><?php esc_html_e( 'Total (30 Days)', 'broodle-engage-wp-connector' ); ?></p>
             </div>
             <div class="logs-stat-box success">
                 <h3><?php echo esc_html( $stats['success'] ); ?></h3>
-                <p><?php esc_html_e( 'Successful', 'broodle-engage-connector' ); ?></p>
+                <p><?php esc_html_e( 'Successful', 'broodle-engage-wp-connector' ); ?></p>
             </div>
             <div class="logs-stat-box failed">
                 <h3><?php echo esc_html( $stats['error'] ?? 0 ); ?></h3>
-                <p><?php esc_html_e( 'Failed', 'broodle-engage-connector' ); ?></p>
+                <p><?php esc_html_e( 'Failed', 'broodle-engage-wp-connector' ); ?></p>
             </div>
             <div class="logs-stat-box pending">
                 <h3><?php echo esc_html( $stats['pending'] ); ?></h3>
-                <p><?php esc_html_e( 'Pending', 'broodle-engage-connector' ); ?></p>
+                <p><?php esc_html_e( 'Pending', 'broodle-engage-wp-connector' ); ?></p>
             </div>
             <div class="logs-stat-box scheduled">
                 <h3><?php echo esc_html( count( $scheduled_logs['logs'] ?? array() ) ); ?></h3>
-                <p><?php esc_html_e( 'Scheduled', 'broodle-engage-connector' ); ?></p>
+                <p><?php esc_html_e( 'Scheduled', 'broodle-engage-wp-connector' ); ?></p>
             </div>
         </div>
 
@@ -3686,25 +3686,25 @@ class Broodle_Engage_Admin {
         <div class="logs-section-header">
             <h2 class="logs-section-title">
                 <span class="dashicons dashicons-clock"></span>
-                <?php esc_html_e( 'Scheduled Notifications', 'broodle-engage-connector' ); ?>
+                <?php esc_html_e( 'Scheduled Notifications', 'broodle-engage-wp-connector' ); ?>
             </h2>
-            <span class="logs-section-count"><?php echo count( $scheduled_logs['logs'] ); ?> <?php esc_html_e( 'pending', 'broodle-engage-connector' ); ?></span>
+            <span class="logs-section-count"><?php echo count( $scheduled_logs['logs'] ); ?> <?php esc_html_e( 'pending', 'broodle-engage-wp-connector' ); ?></span>
         </div>
         <div class="scheduled-notifications-container">
             <p class="scheduled-notifications-description">
                 <span class="dashicons dashicons-info"></span>
-                <?php esc_html_e( 'These notifications are queued and will be sent at the specified times.', 'broodle-engage-connector' ); ?>
+                <?php esc_html_e( 'These notifications are queued and will be sent at the specified times.', 'broodle-engage-wp-connector' ); ?>
             </p>
             <div class="logs-table-container" style="margin-bottom: 0;">
                 <table class="wp-list-table widefat fixed striped logs-table">
                 <thead>
                     <tr>
-                        <th style="width: 18%;"><?php esc_html_e( 'Scheduled Time', 'broodle-engage-connector' ); ?></th>
-                        <th style="width: 10%;"><?php esc_html_e( 'Order', 'broodle-engage-connector' ); ?></th>
-                        <th style="width: 15%;"><?php esc_html_e( 'Phone', 'broodle-engage-connector' ); ?></th>
-                        <th style="width: 20%;"><?php esc_html_e( 'Template', 'broodle-engage-connector' ); ?></th>
-                        <th style="width: 12%;"><?php esc_html_e( 'Status', 'broodle-engage-connector' ); ?></th>
-                        <th style="width: 25%;"><?php esc_html_e( 'Details', 'broodle-engage-connector' ); ?></th>
+                        <th style="width: 18%;"><?php esc_html_e( 'Scheduled Time', 'broodle-engage-wp-connector' ); ?></th>
+                        <th style="width: 10%;"><?php esc_html_e( 'Order', 'broodle-engage-wp-connector' ); ?></th>
+                        <th style="width: 15%;"><?php esc_html_e( 'Phone', 'broodle-engage-wp-connector' ); ?></th>
+                        <th style="width: 20%;"><?php esc_html_e( 'Template', 'broodle-engage-wp-connector' ); ?></th>
+                        <th style="width: 12%;"><?php esc_html_e( 'Status', 'broodle-engage-wp-connector' ); ?></th>
+                        <th style="width: 25%;"><?php esc_html_e( 'Details', 'broodle-engage-wp-connector' ); ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -3718,14 +3718,14 @@ class Broodle_Engage_Admin {
                             <td>
                                 <strong><?php echo esc_html( $scheduled_time ); ?></strong>
                                 <?php if ( $is_overdue ) : ?>
-                                    <br><span style="color: #d63638; font-size: 11px;">⚠️ <?php esc_html_e( 'OVERDUE', 'broodle-engage-connector' ); ?></span>
+                                    <br><span style="color: #d63638; font-size: 11px;">⚠️ <?php esc_html_e( 'OVERDUE', 'broodle-engage-wp-connector' ); ?></span>
                                 <?php elseif ( $scheduled_time ) : ?>
                                     <br><span style="color: #646970; font-size: 11px;">
                                         <?php
                                         $time_diff = strtotime( $scheduled_time ) - time();
                                         if ( $time_diff > 0 ) {
                                             /* translators: %s: human readable time difference */
-                                            echo esc_html( sprintf( __( 'in %s', 'broodle-engage-connector' ), human_time_diff( time(), strtotime( $scheduled_time ) ) ) );
+                                            echo esc_html( sprintf( __( 'in %s', 'broodle-engage-wp-connector' ), human_time_diff( time(), strtotime( $scheduled_time ) ) ) );
                                         }
                                         ?>
                                     </span>
@@ -3746,7 +3746,7 @@ class Broodle_Engage_Admin {
                             <td>
                                 <?php if ( $delay_minutes ) : ?>
                                     <?php /* translators: %s: number of minutes */ ?>
-                                    <?php echo esc_html( sprintf( __( 'Delay: %s minutes', 'broodle-engage-connector' ), $delay_minutes ) ); ?>
+                                    <?php echo esc_html( sprintf( __( 'Delay: %s minutes', 'broodle-engage-wp-connector' ), $delay_minutes ) ); ?>
                                 <?php endif; ?>
                             </td>
                         </tr>
@@ -3760,9 +3760,9 @@ class Broodle_Engage_Admin {
         <div class="logs-section-header">
             <h2 class="logs-section-title">
                 <span class="dashicons dashicons-list-view"></span>
-                <?php esc_html_e( 'Recent Notification Logs', 'broodle-engage-connector' ); ?>
+                <?php esc_html_e( 'Recent Notification Logs', 'broodle-engage-wp-connector' ); ?>
             </h2>
-            <span class="logs-section-count"><?php echo esc_html( $logs_data['total'] ); ?> <?php esc_html_e( 'total', 'broodle-engage-connector' ); ?></span>
+            <span class="logs-section-count"><?php echo esc_html( $logs_data['total'] ); ?> <?php esc_html_e( 'total', 'broodle-engage-wp-connector' ); ?></span>
         </div>
 
         <?php if ( ! empty( $logs_data['logs'] ) ) : ?>
@@ -3770,12 +3770,12 @@ class Broodle_Engage_Admin {
                 <table class="wp-list-table widefat fixed striped logs-table">
                 <thead>
                     <tr>
-                        <th style="width: 14%;"><?php esc_html_e( 'Date', 'broodle-engage-connector' ); ?></th>
-                        <th style="width: 8%;"><?php esc_html_e( 'Order', 'broodle-engage-connector' ); ?></th>
-                        <th style="width: 12%;"><?php esc_html_e( 'Phone', 'broodle-engage-connector' ); ?></th>
-                        <th style="width: 14%;"><?php esc_html_e( 'Template', 'broodle-engage-connector' ); ?></th>
-                        <th style="width: 10%;"><?php esc_html_e( 'Status', 'broodle-engage-connector' ); ?></th>
-                        <th style="width: 42%;"><?php esc_html_e( 'Details', 'broodle-engage-connector' ); ?></th>
+                        <th style="width: 14%;"><?php esc_html_e( 'Date', 'broodle-engage-wp-connector' ); ?></th>
+                        <th style="width: 8%;"><?php esc_html_e( 'Order', 'broodle-engage-wp-connector' ); ?></th>
+                        <th style="width: 12%;"><?php esc_html_e( 'Phone', 'broodle-engage-wp-connector' ); ?></th>
+                        <th style="width: 14%;"><?php esc_html_e( 'Template', 'broodle-engage-wp-connector' ); ?></th>
+                        <th style="width: 10%;"><?php esc_html_e( 'Status', 'broodle-engage-wp-connector' ); ?></th>
+                        <th style="width: 42%;"><?php esc_html_e( 'Details', 'broodle-engage-wp-connector' ); ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -3817,19 +3817,19 @@ class Broodle_Engage_Admin {
                                 <div class="log-detail-card" id="log-detail-<?php echo esc_attr( $index ); ?>">
                                     <div class="log-detail-header" onclick="this.parentElement.classList.toggle('open')">
                                         <span class="dashicons dashicons-arrow-down-alt2"></span>
-                                        <?php esc_html_e( 'View API Details', 'broodle-engage-connector' ); ?>
+                                        <?php esc_html_e( 'View API Details', 'broodle-engage-wp-connector' ); ?>
                                     </div>
                                     <div class="log-detail-content">
                                         <?php if ( $sent_message ) : ?>
                                         <div class="log-detail-section">
-                                            <h5><span class="dashicons dashicons-format-chat"></span> <?php esc_html_e( 'Sent Message', 'broodle-engage-connector' ); ?></h5>
+                                            <h5><span class="dashicons dashicons-format-chat"></span> <?php esc_html_e( 'Sent Message', 'broodle-engage-wp-connector' ); ?></h5>
                                             <div class="log-message-preview"><?php echo esc_html( $sent_message ); ?></div>
                                         </div>
                                         <?php endif; ?>
 
                                         <?php if ( ! empty( $template_vars ) ) : ?>
                                         <div class="log-detail-section">
-                                            <h5><span class="dashicons dashicons-editor-code"></span> <?php esc_html_e( 'Template Variables', 'broodle-engage-connector' ); ?></h5>
+                                            <h5><span class="dashicons dashicons-editor-code"></span> <?php esc_html_e( 'Template Variables', 'broodle-engage-wp-connector' ); ?></h5>
                                             <div class="log-variables-grid">
                                                 <?php foreach ( $template_vars as $var_name => $var_value ) : ?>
                                                 <div class="log-variable-item">
@@ -3843,7 +3843,7 @@ class Broodle_Engage_Admin {
 
                                         <?php if ( $api_response ) : ?>
                                         <div class="log-detail-section">
-                                            <h5><span class="dashicons dashicons-rest-api"></span> <?php esc_html_e( 'API Response', 'broodle-engage-connector' ); ?></h5>
+                                            <h5><span class="dashicons dashicons-rest-api"></span> <?php esc_html_e( 'API Response', 'broodle-engage-wp-connector' ); ?></h5>
                                             <pre><?php echo esc_html( wp_json_encode( $api_response, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE ) ); ?></pre>
                                         </div>
                                         <?php endif; ?>
@@ -3868,8 +3868,8 @@ class Broodle_Engage_Admin {
                     array(
                         'base' => add_query_arg( 'paged', '%#%' ),
                         'format' => '',
-                        'prev_text' => __( '&laquo; Previous', 'broodle-engage-connector' ),
-                        'next_text' => __( 'Next &raquo;', 'broodle-engage-connector' ),
+                        'prev_text' => __( '&laquo; Previous', 'broodle-engage-wp-connector' ),
+                        'next_text' => __( 'Next &raquo;', 'broodle-engage-wp-connector' ),
                         'total' => $total_pages,
                         'current' => $page,
                     )
@@ -3880,8 +3880,8 @@ class Broodle_Engage_Admin {
         <?php else : ?>
             <div class="logs-empty-state">
                 <span class="dashicons dashicons-email-alt"></span>
-                <h3><?php esc_html_e( 'No notification logs found', 'broodle-engage-connector' ); ?></h3>
-                <p><?php esc_html_e( 'WhatsApp notifications will appear here once they are sent.', 'broodle-engage-connector' ); ?></p>
+                <h3><?php esc_html_e( 'No notification logs found', 'broodle-engage-wp-connector' ); ?></h3>
+                <p><?php esc_html_e( 'WhatsApp notifications will appear here once they are sent.', 'broodle-engage-wp-connector' ); ?></p>
             </div>
         <?php endif; ?>
         </div><!-- .logs-tab-content -->
@@ -4057,78 +4057,78 @@ class Broodle_Engage_Admin {
         <div class="help-page-header">
             <h2>
                 <span class="dashicons dashicons-editor-help"></span>
-                <?php esc_html_e( 'Help & Documentation', 'broodle-engage-connector' ); ?>
+                <?php esc_html_e( 'Help & Documentation', 'broodle-engage-wp-connector' ); ?>
             </h2>
-            <p><?php esc_html_e( 'Everything you need to set up and use Broodle Engage Connector for WooCommerce WhatsApp notifications.', 'broodle-engage-connector' ); ?></p>
+            <p><?php esc_html_e( 'Everything you need to set up and use Broodle Engage Connector for WooCommerce WhatsApp notifications.', 'broodle-engage-wp-connector' ); ?></p>
         </div>
 
         <!-- Getting Started -->
         <h2 style="font-size: 20px; font-weight: 600; margin: 0 0 16px 0; color: #1d2327;">
             <span class="dashicons dashicons-flag" style="color: #0E5ECE; vertical-align: middle;"></span>
-            <?php esc_html_e( 'Getting Started', 'broodle-engage-connector' ); ?>
+            <?php esc_html_e( 'Getting Started', 'broodle-engage-wp-connector' ); ?>
         </h2>
         <div class="help-grid">
             <div class="help-card">
                 <h3 class="help-card-title">
                     <span class="step-badge">1</span>
-                    <?php esc_html_e( 'Create Your Broodle Account', 'broodle-engage-connector' ); ?>
+                    <?php esc_html_e( 'Create Your Broodle Account', 'broodle-engage-wp-connector' ); ?>
                 </h3>
-                <p><?php esc_html_e( 'Sign up at Broodle Engage to get your WhatsApp Business API credentials:', 'broodle-engage-connector' ); ?></p>
+                <p><?php esc_html_e( 'Sign up at Broodle Engage to get your WhatsApp Business API credentials:', 'broodle-engage-wp-connector' ); ?></p>
                 <ul>
-                    <li><?php esc_html_e( 'Go to', 'broodle-engage-connector' ); ?> <a href="https://engage.broodle.one" target="_blank">engage.broodle.one</a></li>
-                    <li><?php esc_html_e( 'Create your account and connect a WhatsApp Business number', 'broodle-engage-connector' ); ?></li>
-                    <li><?php esc_html_e( 'Navigate to Settings → Account → Access Token to get your API key', 'broodle-engage-connector' ); ?></li>
-                    <li><?php esc_html_e( 'Note your Account ID and WhatsApp Inbox ID', 'broodle-engage-connector' ); ?></li>
+                    <li><?php esc_html_e( 'Go to', 'broodle-engage-wp-connector' ); ?> <a href="https://engage.broodle.one" target="_blank">engage.broodle.one</a></li>
+                    <li><?php esc_html_e( 'Create your account and connect a WhatsApp Business number', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><?php esc_html_e( 'Navigate to Settings → Account → Access Token to get your API key', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><?php esc_html_e( 'Note your Account ID and WhatsApp Inbox ID', 'broodle-engage-wp-connector' ); ?></li>
                 </ul>
             </div>
             <div class="help-card">
                 <h3 class="help-card-title">
                     <span class="step-badge">2</span>
-                    <?php esc_html_e( 'Configure Plugin Settings', 'broodle-engage-connector' ); ?>
+                    <?php esc_html_e( 'Configure Plugin Settings', 'broodle-engage-wp-connector' ); ?>
                 </h3>
-                <p><?php esc_html_e( 'Go to the Settings tab and fill in the following:', 'broodle-engage-connector' ); ?></p>
+                <p><?php esc_html_e( 'Go to the Settings tab and fill in the following:', 'broodle-engage-wp-connector' ); ?></p>
                 <ul>
-                    <li><strong><?php esc_html_e( 'API Access Token', 'broodle-engage-connector' ); ?></strong> — <?php esc_html_e( 'Your Broodle API token for authentication', 'broodle-engage-connector' ); ?></li>
-                    <li><strong><?php esc_html_e( 'Account ID', 'broodle-engage-connector' ); ?></strong> — <?php esc_html_e( 'Your Broodle account identifier', 'broodle-engage-connector' ); ?></li>
-                    <li><strong><?php esc_html_e( 'WhatsApp Inbox ID', 'broodle-engage-connector' ); ?></strong> — <?php esc_html_e( 'The inbox connected to your WhatsApp number', 'broodle-engage-connector' ); ?></li>
-                    <li><strong><?php esc_html_e( 'Phone Number Field', 'broodle-engage-connector' ); ?></strong> — <?php esc_html_e( 'Choose which WooCommerce field to read the customer phone from', 'broodle-engage-connector' ); ?></li>
-                    <li><strong><?php esc_html_e( 'Default Country Code', 'broodle-engage-connector' ); ?></strong> — <?php esc_html_e( 'Auto-prepended if the phone number has no country code', 'broodle-engage-connector' ); ?></li>
+                    <li><strong><?php esc_html_e( 'API Access Token', 'broodle-engage-wp-connector' ); ?></strong> — <?php esc_html_e( 'Your Broodle API token for authentication', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><strong><?php esc_html_e( 'Account ID', 'broodle-engage-wp-connector' ); ?></strong> — <?php esc_html_e( 'Your Broodle account identifier', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><strong><?php esc_html_e( 'WhatsApp Inbox ID', 'broodle-engage-wp-connector' ); ?></strong> — <?php esc_html_e( 'The inbox connected to your WhatsApp number', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><strong><?php esc_html_e( 'Phone Number Field', 'broodle-engage-wp-connector' ); ?></strong> — <?php esc_html_e( 'Choose which WooCommerce field to read the customer phone from', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><strong><?php esc_html_e( 'Default Country Code', 'broodle-engage-wp-connector' ); ?></strong> — <?php esc_html_e( 'Auto-prepended if the phone number has no country code', 'broodle-engage-wp-connector' ); ?></li>
                 </ul>
                 <div class="help-tip">
-                    <strong><?php esc_html_e( 'Tip:', 'broodle-engage-connector' ); ?></strong>
-                    <?php esc_html_e( 'Use the "Test Connection" button to verify your API credentials, and "Send Test Message" to send a hello_world template to any WhatsApp number.', 'broodle-engage-connector' ); ?>
+                    <strong><?php esc_html_e( 'Tip:', 'broodle-engage-wp-connector' ); ?></strong>
+                    <?php esc_html_e( 'Use the "Test Connection" button to verify your API credentials, and "Send Test Message" to send a hello_world template to any WhatsApp number.', 'broodle-engage-wp-connector' ); ?>
                 </div>
             </div>
             <div class="help-card">
                 <h3 class="help-card-title">
                     <span class="step-badge">3</span>
-                    <?php esc_html_e( 'Create & Approve WhatsApp Templates', 'broodle-engage-connector' ); ?>
+                    <?php esc_html_e( 'Create & Approve WhatsApp Templates', 'broodle-engage-wp-connector' ); ?>
                 </h3>
-                <p><?php esc_html_e( 'WhatsApp requires pre-approved message templates for business-initiated messages:', 'broodle-engage-connector' ); ?></p>
+                <p><?php esc_html_e( 'WhatsApp requires pre-approved message templates for business-initiated messages:', 'broodle-engage-wp-connector' ); ?></p>
                 <ul>
-                    <li><?php esc_html_e( 'Create templates in your Broodle Engage dashboard or via Meta Business Manager', 'broodle-engage-connector' ); ?></li>
-                    <li><?php esc_html_e( 'Use {{1}}, {{2}}, {{3}}... placeholders for dynamic variables', 'broodle-engage-connector' ); ?></li>
-                    <li><?php esc_html_e( 'Templates can include image headers, body text, footer, and buttons', 'broodle-engage-connector' ); ?></li>
-                    <li><?php esc_html_e( 'Wait for WhatsApp to approve your templates (usually 24-48 hours)', 'broodle-engage-connector' ); ?></li>
-                    <li><?php esc_html_e( 'Only APPROVED templates will appear in the plugin', 'broodle-engage-connector' ); ?></li>
+                    <li><?php esc_html_e( 'Create templates in your Broodle Engage dashboard or via Meta Business Manager', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><?php esc_html_e( 'Use {{1}}, {{2}}, {{3}}... placeholders for dynamic variables', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><?php esc_html_e( 'Templates can include image headers, body text, footer, and buttons', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><?php esc_html_e( 'Wait for WhatsApp to approve your templates (usually 24-48 hours)', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><?php esc_html_e( 'Only APPROVED templates will appear in the plugin', 'broodle-engage-wp-connector' ); ?></li>
                 </ul>
             </div>
             <div class="help-card">
                 <h3 class="help-card-title">
                     <span class="step-badge">4</span>
-                    <?php esc_html_e( 'Map Templates to Order Events', 'broodle-engage-connector' ); ?>
+                    <?php esc_html_e( 'Map Templates to Order Events', 'broodle-engage-wp-connector' ); ?>
                 </h3>
-                <p><?php esc_html_e( 'Go to the Templates tab to configure notifications:', 'broodle-engage-connector' ); ?></p>
+                <p><?php esc_html_e( 'Go to the Templates tab to configure notifications:', 'broodle-engage-wp-connector' ); ?></p>
                 <ul>
-                    <li><?php esc_html_e( 'Enable/disable notifications per order status (Processing, Shipped, Completed, etc.)', 'broodle-engage-connector' ); ?></li>
-                    <li><?php esc_html_e( 'Select which approved template to send for each status', 'broodle-engage-connector' ); ?></li>
-                    <li><?php esc_html_e( 'Map template variables ({{1}}, {{2}}...) to order data fields', 'broodle-engage-connector' ); ?></li>
-                    <li><?php esc_html_e( 'Optionally upload a header image or use the product featured image', 'broodle-engage-connector' ); ?></li>
-                    <li><?php esc_html_e( 'Add custom notification types for any WooCommerce status', 'broodle-engage-connector' ); ?></li>
+                    <li><?php esc_html_e( 'Enable/disable notifications per order status (Processing, Shipped, Completed, etc.)', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><?php esc_html_e( 'Select which approved template to send for each status', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><?php esc_html_e( 'Map template variables ({{1}}, {{2}}...) to order data fields', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><?php esc_html_e( 'Optionally upload a header image or use the product featured image', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><?php esc_html_e( 'Add custom notification types for any WooCommerce status', 'broodle-engage-wp-connector' ); ?></li>
                 </ul>
                 <div class="help-tip">
-                    <strong><?php esc_html_e( 'Tip:', 'broodle-engage-connector' ); ?></strong>
-                    <?php esc_html_e( 'Click "Refresh" on the Templates page to fetch the latest approved templates from your Broodle account.', 'broodle-engage-connector' ); ?>
+                    <strong><?php esc_html_e( 'Tip:', 'broodle-engage-wp-connector' ); ?></strong>
+                    <?php esc_html_e( 'Click "Refresh" on the Templates page to fetch the latest approved templates from your Broodle account.', 'broodle-engage-wp-connector' ); ?>
                 </div>
             </div>
         </div>
@@ -4136,49 +4136,49 @@ class Broodle_Engage_Admin {
         <!-- Template Variables Reference -->
         <h2 style="font-size: 20px; font-weight: 600; margin: 30px 0 16px 0; color: #1d2327;">
             <span class="dashicons dashicons-editor-code" style="color: #0E5ECE; vertical-align: middle;"></span>
-            <?php esc_html_e( 'Available Template Variables', 'broodle-engage-connector' ); ?>
+            <?php esc_html_e( 'Available Template Variables', 'broodle-engage-wp-connector' ); ?>
         </h2>
         <div class="help-grid">
             <div class="help-card help-card-full">
                 <h3 class="help-card-title">
                     <span class="dashicons dashicons-list-view"></span>
-                    <?php esc_html_e( 'Variable Mapping Reference', 'broodle-engage-connector' ); ?>
+                    <?php esc_html_e( 'Variable Mapping Reference', 'broodle-engage-wp-connector' ); ?>
                 </h3>
-                <p><?php esc_html_e( 'When configuring a template, map each {{N}} placeholder to one of these WooCommerce data fields. You can assign any variable to any placeholder in any order.', 'broodle-engage-connector' ); ?></p>
+                <p><?php esc_html_e( 'When configuring a template, map each {{N}} placeholder to one of these WooCommerce data fields. You can assign any variable to any placeholder in any order.', 'broodle-engage-wp-connector' ); ?></p>
                 <table class="variable-table">
                     <thead>
                         <tr>
-                            <th><?php esc_html_e( 'Variable', 'broodle-engage-connector' ); ?></th>
-                            <th><?php esc_html_e( 'Description', 'broodle-engage-connector' ); ?></th>
-                            <th><?php esc_html_e( 'Example Value', 'broodle-engage-connector' ); ?></th>
+                            <th><?php esc_html_e( 'Variable', 'broodle-engage-wp-connector' ); ?></th>
+                            <th><?php esc_html_e( 'Description', 'broodle-engage-wp-connector' ); ?></th>
+                            <th><?php esc_html_e( 'Example Value', 'broodle-engage-wp-connector' ); ?></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td><code>customer_name</code></td><td><?php esc_html_e( 'Full name (first + last)', 'broodle-engage-connector' ); ?></td><td>John Doe</td></tr>
-                        <tr><td><code>customer_first_name</code></td><td><?php esc_html_e( 'First name only', 'broodle-engage-connector' ); ?></td><td>John</td></tr>
-                        <tr><td><code>customer_last_name</code></td><td><?php esc_html_e( 'Last name only', 'broodle-engage-connector' ); ?></td><td>Doe</td></tr>
-                        <tr><td><code>customer_email</code></td><td><?php esc_html_e( 'Customer email address', 'broodle-engage-connector' ); ?></td><td>john@example.com</td></tr>
-                        <tr><td><code>order_id</code></td><td><?php esc_html_e( 'WordPress order post ID', 'broodle-engage-connector' ); ?></td><td>1234</td></tr>
-                        <tr><td><code>order_number</code></td><td><?php esc_html_e( 'WooCommerce order number', 'broodle-engage-connector' ); ?></td><td>#1234</td></tr>
-                        <tr><td><code>order_total</code></td><td><?php esc_html_e( 'Formatted total with currency', 'broodle-engage-connector' ); ?></td><td>₹1,299.00</td></tr>
-                        <tr><td><code>order_total_raw</code></td><td><?php esc_html_e( 'Numeric total without currency', 'broodle-engage-connector' ); ?></td><td>1299.00</td></tr>
-                        <tr><td><code>order_date</code></td><td><?php esc_html_e( 'Order creation date', 'broodle-engage-connector' ); ?></td><td>February 6, 2026</td></tr>
-                        <tr><td><code>order_status</code></td><td><?php esc_html_e( 'Current order status label', 'broodle-engage-connector' ); ?></td><td>Processing</td></tr>
-                        <tr><td><code>product_names</code></td><td><?php esc_html_e( 'Comma-separated product names', 'broodle-engage-connector' ); ?></td><td>Blue T-Shirt, Jeans</td></tr>
-                        <tr><td><code>product_count</code></td><td><?php esc_html_e( 'Number of items in order', 'broodle-engage-connector' ); ?></td><td>2</td></tr>
-                        <tr><td><code>shipping_address</code></td><td><?php esc_html_e( 'Full shipping address', 'broodle-engage-connector' ); ?></td><td>123 Main St, Mumbai</td></tr>
-                        <tr><td><code>billing_address</code></td><td><?php esc_html_e( 'Full billing address', 'broodle-engage-connector' ); ?></td><td>123 Main St, Mumbai</td></tr>
-                        <tr><td><code>payment_method</code></td><td><?php esc_html_e( 'Payment method title', 'broodle-engage-connector' ); ?></td><td>Cash on delivery</td></tr>
-                        <tr><td><code>shipping_method</code></td><td><?php esc_html_e( 'Shipping method title', 'broodle-engage-connector' ); ?></td><td>Flat rate</td></tr>
-                        <tr><td><code>tracking_url</code></td><td><?php esc_html_e( 'Shipment tracking URL', 'broodle-engage-connector' ); ?></td><td>https://track.example.com/...</td></tr>
-                        <tr><td><code>tracking_number</code></td><td><?php esc_html_e( 'Shipment tracking number', 'broodle-engage-connector' ); ?></td><td>AWB123456789</td></tr>
-                        <tr><td><code>coupon_code</code></td><td><?php esc_html_e( 'Applied coupon codes', 'broodle-engage-connector' ); ?></td><td>SAVE10</td></tr>
-                        <tr><td><code>product_url</code></td><td><?php esc_html_e( 'URL of the first product in order', 'broodle-engage-connector' ); ?></td><td>https://shop.example.com/blue-tshirt</td></tr>
-                        <tr><td><code>cart_url</code></td><td><?php esc_html_e( 'WooCommerce cart page URL', 'broodle-engage-connector' ); ?></td><td>https://shop.example.com/cart</td></tr>
-                        <tr><td><code>shop_url</code></td><td><?php esc_html_e( 'WooCommerce shop page URL', 'broodle-engage-connector' ); ?></td><td>https://shop.example.com/shop</td></tr>
-                        <tr><td><code>my_account_url</code></td><td><?php esc_html_e( 'Customer account page URL', 'broodle-engage-connector' ); ?></td><td>https://shop.example.com/my-account</td></tr>
-                        <tr><td><code>site_name</code></td><td><?php esc_html_e( 'Your WordPress site name', 'broodle-engage-connector' ); ?></td><td>My Store</td></tr>
-                        <tr><td><code>custom_text</code></td><td><?php esc_html_e( 'Any static text you type in', 'broodle-engage-connector' ); ?></td><td>Thank you for shopping!</td></tr>
+                        <tr><td><code>customer_name</code></td><td><?php esc_html_e( 'Full name (first + last)', 'broodle-engage-wp-connector' ); ?></td><td>John Doe</td></tr>
+                        <tr><td><code>customer_first_name</code></td><td><?php esc_html_e( 'First name only', 'broodle-engage-wp-connector' ); ?></td><td>John</td></tr>
+                        <tr><td><code>customer_last_name</code></td><td><?php esc_html_e( 'Last name only', 'broodle-engage-wp-connector' ); ?></td><td>Doe</td></tr>
+                        <tr><td><code>customer_email</code></td><td><?php esc_html_e( 'Customer email address', 'broodle-engage-wp-connector' ); ?></td><td>john@example.com</td></tr>
+                        <tr><td><code>order_id</code></td><td><?php esc_html_e( 'WordPress order post ID', 'broodle-engage-wp-connector' ); ?></td><td>1234</td></tr>
+                        <tr><td><code>order_number</code></td><td><?php esc_html_e( 'WooCommerce order number', 'broodle-engage-wp-connector' ); ?></td><td>#1234</td></tr>
+                        <tr><td><code>order_total</code></td><td><?php esc_html_e( 'Formatted total with currency', 'broodle-engage-wp-connector' ); ?></td><td>₹1,299.00</td></tr>
+                        <tr><td><code>order_total_raw</code></td><td><?php esc_html_e( 'Numeric total without currency', 'broodle-engage-wp-connector' ); ?></td><td>1299.00</td></tr>
+                        <tr><td><code>order_date</code></td><td><?php esc_html_e( 'Order creation date', 'broodle-engage-wp-connector' ); ?></td><td>February 6, 2026</td></tr>
+                        <tr><td><code>order_status</code></td><td><?php esc_html_e( 'Current order status label', 'broodle-engage-wp-connector' ); ?></td><td>Processing</td></tr>
+                        <tr><td><code>product_names</code></td><td><?php esc_html_e( 'Comma-separated product names', 'broodle-engage-wp-connector' ); ?></td><td>Blue T-Shirt, Jeans</td></tr>
+                        <tr><td><code>product_count</code></td><td><?php esc_html_e( 'Number of items in order', 'broodle-engage-wp-connector' ); ?></td><td>2</td></tr>
+                        <tr><td><code>shipping_address</code></td><td><?php esc_html_e( 'Full shipping address', 'broodle-engage-wp-connector' ); ?></td><td>123 Main St, Mumbai</td></tr>
+                        <tr><td><code>billing_address</code></td><td><?php esc_html_e( 'Full billing address', 'broodle-engage-wp-connector' ); ?></td><td>123 Main St, Mumbai</td></tr>
+                        <tr><td><code>payment_method</code></td><td><?php esc_html_e( 'Payment method title', 'broodle-engage-wp-connector' ); ?></td><td>Cash on delivery</td></tr>
+                        <tr><td><code>shipping_method</code></td><td><?php esc_html_e( 'Shipping method title', 'broodle-engage-wp-connector' ); ?></td><td>Flat rate</td></tr>
+                        <tr><td><code>tracking_url</code></td><td><?php esc_html_e( 'Shipment tracking URL', 'broodle-engage-wp-connector' ); ?></td><td>https://track.example.com/...</td></tr>
+                        <tr><td><code>tracking_number</code></td><td><?php esc_html_e( 'Shipment tracking number', 'broodle-engage-wp-connector' ); ?></td><td>AWB123456789</td></tr>
+                        <tr><td><code>coupon_code</code></td><td><?php esc_html_e( 'Applied coupon codes', 'broodle-engage-wp-connector' ); ?></td><td>SAVE10</td></tr>
+                        <tr><td><code>product_url</code></td><td><?php esc_html_e( 'URL of the first product in order', 'broodle-engage-wp-connector' ); ?></td><td>https://shop.example.com/blue-tshirt</td></tr>
+                        <tr><td><code>cart_url</code></td><td><?php esc_html_e( 'WooCommerce cart page URL', 'broodle-engage-wp-connector' ); ?></td><td>https://shop.example.com/cart</td></tr>
+                        <tr><td><code>shop_url</code></td><td><?php esc_html_e( 'WooCommerce shop page URL', 'broodle-engage-wp-connector' ); ?></td><td>https://shop.example.com/shop</td></tr>
+                        <tr><td><code>my_account_url</code></td><td><?php esc_html_e( 'Customer account page URL', 'broodle-engage-wp-connector' ); ?></td><td>https://shop.example.com/my-account</td></tr>
+                        <tr><td><code>site_name</code></td><td><?php esc_html_e( 'Your WordPress site name', 'broodle-engage-wp-connector' ); ?></td><td>My Store</td></tr>
+                        <tr><td><code>custom_text</code></td><td><?php esc_html_e( 'Any static text you type in', 'broodle-engage-wp-connector' ); ?></td><td>Thank you for shopping!</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -4187,56 +4187,56 @@ class Broodle_Engage_Admin {
         <!-- Template Features -->
         <h2 style="font-size: 20px; font-weight: 600; margin: 30px 0 16px 0; color: #1d2327;">
             <span class="dashicons dashicons-admin-appearance" style="color: #0E5ECE; vertical-align: middle;"></span>
-            <?php esc_html_e( 'Template Features', 'broodle-engage-connector' ); ?>
+            <?php esc_html_e( 'Template Features', 'broodle-engage-wp-connector' ); ?>
         </h2>
         <div class="help-grid">
             <div class="help-card">
                 <h3 class="help-card-title">
                     <span class="dashicons dashicons-format-image"></span>
-                    <?php esc_html_e( 'Image Headers', 'broodle-engage-connector' ); ?>
+                    <?php esc_html_e( 'Image Headers', 'broodle-engage-wp-connector' ); ?>
                 </h3>
-                <p><?php esc_html_e( 'Templates with IMAGE headers support two image options:', 'broodle-engage-connector' ); ?></p>
+                <p><?php esc_html_e( 'Templates with IMAGE headers support two image options:', 'broodle-engage-wp-connector' ); ?></p>
                 <ul>
-                    <li><strong><?php esc_html_e( 'Upload Image:', 'broodle-engage-connector' ); ?></strong> <?php esc_html_e( 'Select a static image from your WordPress Media Library to use for all notifications of that type.', 'broodle-engage-connector' ); ?></li>
-                    <li><strong><?php esc_html_e( 'Use Product Image:', 'broodle-engage-connector' ); ?></strong> <?php esc_html_e( 'Tick the checkbox to automatically use the featured image of the first product in the order. Falls back to the uploaded image if no product image exists.', 'broodle-engage-connector' ); ?></li>
+                    <li><strong><?php esc_html_e( 'Upload Image:', 'broodle-engage-wp-connector' ); ?></strong> <?php esc_html_e( 'Select a static image from your WordPress Media Library to use for all notifications of that type.', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><strong><?php esc_html_e( 'Use Product Image:', 'broodle-engage-wp-connector' ); ?></strong> <?php esc_html_e( 'Tick the checkbox to automatically use the featured image of the first product in the order. Falls back to the uploaded image if no product image exists.', 'broodle-engage-wp-connector' ); ?></li>
                 </ul>
             </div>
             <div class="help-card">
                 <h3 class="help-card-title">
                     <span class="dashicons dashicons-admin-links"></span>
-                    <?php esc_html_e( 'Button Variables', 'broodle-engage-connector' ); ?>
+                    <?php esc_html_e( 'Button Variables', 'broodle-engage-wp-connector' ); ?>
                 </h3>
-                <p><?php esc_html_e( 'Templates with URL buttons containing {{N}} placeholders are automatically detected. The plugin maps button variables using order data:', 'broodle-engage-connector' ); ?></p>
+                <p><?php esc_html_e( 'Templates with URL buttons containing {{N}} placeholders are automatically detected. The plugin maps button variables using order data:', 'broodle-engage-wp-connector' ); ?></p>
                 <ul>
-                    <li><?php esc_html_e( 'Dynamic URL buttons (e.g., "Track Order" → {{1}}) are mapped to your chosen variable', 'broodle-engage-connector' ); ?></li>
-                    <li><?php esc_html_e( 'Button variables are sent separately from body variables in the correct API format', 'broodle-engage-connector' ); ?></li>
-                    <li><?php esc_html_e( 'Common use: Map product_url or tracking_url to a button placeholder', 'broodle-engage-connector' ); ?></li>
+                    <li><?php esc_html_e( 'Dynamic URL buttons (e.g., "Track Order" → {{1}}) are mapped to your chosen variable', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><?php esc_html_e( 'Button variables are sent separately from body variables in the correct API format', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><?php esc_html_e( 'Common use: Map product_url or tracking_url to a button placeholder', 'broodle-engage-wp-connector' ); ?></li>
                 </ul>
             </div>
             <div class="help-card">
                 <h3 class="help-card-title">
                     <span class="dashicons dashicons-plus-alt"></span>
-                    <?php esc_html_e( 'Custom Notification Types', 'broodle-engage-connector' ); ?>
+                    <?php esc_html_e( 'Custom Notification Types', 'broodle-engage-wp-connector' ); ?>
                 </h3>
-                <p><?php esc_html_e( 'Beyond the default order statuses, you can add custom notifications:', 'broodle-engage-connector' ); ?></p>
+                <p><?php esc_html_e( 'Beyond the default order statuses, you can add custom notifications:', 'broodle-engage-wp-connector' ); ?></p>
                 <ul>
-                    <li><?php esc_html_e( 'Click "Add Notification Type" on the Templates page', 'broodle-engage-connector' ); ?></li>
-                    <li><?php esc_html_e( 'Map to any WooCommerce order status (including custom ones from plugins)', 'broodle-engage-connector' ); ?></li>
-                    <li><?php esc_html_e( 'Each custom notification gets its own template, variable mapping, and image settings', 'broodle-engage-connector' ); ?></li>
-                    <li><?php esc_html_e( 'Remove custom notifications any time without affecting default ones', 'broodle-engage-connector' ); ?></li>
+                    <li><?php esc_html_e( 'Click "Add Notification Type" on the Templates page', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><?php esc_html_e( 'Map to any WooCommerce order status (including custom ones from plugins)', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><?php esc_html_e( 'Each custom notification gets its own template, variable mapping, and image settings', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><?php esc_html_e( 'Remove custom notifications any time without affecting default ones', 'broodle-engage-wp-connector' ); ?></li>
                 </ul>
             </div>
             <div class="help-card">
                 <h3 class="help-card-title">
                     <span class="dashicons dashicons-chart-bar"></span>
-                    <?php esc_html_e( 'Notification Logs', 'broodle-engage-connector' ); ?>
+                    <?php esc_html_e( 'Notification Logs', 'broodle-engage-wp-connector' ); ?>
                 </h3>
-                <p><?php esc_html_e( 'Track every notification sent from the Logs tab:', 'broodle-engage-connector' ); ?></p>
+                <p><?php esc_html_e( 'Track every notification sent from the Logs tab:', 'broodle-engage-wp-connector' ); ?></p>
                 <ul>
-                    <li><?php esc_html_e( 'View success and error status for each message', 'broodle-engage-connector' ); ?></li>
-                    <li><?php esc_html_e( 'See timestamp, phone number, order ID, and template used', 'broodle-engage-connector' ); ?></li>
-                    <li><?php esc_html_e( 'Filter by status (success/error) to quickly find issues', 'broodle-engage-connector' ); ?></li>
-                    <li><?php esc_html_e( 'Logs are automatically cleaned up based on your retention setting', 'broodle-engage-connector' ); ?></li>
+                    <li><?php esc_html_e( 'View success and error status for each message', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><?php esc_html_e( 'See timestamp, phone number, order ID, and template used', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><?php esc_html_e( 'Filter by status (success/error) to quickly find issues', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><?php esc_html_e( 'Logs are automatically cleaned up based on your retention setting', 'broodle-engage-wp-connector' ); ?></li>
                 </ul>
             </div>
         </div>
@@ -4244,51 +4244,51 @@ class Broodle_Engage_Admin {
         <!-- Troubleshooting -->
         <h2 style="font-size: 20px; font-weight: 600; margin: 30px 0 16px 0; color: #1d2327;">
             <span class="dashicons dashicons-sos" style="color: #0E5ECE; vertical-align: middle;"></span>
-            <?php esc_html_e( 'Troubleshooting', 'broodle-engage-connector' ); ?>
+            <?php esc_html_e( 'Troubleshooting', 'broodle-engage-wp-connector' ); ?>
         </h2>
         <div class="help-grid">
             <div class="help-card help-card-full">
                 <h3 class="help-card-title">
                     <span class="dashicons dashicons-warning"></span>
-                    <?php esc_html_e( 'Common Issues & Solutions', 'broodle-engage-connector' ); ?>
+                    <?php esc_html_e( 'Common Issues & Solutions', 'broodle-engage-wp-connector' ); ?>
                 </h3>
                 <table class="variable-table">
                     <thead>
                         <tr>
-                            <th style="width: 35%;"><?php esc_html_e( 'Issue', 'broodle-engage-connector' ); ?></th>
-                            <th><?php esc_html_e( 'Solution', 'broodle-engage-connector' ); ?></th>
+                            <th style="width: 35%;"><?php esc_html_e( 'Issue', 'broodle-engage-wp-connector' ); ?></th>
+                            <th><?php esc_html_e( 'Solution', 'broodle-engage-wp-connector' ); ?></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong><?php esc_html_e( 'API connection test fails', 'broodle-engage-connector' ); ?></strong></td>
-                            <td><?php esc_html_e( 'Verify your API Access Token is correct. Go to your Broodle dashboard → Settings → Account → copy the token again.', 'broodle-engage-connector' ); ?></td>
+                            <td><strong><?php esc_html_e( 'API connection test fails', 'broodle-engage-wp-connector' ); ?></strong></td>
+                            <td><?php esc_html_e( 'Verify your API Access Token is correct. Go to your Broodle dashboard → Settings → Account → copy the token again.', 'broodle-engage-wp-connector' ); ?></td>
                         </tr>
                         <tr>
-                            <td><strong><?php esc_html_e( 'No templates appear', 'broodle-engage-connector' ); ?></strong></td>
-                            <td><?php esc_html_e( 'Only APPROVED templates are shown. Check your template status in the Broodle dashboard. New templates take 24-48 hours for WhatsApp approval.', 'broodle-engage-connector' ); ?></td>
+                            <td><strong><?php esc_html_e( 'No templates appear', 'broodle-engage-wp-connector' ); ?></strong></td>
+                            <td><?php esc_html_e( 'Only APPROVED templates are shown. Check your template status in the Broodle dashboard. New templates take 24-48 hours for WhatsApp approval.', 'broodle-engage-wp-connector' ); ?></td>
                         </tr>
                         <tr>
-                            <td><strong><?php esc_html_e( 'Messages logged as success but not received', 'broodle-engage-connector' ); ?></strong></td>
-                            <td><?php esc_html_e( 'Check that the recipient has an active WhatsApp account on the number. Also verify the phone number format includes country code (e.g., +91).', 'broodle-engage-connector' ); ?></td>
+                            <td><strong><?php esc_html_e( 'Messages logged as success but not received', 'broodle-engage-wp-connector' ); ?></strong></td>
+                            <td><?php esc_html_e( 'Check that the recipient has an active WhatsApp account on the number. Also verify the phone number format includes country code (e.g., +91).', 'broodle-engage-wp-connector' ); ?></td>
                         </tr>
                         <tr>
-                            <td><strong><?php esc_html_e( 'Error #132012 (parameter mismatch)', 'broodle-engage-connector' ); ?></strong></td>
-                            <td><?php esc_html_e( 'The number of mapped variables must match the template placeholders exactly. Count the {{N}} placeholders in your template body and buttons, and map each one.', 'broodle-engage-connector' ); ?></td>
+                            <td><strong><?php esc_html_e( 'Error #132012 (parameter mismatch)', 'broodle-engage-wp-connector' ); ?></strong></td>
+                            <td><?php esc_html_e( 'The number of mapped variables must match the template placeholders exactly. Count the {{N}} placeholders in your template body and buttons, and map each one.', 'broodle-engage-wp-connector' ); ?></td>
                         </tr>
                         <tr>
-                            <td><strong><?php esc_html_e( 'Image not showing in WhatsApp', 'broodle-engage-connector' ); ?></strong></td>
-                            <td><?php esc_html_e( 'Ensure the image URL is publicly accessible (not behind authentication). Use HTTPS URLs. If using "Use product image", verify the product has a featured image set.', 'broodle-engage-connector' ); ?></td>
+                            <td><strong><?php esc_html_e( 'Image not showing in WhatsApp', 'broodle-engage-wp-connector' ); ?></strong></td>
+                            <td><?php esc_html_e( 'Ensure the image URL is publicly accessible (not behind authentication). Use HTTPS URLs. If using "Use product image", verify the product has a featured image set.', 'broodle-engage-wp-connector' ); ?></td>
                         </tr>
                         <tr>
-                            <td><strong><?php esc_html_e( 'Notifications not triggering', 'broodle-engage-connector' ); ?></strong></td>
-                            <td><?php esc_html_e( 'Make sure the notification toggle is ON for that order status. Also verify the customer order has a phone number in the selected phone field.', 'broodle-engage-connector' ); ?></td>
+                            <td><strong><?php esc_html_e( 'Notifications not triggering', 'broodle-engage-wp-connector' ); ?></strong></td>
+                            <td><?php esc_html_e( 'Make sure the notification toggle is ON for that order status. Also verify the customer order has a phone number in the selected phone field.', 'broodle-engage-wp-connector' ); ?></td>
                         </tr>
                     </tbody>
                 </table>
                 <div class="help-tip" style="margin-top: 20px;">
-                    <strong><?php esc_html_e( 'Debug Logs:', 'broodle-engage-connector' ); ?></strong>
-                    <?php esc_html_e( 'Enable WP_DEBUG_LOG in wp-config.php to see detailed API request/response logs at wp-content/debug.log. The plugin logs all API calls including the full request payload and response.', 'broodle-engage-connector' ); ?>
+                    <strong><?php esc_html_e( 'Debug Logs:', 'broodle-engage-wp-connector' ); ?></strong>
+                    <?php esc_html_e( 'Enable WP_DEBUG_LOG in wp-config.php to see detailed API request/response logs at wp-content/debug.log. The plugin logs all API calls including the full request payload and response.', 'broodle-engage-wp-connector' ); ?>
                 </div>
             </div>
         </div>
@@ -4296,33 +4296,33 @@ class Broodle_Engage_Admin {
         <!-- Settings Reference -->
         <h2 style="font-size: 20px; font-weight: 600; margin: 30px 0 16px 0; color: #1d2327;">
             <span class="dashicons dashicons-admin-settings" style="color: #0E5ECE; vertical-align: middle;"></span>
-            <?php esc_html_e( 'Settings Reference', 'broodle-engage-connector' ); ?>
+            <?php esc_html_e( 'Settings Reference', 'broodle-engage-wp-connector' ); ?>
         </h2>
         <div class="help-grid">
             <div class="help-card">
                 <h3 class="help-card-title">
                     <span class="dashicons dashicons-admin-network"></span>
-                    <?php esc_html_e( 'API Configuration', 'broodle-engage-connector' ); ?>
+                    <?php esc_html_e( 'API Configuration', 'broodle-engage-wp-connector' ); ?>
                 </h3>
                 <ul>
-                    <li><strong><?php esc_html_e( 'API Access Token:', 'broodle-engage-connector' ); ?></strong> <?php esc_html_e( 'Authentication token for the Broodle Engage API. Found in Settings → Account.', 'broodle-engage-connector' ); ?></li>
-                    <li><strong><?php esc_html_e( 'Account ID:', 'broodle-engage-connector' ); ?></strong> <?php esc_html_e( 'Your unique Broodle account number. Visible in your dashboard URL.', 'broodle-engage-connector' ); ?></li>
-                    <li><strong><?php esc_html_e( 'WhatsApp Inbox ID:', 'broodle-engage-connector' ); ?></strong> <?php esc_html_e( 'The ID of the WhatsApp inbox to send from. Found in Settings → Inboxes.', 'broodle-engage-connector' ); ?></li>
-                    <li><strong><?php esc_html_e( 'Template Language:', 'broodle-engage-connector' ); ?></strong> <?php esc_html_e( 'Default language code used when sending templates (e.g., en_US, hi, es).', 'broodle-engage-connector' ); ?></li>
-                    <li><strong><?php esc_html_e( 'Template Category:', 'broodle-engage-connector' ); ?></strong> <?php esc_html_e( 'UTILITY for order notifications, MARKETING for promotions.', 'broodle-engage-connector' ); ?></li>
+                    <li><strong><?php esc_html_e( 'API Access Token:', 'broodle-engage-wp-connector' ); ?></strong> <?php esc_html_e( 'Authentication token for the Broodle Engage API. Found in Settings → Account.', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><strong><?php esc_html_e( 'Account ID:', 'broodle-engage-wp-connector' ); ?></strong> <?php esc_html_e( 'Your unique Broodle account number. Visible in your dashboard URL.', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><strong><?php esc_html_e( 'WhatsApp Inbox ID:', 'broodle-engage-wp-connector' ); ?></strong> <?php esc_html_e( 'The ID of the WhatsApp inbox to send from. Found in Settings → Inboxes.', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><strong><?php esc_html_e( 'Template Language:', 'broodle-engage-wp-connector' ); ?></strong> <?php esc_html_e( 'Default language code used when sending templates (e.g., en_US, hi, es).', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><strong><?php esc_html_e( 'Template Category:', 'broodle-engage-wp-connector' ); ?></strong> <?php esc_html_e( 'UTILITY for order notifications, MARKETING for promotions.', 'broodle-engage-wp-connector' ); ?></li>
                 </ul>
             </div>
             <div class="help-card">
                 <h3 class="help-card-title">
                     <span class="dashicons dashicons-admin-generic"></span>
-                    <?php esc_html_e( 'General Settings', 'broodle-engage-connector' ); ?>
+                    <?php esc_html_e( 'General Settings', 'broodle-engage-wp-connector' ); ?>
                 </h3>
                 <ul>
-                    <li><strong><?php esc_html_e( 'Phone Number Field:', 'broodle-engage-connector' ); ?></strong> <?php esc_html_e( 'Which WooCommerce checkout field to read the customer phone from (billing phone, shipping phone, or custom field).', 'broodle-engage-connector' ); ?></li>
-                    <li><strong><?php esc_html_e( 'Default Country Code:', 'broodle-engage-connector' ); ?></strong> <?php esc_html_e( 'Auto-prepended when a phone number lacks a country prefix (e.g., +91 for India).', 'broodle-engage-connector' ); ?></li>
-                    <li><strong><?php esc_html_e( 'Retry Attempts:', 'broodle-engage-connector' ); ?></strong> <?php esc_html_e( 'How many times to retry a failed notification (0-10).', 'broodle-engage-connector' ); ?></li>
-                    <li><strong><?php esc_html_e( 'Retry Delay:', 'broodle-engage-connector' ); ?></strong> <?php esc_html_e( 'Wait time in seconds between retry attempts (60-3600).', 'broodle-engage-connector' ); ?></li>
-                    <li><strong><?php esc_html_e( 'Log Retention:', 'broodle-engage-connector' ); ?></strong> <?php esc_html_e( 'Days to keep notification logs before automatic cleanup (1-365).', 'broodle-engage-connector' ); ?></li>
+                    <li><strong><?php esc_html_e( 'Phone Number Field:', 'broodle-engage-wp-connector' ); ?></strong> <?php esc_html_e( 'Which WooCommerce checkout field to read the customer phone from (billing phone, shipping phone, or custom field).', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><strong><?php esc_html_e( 'Default Country Code:', 'broodle-engage-wp-connector' ); ?></strong> <?php esc_html_e( 'Auto-prepended when a phone number lacks a country prefix (e.g., +91 for India).', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><strong><?php esc_html_e( 'Retry Attempts:', 'broodle-engage-wp-connector' ); ?></strong> <?php esc_html_e( 'How many times to retry a failed notification (0-10).', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><strong><?php esc_html_e( 'Retry Delay:', 'broodle-engage-wp-connector' ); ?></strong> <?php esc_html_e( 'Wait time in seconds between retry attempts (60-3600).', 'broodle-engage-wp-connector' ); ?></li>
+                    <li><strong><?php esc_html_e( 'Log Retention:', 'broodle-engage-wp-connector' ); ?></strong> <?php esc_html_e( 'Days to keep notification logs before automatic cleanup (1-365).', 'broodle-engage-wp-connector' ); ?></li>
                 </ul>
             </div>
         </div>
@@ -4330,29 +4330,29 @@ class Broodle_Engage_Admin {
         <!-- Support -->
         <h2 style="font-size: 20px; font-weight: 600; margin: 30px 0 16px 0; color: #1d2327;">
             <span class="dashicons dashicons-heart" style="color: #0E5ECE; vertical-align: middle;"></span>
-            <?php esc_html_e( 'Support & Resources', 'broodle-engage-connector' ); ?>
+            <?php esc_html_e( 'Support & Resources', 'broodle-engage-wp-connector' ); ?>
         </h2>
         <div class="help-grid">
             <div class="help-card help-card-full">
                 <div style="display: flex; gap: 30px; flex-wrap: wrap;">
                     <div style="flex: 1; min-width: 200px;">
-                        <h4 style="margin: 0 0 10px 0; color: #1d2327;"><?php esc_html_e( 'Broodle Engage Dashboard', 'broodle-engage-connector' ); ?></h4>
-                        <p><?php esc_html_e( 'Manage templates, view conversations, and configure your WhatsApp inbox.', 'broodle-engage-connector' ); ?></p>
+                        <h4 style="margin: 0 0 10px 0; color: #1d2327;"><?php esc_html_e( 'Broodle Engage Dashboard', 'broodle-engage-wp-connector' ); ?></h4>
+                        <p><?php esc_html_e( 'Manage templates, view conversations, and configure your WhatsApp inbox.', 'broodle-engage-wp-connector' ); ?></p>
                         <a href="https://engage.broodle.one" target="_blank" style="display: inline-flex; align-items: center; gap: 4px;">
                             engage.broodle.one <span class="dashicons dashicons-external" style="font-size: 16px; width: 16px; height: 16px;"></span>
                         </a>
                     </div>
                     <div style="flex: 1; min-width: 200px;">
-                        <h4 style="margin: 0 0 10px 0; color: #1d2327;"><?php esc_html_e( 'Broodle Website', 'broodle-engage-connector' ); ?></h4>
-                        <p><?php esc_html_e( 'Documentation, FAQs, and contact support.', 'broodle-engage-connector' ); ?></p>
+                        <h4 style="margin: 0 0 10px 0; color: #1d2327;"><?php esc_html_e( 'Broodle Website', 'broodle-engage-wp-connector' ); ?></h4>
+                        <p><?php esc_html_e( 'Documentation, FAQs, and contact support.', 'broodle-engage-wp-connector' ); ?></p>
                         <a href="https://broodle.host" target="_blank" style="display: inline-flex; align-items: center; gap: 4px;">
                             broodle.host <span class="dashicons dashicons-external" style="font-size: 16px; width: 16px; height: 16px;"></span>
                         </a>
                     </div>
                     <div style="flex: 1; min-width: 200px;">
-                        <h4 style="margin: 0 0 10px 0; color: #1d2327;"><?php esc_html_e( 'Plugin Version', 'broodle-engage-connector' ); ?></h4>
+                        <h4 style="margin: 0 0 10px 0; color: #1d2327;"><?php esc_html_e( 'Plugin Version', 'broodle-engage-wp-connector' ); ?></h4>
                         <p style="margin-bottom: 4px;"><?php echo esc_html( BROODLE_ENGAGE_VERSION ); ?></p>
-                        <p style="color: #646970; font-size: 13px; margin: 0;"><?php esc_html_e( 'Broodle Engage Connector for WooCommerce', 'broodle-engage-connector' ); ?></p>
+                        <p style="color: #646970; font-size: 13px; margin: 0;"><?php esc_html_e( 'Broodle Engage Connector for WooCommerce', 'broodle-engage-wp-connector' ); ?></p>
                     </div>
                 </div>
             </div>
@@ -4389,7 +4389,7 @@ class Broodle_Engage_Admin {
         check_ajax_referer( 'broodle_engage_admin_nonce', 'nonce' );
 
         if ( ! current_user_can( 'manage_woocommerce' ) ) {
-            wp_die( __( 'You do not have sufficient permissions to access this page.', 'broodle-engage-connector' ) );
+            wp_die( __( 'You do not have sufficient permissions to access this page.', 'broodle-engage-wp-connector' ) );
         }
 
         $api_key = sanitize_text_field( $_POST['api_key'] ?? '' );
@@ -4405,13 +4405,13 @@ class Broodle_Engage_Admin {
         
         if ( $access_test['profile'] && $access_test['account'] && $access_test['inbox'] ) {
             wp_send_json_success( array(
-                'message' => __( 'All connections verified!', 'broodle-engage-connector' ) . "\n" . $message,
+                'message' => __( 'All connections verified!', 'broodle-engage-wp-connector' ) . "\n" . $message,
                 'diagnostics' => $access_test,
             ) );
         } elseif ( $access_test['profile'] ) {
             // Profile works but account/inbox doesn't
             wp_send_json_error( array(
-                'message' => __( 'API token is valid but account/inbox access failed:', 'broodle-engage-connector' ) . "\n" . $message,
+                'message' => __( 'API token is valid but account/inbox access failed:', 'broodle-engage-wp-connector' ) . "\n" . $message,
                 'diagnostics' => $access_test,
             ) );
         } else {
@@ -4429,18 +4429,18 @@ class Broodle_Engage_Admin {
         check_ajax_referer( 'broodle_engage_admin_nonce', 'nonce' );
 
         if ( ! current_user_can( 'manage_woocommerce' ) ) {
-            wp_die( __( 'You do not have sufficient permissions to access this page.', 'broodle-engage-connector' ) );
+            wp_die( __( 'You do not have sufficient permissions to access this page.', 'broodle-engage-wp-connector' ) );
         }
 
         $status = sanitize_text_field( $_POST['status'] ?? '' );
         $phone = sanitize_text_field( $_POST['phone'] ?? '' );
 
         if ( empty( $phone ) ) {
-            wp_send_json_error( __( 'Phone number is required for test message.', 'broodle-engage-connector' ) );
+            wp_send_json_error( __( 'Phone number is required for test message.', 'broodle-engage-wp-connector' ) );
         }
 
         // Send test message logic would go here
-        wp_send_json_success( __( 'Test message sent successfully!', 'broodle-engage-connector' ) );
+        wp_send_json_success( __( 'Test message sent successfully!', 'broodle-engage-wp-connector' ) );
     }
 
     /**
@@ -4450,7 +4450,7 @@ class Broodle_Engage_Admin {
         check_ajax_referer( 'broodle_engage_admin_nonce', 'nonce' );
 
         if ( ! current_user_can( 'manage_woocommerce' ) ) {
-            wp_die( __( 'You do not have sufficient permissions to access this page.', 'broodle-engage-connector' ) );
+            wp_die( __( 'You do not have sufficient permissions to access this page.', 'broodle-engage-wp-connector' ) );
         }
 
         // Get phone number from request
@@ -4458,7 +4458,7 @@ class Broodle_Engage_Admin {
         
         if ( empty( $phone_number ) ) {
             wp_send_json_error( array(
-                'message' => __( 'Please enter a phone number with country code (e.g., +919876543210).', 'broodle-engage-connector' ),
+                'message' => __( 'Please enter a phone number with country code (e.g., +919876543210).', 'broodle-engage-wp-connector' ),
                 'error_code' => 'missing_phone',
             ) );
             return;
@@ -4503,7 +4503,7 @@ class Broodle_Engage_Admin {
         }
 
         // Get detailed response information
-        $message = sprintf( __( 'Test message sent successfully to %s!', 'broodle-engage-connector' ), $phone_number );
+        $message = sprintf( __( 'Test message sent successfully to %s!', 'broodle-engage-wp-connector' ), $phone_number );
         if ( isset( $response['status_message'] ) && ! empty( $response['status_message'] ) ) {
             $message .= ' ' . $response['status_message'];
         }
@@ -4521,19 +4521,19 @@ class Broodle_Engage_Admin {
     public function ajax_test_failed_notification() {
         // Check nonce and permissions
         if ( ! check_ajax_referer( 'broodle_engage_admin_nonce', 'nonce', false ) || ! $this->user_can_access() ) {
-            wp_send_json_error( array( 'message' => __( 'Security check failed.', 'broodle-engage-connector' ) ) );
+            wp_send_json_error( array( 'message' => __( 'Security check failed.', 'broodle-engage-wp-connector' ) ) );
         }
 
         $notification_type = isset( $_POST['notification_type'] ) ? sanitize_text_field( wp_unslash( $_POST['notification_type'] ) ) : 'order_failed';
         $order_id = isset( $_POST['order_id'] ) ? absint( $_POST['order_id'] ) : 0;
 
         if ( ! $order_id ) {
-            wp_send_json_error( array( 'message' => __( 'Please provide a valid order ID.', 'broodle-engage-connector' ) ) );
+            wp_send_json_error( array( 'message' => __( 'Please provide a valid order ID.', 'broodle-engage-wp-connector' ) ) );
         }
 
         $order = wc_get_order( $order_id );
         if ( ! $order ) {
-            wp_send_json_error( array( 'message' => __( 'Order not found.', 'broodle-engage-connector' ) ) );
+            wp_send_json_error( array( 'message' => __( 'Order not found.', 'broodle-engage-wp-connector' ) ) );
         }
 
         // Test the notification
@@ -4562,7 +4562,7 @@ class Broodle_Engage_Admin {
         }
 
         $screen = get_current_screen();
-        if ( ! $screen || strpos( $screen->id, 'broodle-engage-connector' ) === false ) {
+        if ( ! $screen || strpos( $screen->id, 'broodle-engage-wp-connector' ) === false ) {
             return;
         }
 
@@ -4620,7 +4620,7 @@ class Broodle_Engage_Admin {
     public function add_dashboard_widget() {
         wp_add_dashboard_widget(
             'broodle_engage_dashboard_widget',
-            __( 'Broodle Engage Connector', 'broodle-engage-connector' ),
+            __( 'Broodle Engage Connector', 'broodle-engage-wp-connector' ),
             array( $this, 'render_dashboard_widget' ),
             null,
             null,
@@ -4781,7 +4781,7 @@ class Broodle_Engage_Admin {
             <div class="broodle-widget-header">
                 <h3 class="broodle-widget-title">
                     <span class="dashicons dashicons-whatsapp"></span>
-                    <?php esc_html_e( 'Broodle Engage API', 'broodle-engage-connector' ); ?>
+                    <?php esc_html_e( 'Broodle Engage API', 'broodle-engage-wp-connector' ); ?>
                 </h3>
                 <div class="broodle-widget-status">
                     <span class="broodle-status-indicator broodle-status-<?php echo esc_attr( $stats['status'] ); ?>"></span>
@@ -4792,35 +4792,35 @@ class Broodle_Engage_Admin {
             <div class="broodle-stats-grid">
                 <div class="broodle-stat-card">
                     <div class="broodle-stat-number"><?php echo esc_html( number_format( $stats['today'] ) ); ?></div>
-                    <div class="broodle-stat-label"><?php esc_html_e( 'Today', 'broodle-engage-connector' ); ?></div>
+                    <div class="broodle-stat-label"><?php esc_html_e( 'Today', 'broodle-engage-wp-connector' ); ?></div>
                 </div>
                 <div class="broodle-stat-card">
                     <div class="broodle-stat-number"><?php echo esc_html( number_format( $stats['last_7_days'] ) ); ?></div>
-                    <div class="broodle-stat-label"><?php esc_html_e( '7 Days', 'broodle-engage-connector' ); ?></div>
+                    <div class="broodle-stat-label"><?php esc_html_e( '7 Days', 'broodle-engage-wp-connector' ); ?></div>
                 </div>
                 <div class="broodle-stat-card">
                     <div class="broodle-stat-number"><?php echo esc_html( number_format( $stats['last_30_days'] ) ); ?></div>
-                    <div class="broodle-stat-label"><?php esc_html_e( '30 Days', 'broodle-engage-connector' ); ?></div>
+                    <div class="broodle-stat-label"><?php esc_html_e( '30 Days', 'broodle-engage-wp-connector' ); ?></div>
                 </div>
             </div>
 
             <div class="broodle-actions">
-                <a href="<?php echo esc_url( admin_url( 'admin.php?page=broodle-engage-connector&tab=logs' ) ); ?>"
+                <a href="<?php echo esc_url( admin_url( 'admin.php?page=broodle-engage-wp-connector&tab=logs' ) ); ?>"
                    class="broodle-action-btn broodle-btn-primary">
                     <span class="dashicons dashicons-chart-bar"></span>
-                    <?php esc_html_e( 'View Logs', 'broodle-engage-connector' ); ?>
+                    <?php esc_html_e( 'View Logs', 'broodle-engage-wp-connector' ); ?>
                 </a>
-                <a href="<?php echo esc_url( admin_url( 'admin.php?page=broodle-engage-connector&tab=templates' ) ); ?>"
+                <a href="<?php echo esc_url( admin_url( 'admin.php?page=broodle-engage-wp-connector&tab=templates' ) ); ?>"
                    class="broodle-action-btn broodle-btn-secondary">
                     <span class="dashicons dashicons-admin-generic"></span>
-                    <?php esc_html_e( 'Settings', 'broodle-engage-connector' ); ?>
+                    <?php esc_html_e( 'Settings', 'broodle-engage-wp-connector' ); ?>
                 </a>
                 <a href="https://engage.broodle.one"
                    target="_blank"
                    rel="noopener noreferrer"
                    class="broodle-action-btn broodle-btn-whatsapp">
                     <span class="dashicons dashicons-format-chat"></span>
-                    <?php esc_html_e( 'Open WhatsApp Inbox', 'broodle-engage-connector' ); ?>
+                    <?php esc_html_e( 'Open WhatsApp Inbox', 'broodle-engage-wp-connector' ); ?>
                 </a>
             </div>
 
@@ -4828,8 +4828,8 @@ class Broodle_Engage_Admin {
                 <div class="broodle-error-notice">
                     <span class="dashicons dashicons-warning"></span>
                     <span>
-                        <?php echo esc_html( $stats['recent_errors'] ); ?> <?php esc_html_e( 'failed messages in the last 24 hours.', 'broodle-engage-connector' ); ?>
-                        <a href="<?php echo esc_url( admin_url( 'admin.php?page=broodle-engage-connector&tab=logs&status=error' ) ); ?>"><?php esc_html_e( 'View errors', 'broodle-engage-connector' ); ?></a>
+                        <?php echo esc_html( $stats['recent_errors'] ); ?> <?php esc_html_e( 'failed messages in the last 24 hours.', 'broodle-engage-wp-connector' ); ?>
+                        <a href="<?php echo esc_url( admin_url( 'admin.php?page=broodle-engage-wp-connector&tab=logs&status=error' ) ); ?>"><?php esc_html_e( 'View errors', 'broodle-engage-wp-connector' ); ?></a>
                     </span>
                 </div>
             <?php endif; ?>
@@ -4919,7 +4919,7 @@ class Broodle_Engage_Admin {
         check_ajax_referer( 'broodle_engage_admin_nonce', 'nonce' );
 
         if ( ! current_user_can( 'manage_woocommerce' ) ) {
-            wp_send_json_error( array( 'message' => __( 'Permission denied.', 'broodle-engage-connector' ) ) );
+            wp_send_json_error( array( 'message' => __( 'Permission denied.', 'broodle-engage-wp-connector' ) ) );
         }
 
         $api = new Broodle_Engage_API();
@@ -4947,7 +4947,7 @@ class Broodle_Engage_Admin {
         check_ajax_referer( 'broodle_engage_admin_nonce', 'nonce' );
 
         if ( ! current_user_can( 'manage_woocommerce' ) ) {
-            wp_send_json_error( array( 'message' => __( 'Permission denied.', 'broodle-engage-connector' ) ) );
+            wp_send_json_error( array( 'message' => __( 'Permission denied.', 'broodle-engage-wp-connector' ) ) );
         }
 
         // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Data is sanitized below per field.
@@ -4956,7 +4956,7 @@ class Broodle_Engage_Admin {
         $custom_statuses = isset( $_POST['custom_statuses'] ) ? wp_unslash( $_POST['custom_statuses'] ) : array();
         
         if ( empty( $config ) ) {
-            wp_send_json_error( array( 'message' => __( 'No configuration data provided.', 'broodle-engage-connector' ) ) );
+            wp_send_json_error( array( 'message' => __( 'No configuration data provided.', 'broodle-engage-wp-connector' ) ) );
         }
 
         $settings = Broodle_Engage_Settings::get_settings();
@@ -5005,7 +5005,7 @@ class Broodle_Engage_Admin {
         update_option( 'broodle_engage_settings', $settings );
 
         wp_send_json_success( array( 
-            'message' => __( 'Template configuration saved successfully!', 'broodle-engage-connector' ),
+            'message' => __( 'Template configuration saved successfully!', 'broodle-engage-wp-connector' ),
         ) );
     }
 
@@ -5014,32 +5014,32 @@ class Broodle_Engage_Admin {
      */
     public static function get_variable_options() {
         return array(
-            ''                    => __( '-- Select Variable --', 'broodle-engage-connector' ),
-            'customer_name'       => __( 'Customer Name', 'broodle-engage-connector' ),
-            'customer_first_name' => __( 'Customer First Name', 'broodle-engage-connector' ),
-            'customer_last_name'  => __( 'Customer Last Name', 'broodle-engage-connector' ),
-            'customer_email'      => __( 'Customer Email', 'broodle-engage-connector' ),
-            'order_id'            => __( 'Order ID', 'broodle-engage-connector' ),
-            'order_number'        => __( 'Order Number', 'broodle-engage-connector' ),
-            'order_total'         => __( 'Order Total (formatted)', 'broodle-engage-connector' ),
-            'order_total_raw'     => __( 'Order Total (number only)', 'broodle-engage-connector' ),
-            'order_date'          => __( 'Order Date', 'broodle-engage-connector' ),
-            'order_status'        => __( 'Order Status', 'broodle-engage-connector' ),
-            'product_names'       => __( 'Product Names', 'broodle-engage-connector' ),
-            'product_count'       => __( 'Product Count', 'broodle-engage-connector' ),
-            'shipping_address'    => __( 'Shipping Address', 'broodle-engage-connector' ),
-            'billing_address'     => __( 'Billing Address', 'broodle-engage-connector' ),
-            'payment_method'      => __( 'Payment Method', 'broodle-engage-connector' ),
-            'shipping_method'     => __( 'Shipping Method', 'broodle-engage-connector' ),
-            'tracking_url'        => __( 'Tracking URL', 'broodle-engage-connector' ),
-            'tracking_number'     => __( 'Tracking Number', 'broodle-engage-connector' ),
-            'coupon_code'         => __( 'Coupon Code', 'broodle-engage-connector' ),
-            'cart_url'            => __( 'Cart URL', 'broodle-engage-connector' ),
-            'product_url'         => __( 'Product URL (first item)', 'broodle-engage-connector' ),
-            'shop_url'            => __( 'Shop URL', 'broodle-engage-connector' ),
-            'my_account_url'      => __( 'My Account URL', 'broodle-engage-connector' ),
-            'site_name'           => __( 'Site Name', 'broodle-engage-connector' ),
-            'custom_text'         => __( 'Custom Text (enter below)', 'broodle-engage-connector' ),
+            ''                    => __( '-- Select Variable --', 'broodle-engage-wp-connector' ),
+            'customer_name'       => __( 'Customer Name', 'broodle-engage-wp-connector' ),
+            'customer_first_name' => __( 'Customer First Name', 'broodle-engage-wp-connector' ),
+            'customer_last_name'  => __( 'Customer Last Name', 'broodle-engage-wp-connector' ),
+            'customer_email'      => __( 'Customer Email', 'broodle-engage-wp-connector' ),
+            'order_id'            => __( 'Order ID', 'broodle-engage-wp-connector' ),
+            'order_number'        => __( 'Order Number', 'broodle-engage-wp-connector' ),
+            'order_total'         => __( 'Order Total (formatted)', 'broodle-engage-wp-connector' ),
+            'order_total_raw'     => __( 'Order Total (number only)', 'broodle-engage-wp-connector' ),
+            'order_date'          => __( 'Order Date', 'broodle-engage-wp-connector' ),
+            'order_status'        => __( 'Order Status', 'broodle-engage-wp-connector' ),
+            'product_names'       => __( 'Product Names', 'broodle-engage-wp-connector' ),
+            'product_count'       => __( 'Product Count', 'broodle-engage-wp-connector' ),
+            'shipping_address'    => __( 'Shipping Address', 'broodle-engage-wp-connector' ),
+            'billing_address'     => __( 'Billing Address', 'broodle-engage-wp-connector' ),
+            'payment_method'      => __( 'Payment Method', 'broodle-engage-wp-connector' ),
+            'shipping_method'     => __( 'Shipping Method', 'broodle-engage-wp-connector' ),
+            'tracking_url'        => __( 'Tracking URL', 'broodle-engage-wp-connector' ),
+            'tracking_number'     => __( 'Tracking Number', 'broodle-engage-wp-connector' ),
+            'coupon_code'         => __( 'Coupon Code', 'broodle-engage-wp-connector' ),
+            'cart_url'            => __( 'Cart URL', 'broodle-engage-wp-connector' ),
+            'product_url'         => __( 'Product URL (first item)', 'broodle-engage-wp-connector' ),
+            'shop_url'            => __( 'Shop URL', 'broodle-engage-wp-connector' ),
+            'my_account_url'      => __( 'My Account URL', 'broodle-engage-wp-connector' ),
+            'site_name'           => __( 'Site Name', 'broodle-engage-wp-connector' ),
+            'custom_text'         => __( 'Custom Text (enter below)', 'broodle-engage-wp-connector' ),
         );
     }
 
