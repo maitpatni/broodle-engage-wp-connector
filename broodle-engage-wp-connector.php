@@ -15,7 +15,6 @@
  * WC tested up to: 9.9
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Network: false
  *
  * @package BroodleEngageConnector
  */
@@ -78,9 +77,6 @@ class Broodle_Engage_Connector {
         // Declare HPOS compatibility
         add_action( 'before_woocommerce_init', array( $this, 'declare_hpos_compatibility' ) );
 
-        // Load text domain
-        load_plugin_textdomain( 'broodle-engage-wp-connector', false, dirname( BROODLE_ENGAGE_PLUGIN_BASENAME ) . '/languages' );
-
         // Include required files
         $this->includes();
 
@@ -97,7 +93,6 @@ class Broodle_Engage_Connector {
         require_once BROODLE_ENGAGE_PLUGIN_DIR . 'includes/class-broodle-engage-notifications.php';
         require_once BROODLE_ENGAGE_PLUGIN_DIR . 'includes/class-broodle-engage-logger.php';
         require_once BROODLE_ENGAGE_PLUGIN_DIR . 'includes/class-broodle-engage-settings.php';
-        require_once BROODLE_ENGAGE_PLUGIN_DIR . 'includes/class-broodle-engage-updater.php';
     }
 
     /**
@@ -111,11 +106,6 @@ class Broodle_Engage_Connector {
 
         // Initialize notifications handler
         new Broodle_Engage_Notifications();
-
-        // Initialize GitHub updater
-        if ( is_admin() ) {
-            new Broodle_Engage_Updater();
-        }
 
         // Clean up any duplicate shipped statuses
         add_action( 'init', array( $this, 'cleanup_duplicate_statuses' ), 15 );
