@@ -302,7 +302,7 @@ class Broodle_Engage_API {
         $template_params = $this->build_template_params( $template_name, $template_vars, $media_uri, $template_lang );
 
         // Build content message (displayed in inbox)
-        $content = $this->build_content_message( $template_name, $template_vars, $template_body );
+        $content = $this->build_content_message( $template_name, $template_vars, $template_body, $media_uri );
 
         $data = array(
             'source_id'  => $source_id,
@@ -413,7 +413,7 @@ class Broodle_Engage_API {
      * @param array  $template_vars Template variables.
      * @return string Content message.
      */
-    private function build_content_message( $template_name, $template_vars = array(), $template_body = '' ) {
+    private function build_content_message( $template_name, $template_vars = array(), $template_body = '', $media_uri = '' ) {
         // Use the actual template body text if provided
         $message = '';
 
@@ -452,6 +452,11 @@ class Broodle_Engage_API {
             
             // Remove any remaining unreplaced placeholders
             $message = preg_replace( '/\{\{\d+\}\}/', '', $message );
+
+            // Prepend image URL if present so it displays in Chatwoot
+            if ( ! empty( $media_uri ) && filter_var( $media_uri, FILTER_VALIDATE_URL ) ) {
+                $message = $media_uri . "\n\n" . trim( $message );
+            }
             
             return trim( $message );
         }

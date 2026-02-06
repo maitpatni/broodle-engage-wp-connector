@@ -1283,7 +1283,7 @@ class Broodle_Engage_Notifications {
                 return wc_get_cart_url();
                 
             case 'shop_url':
-                return get_permalink( wc_get_page_id( 'shop' ) );
+                return wc_get_page_permalink( 'shop' );
                 
             case 'my_account_url':
                 return wc_get_page_permalink( 'myaccount' );
@@ -1340,7 +1340,7 @@ class Broodle_Engage_Notifications {
 
         if ( empty( $items ) ) {
             // If no items, return shop URL
-            return get_permalink( wc_get_page_id( 'shop' ) );
+            return wc_get_page_permalink( 'shop' );
         }
 
         // Get the first item
@@ -1355,7 +1355,7 @@ class Broodle_Engage_Notifications {
         }
 
         // Fallback to shop URL if product URL not found
-        return get_permalink( wc_get_page_id( 'shop' ) );
+        return wc_get_page_permalink( 'shop' );
     }
 
     /**
