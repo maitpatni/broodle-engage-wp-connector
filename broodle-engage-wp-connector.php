@@ -3,7 +3,7 @@
  * Plugin Name: Broodle Engage Connector
  * Plugin URI: https://broodle.host
  * Description: Send WooCommerce order notifications to customers via WhatsApp using Broodle WhatsApp API. Supports order received, shipped, delivered, and failed/cancelled notifications.
- * Version: 3.0.1
+ * Version: 3.1.0
  * Author: Broodle
  * Author URI: https://broodle.host
  * Text Domain: broodle-engage-wp-connector
@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants
-define( 'BROODLE_ENGAGE_VERSION', '3.0.1' );
+define( 'BROODLE_ENGAGE_VERSION', '3.1.0' );
 define( 'BROODLE_ENGAGE_PLUGIN_FILE', __FILE__ );
 define( 'BROODLE_ENGAGE_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'BROODLE_ENGAGE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -204,7 +204,17 @@ class Broodle_Engage_Connector {
             admin_url( 'admin.php?page=broodle-engage-wp-connector' ),
             esc_html__( 'Settings', 'broodle-engage-wp-connector' )
         );
-        array_unshift( $links, $settings_link );
+        $signup_link = sprintf(
+            '<a href="%s" target="_blank" style="color: #0E5ECE; font-weight: 500;">%s</a>',
+            'https://broodle.host/engage',
+            esc_html__( 'Sign Up for Broodle Engage', 'broodle-engage-wp-connector' )
+        );
+        $login_link = sprintf(
+            '<a href="%s" target="_blank" style="color: #0E5ECE; font-weight: 500;">%s</a>',
+            'https://engage.broodle.one',
+            esc_html__( 'Login to Dashboard', 'broodle-engage-wp-connector' )
+        );
+        array_unshift( $links, $settings_link, $signup_link, $login_link );
         return $links;
     }
 
