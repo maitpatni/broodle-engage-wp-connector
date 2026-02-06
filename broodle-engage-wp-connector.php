@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Broodle Engage Connector
- * Plugin URI: https://broodle.host
+ * Plugin URI: https://broodle.host/engage
  * Description: Send WooCommerce order notifications to customers via WhatsApp using Broodle WhatsApp API. Supports order received, shipped, delivered, and failed/cancelled notifications.
  * Version: 3.1.1
  * Author: Broodle
