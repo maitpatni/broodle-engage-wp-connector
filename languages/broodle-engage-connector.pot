@@ -1,0 +1,334 @@
+# Copyright (C) 2025 Broodle
+# This file is distributed under the GPL v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Broodle Engage Connector 1.0.0\n"
+"Report-Msgid-Bugs-To: https://broodle.host\n"
+"POT-Creation-Date: 2025-01-12 12:00+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2025-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: WordPress\n"
+
+#: broodle-engage-connector.php:45
+msgid "Broodle Engage Connector"
+msgstr ""
+
+#: broodle-engage-connector.php:46
+msgid "Settings"
+msgstr ""
+
+#: broodle-engage-connector.php:108
+#, php-format
+msgid "%s requires WooCommerce to be installed and active."
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:25
+msgid "Templates"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:28
+msgid "Logs"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:31
+msgid "Help"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:75
+msgid "API Key"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:81
+#, php-format
+msgid "Get your API key from %s"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:95
+msgid "Test Connection"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:102
+msgid "Phone Number Field"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:111
+msgid "Choose which phone number field to use for WhatsApp notifications."
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:117
+msgid "Default Country Code"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:120
+msgid "Default country code to use if not specified in phone number."
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:126
+msgid "Retry Attempts"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:129
+msgid "Number of times to retry failed notifications."
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:135
+msgid "Retry Delay (seconds)"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:138
+msgid "Delay between retry attempts in seconds."
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:144
+msgid "Log Retention (days)"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:147
+msgid "Number of days to keep notification logs."
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:162
+msgid "WhatsApp Template Configuration"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:163
+msgid "Configure WhatsApp templates for each order status. Templates must be pre-approved in your Broodle dashboard."
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:173
+msgid "Enable"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:175
+msgid "Template name"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:177
+msgid "Send Test"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:194
+msgid "Notification Statistics (Last 30 Days)"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:199
+msgid "Total Notifications"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:204
+msgid "Successful"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:209
+msgid "Failed"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:214
+msgid "Pending"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:218
+msgid "Recent Notification Logs"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:223
+msgid "Date"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:224
+msgid "Order ID"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:225
+msgid "Phone"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:226
+msgid "Template"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:227
+msgid "Status"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:228
+msgid "Error"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:260
+msgid "No notification logs found."
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:268
+msgid "Getting Started"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:270
+msgid "1. Register for Broodle WhatsApp API"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:274
+#, php-format
+msgid "Visit %s to create your account and get your API credentials."
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:280
+msgid "2. Create WhatsApp Templates"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:281
+msgid "Create message templates in your Broodle dashboard and get them approved by WhatsApp."
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:283
+msgid "3. Configure Plugin Settings"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:284
+msgid "Enter your API credentials and configure your templates for each order status."
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:286
+msgid "4. Test Your Setup"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:287
+msgid "Use the test buttons to verify your API connection and template configuration."
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:290
+msgid "Template Variables"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:292
+msgid "You can use the following variables in your WhatsApp templates:"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:304
+msgid "Support"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:308
+#, php-format
+msgid "For support and documentation, visit %s"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:320
+msgid "Security check failed."
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:336
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:345
+msgid "API connection successful!"
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:356
+msgid "Phone number is required for test message."
+msgstr ""
+
+#: includes/class-broodle-wa-admin.php:361
+msgid "Test message sent successfully!"
+msgstr ""
+
+#: includes/class-broodle-wa-api.php:67
+msgid "API key is not configured."
+msgstr ""
+
+#: includes/class-broodle-wa-api.php:72
+msgid "Phone number is required."
+msgstr ""
+
+#: includes/class-broodle-wa-api.php:77
+msgid "Template name is required."
+msgstr ""
+
+#: includes/class-broodle-wa-api.php:108
+msgid "API key is required."
+msgstr ""
+
+#: includes/class-broodle-wa-api.php:140
+#, php-format
+msgid "HTTP request failed: %s"
+msgstr ""
+
+#: includes/class-broodle-wa-api.php:154
+#, php-format
+msgid "API request failed with status %1$d: %2$s"
+msgstr ""
+
+#: includes/class-broodle-wa-api.php:164
+msgid "Invalid JSON response from API."
+msgstr ""
+
+#: includes/class-broodle-wa-api.php:176
+msgid "Unknown API error."
+msgstr ""
+
+#: includes/class-broodle-wa-api.php:183
+msgid "Failed to send message."
+msgstr ""
+
+#: includes/class-broodle-wa-api.php:202
+msgid "Invalid phone number format."
+msgstr ""
+
+#: includes/class-broodle-wa-api.php:213
+msgid "Phone number must be 10-15 digits with country code."
+msgstr ""
+
+#: includes/class-broodle-wa-notifications.php:185
+msgid "Customer phone number not found."
+msgstr ""
+
+#: includes/class-broodle-wa-settings.php:118
+msgid "Order Received (Pending Payment)"
+msgstr ""
+
+#: includes/class-broodle-wa-settings.php:119
+msgid "Order Processing"
+msgstr ""
+
+#: includes/class-broodle-wa-settings.php:120
+msgid "Order Shipped (Custom Status)"
+msgstr ""
+
+#: includes/class-broodle-wa-settings.php:121
+msgid "Order Delivered (Custom Status)"
+msgstr ""
+
+#: includes/class-broodle-wa-settings.php:122
+msgid "Order Completed"
+msgstr ""
+
+#: includes/class-broodle-wa-settings.php:123
+msgid "Order Cancelled"
+msgstr ""
+
+#: includes/class-broodle-wa-settings.php:124
+msgid "Order Failed"
+msgstr ""
+
+#: includes/class-broodle-wa-settings.php:125
+msgid "Order Refunded"
+msgstr ""
+
+#: includes/class-broodle-wa-settings.php:135
+msgid "Billing Phone"
+msgstr ""
+
+#: includes/class-broodle-wa-settings.php:136
+msgid "Shipping Phone"
+msgstr ""
+
+#: includes/class-broodle-wa-settings.php:149
+msgid "API key is required."
+msgstr ""
+
+
