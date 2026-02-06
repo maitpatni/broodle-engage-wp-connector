@@ -248,6 +248,7 @@ class Broodle_Engage_Settings {
                     'enabled'       => ! empty( $tc['enabled'] ) && 'false' !== $tc['enabled'],
                     'template_name' => sanitize_text_field( $tc['template_name'] ?? '' ),
                     'template_lang' => sanitize_text_field( $tc['template_lang'] ?? 'en' ),
+                    'template_body' => sanitize_textarea_field( $tc['template_body'] ?? '' ),
                     'variable_map'  => array_map( 'sanitize_text_field', (array) ( $tc['variable_map'] ?? array() ) ),
                     'custom_text'   => array_map( 'sanitize_text_field', (array) ( $tc['custom_text'] ?? array() ) ),
                     'image_id'      => absint( $tc['image_id'] ?? 0 ),

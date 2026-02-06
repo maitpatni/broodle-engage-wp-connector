@@ -74,9 +74,10 @@ class Broodle_Engage_API {
      * @param array  $template_vars Template variables.
      * @param string $media_uri Optional media URI.
      * @param string $template_lang Template language code (e.g. 'en', 'en_US').
+     * @param string $template_body Template body text with placeholders.
      * @return array|WP_Error
      */
-    public function send_template_message( $phone_number, $template_name, $template_vars = array(), $media_uri = '', $template_lang = '' ) {
+    public function send_template_message( $phone_number, $template_name, $template_vars = array(), $media_uri = '', $template_lang = '', $template_body = '' ) {
         // Validate credentials
         if ( empty( $this->api_key ) ) {
             return new WP_Error( 'missing_credentials', __( 'API access token is not configured.', 'broodle-engage-connector' ) );
@@ -125,7 +126,8 @@ class Broodle_Engage_API {
             $template_name,
             $template_vars,
             $media_uri,
-            $template_lang
+            $template_lang,
+            $template_body
         );
 
         return $result;
@@ -289,9 +291,10 @@ class Broodle_Engage_API {
      * @param array  $template_vars Template variables.
      * @param string $media_uri Optional media URI.
      * @param string $template_lang Template language code.
+     * @param string $template_body Template body text with placeholders.
      * @return array|WP_Error Result or error.
      */
-    private function create_conversation_with_template( $contact_id, $source_id, $template_name, $template_vars, $media_uri = '', $template_lang = '' ) {
+    private function create_conversation_with_template( $contact_id, $source_id, $template_name, $template_vars, $media_uri = '', $template_lang = '', $template_body = '' ) {
         $endpoint = "/api/v1/accounts/{$this->account_id}/conversations";
         $url = self::API_BASE_URL . $endpoint;
 
@@ -299,7 +302,7 @@ class Broodle_Engage_API {
         $template_params = $this->build_template_params( $template_name, $template_vars, $media_uri, $template_lang );
 
         // Build content message (displayed in inbox)
-        $content = $this->build_content_message( $template_name, $template_vars );
+        $content = $this->build_content_message( $template_name, $template_vars, $template_body );
 
         $data = array(
             'source_id'  => $source_id,
@@ -410,13 +413,31 @@ class Broodle_Engage_API {
      * @param array  $template_vars Template variables.
      * @return string Content message.
      */
-    private function build_content_message( $template_name, $template_vars = array() ) {
-        $settings = Broodle_Engage_Settings::get_settings();
-        $template_messages = $settings['template_messages'] ?? array();
-        
-        // Check if we have a stored message for this template
-        if ( isset( $template_messages[ $template_name ] ) && ! empty( $template_messages[ $template_name ] ) ) {
-            $message = $template_messages[ $template_name ];
+    private function build_content_message( $template_name, $template_vars = array(), $template_body = '' ) {
+        // Use the actual template body text if provided
+        $message = '';
+
+        if ( ! empty( $template_body ) ) {
+            $message = $template_body;
+        } else {
+            // Fallback: look up from saved template_config
+            $settings = Broodle_Engage_Settings::get_settings();
+            $template_config = $settings['template_config'] ?? array();
+            foreach ( $template_config as $status => $config ) {
+                if ( ( $config['template_name'] ?? '' ) === $template_name && ! empty( $config['template_body'] ) ) {
+                    $message = $config['template_body'];
+                    break;
+                }
+            }
+
+            // Second fallback: legacy template_messages
+            if ( empty( $message ) ) {
+                $template_messages = $settings['template_messages'] ?? array();
+                $message = $template_messages[ $template_name ] ?? '';
+            }
+        }
+
+        if ( ! empty( $message ) ) {
             
             // Replace placeholders {{1}}, {{2}}, etc. with actual variable values
             if ( ! empty( $template_vars ) && is_array( $template_vars ) ) {
@@ -435,7 +456,7 @@ class Broodle_Engage_API {
             return trim( $message );
         }
         
-        // Fallback: create a generic message with template name and variables
+        // Last resort fallback: create a generic message with template name and variables
         $message_parts = array();
         $template_display = str_replace( '_', ' ', ucwords( $template_name, '_' ) );
         $message_parts[] = "📋 {$template_display}";

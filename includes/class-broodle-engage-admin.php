@@ -2880,11 +2880,16 @@ class Broodle_Engage_Admin {
                     var imageId = card.find('.image-id-input').val();
 
                     // Get template info
+                    var templateBody = '';
                     var template = templatesData.find(function(t) {
                         return t.name === templateName;
                     });
                     if (template) {
                         templateLang = template.language;
+                        templateBody = (template.header ? template.header + '\n\n' : '') + (template.body || '');
+                        if (template.footer) {
+                            templateBody += '\n\n' + template.footer;
+                        }
                     }
 
                     // Get variable mappings and custom text
@@ -2906,6 +2911,7 @@ class Broodle_Engage_Admin {
                         enabled: isEnabled,
                         template_name: templateName,
                         template_lang: templateLang,
+                        template_body: templateBody,
                         variable_map: variableMap,
                         custom_text: customText,
                         image_id: imageId
@@ -4262,6 +4268,7 @@ class Broodle_Engage_Admin {
                 'enabled'       => filter_var( $enabled_raw, FILTER_VALIDATE_BOOLEAN ),
                 'template_name' => sanitize_text_field( $template_data['template_name'] ?? '' ),
                 'template_lang' => sanitize_text_field( $template_data['template_lang'] ?? 'en' ),
+                'template_body' => sanitize_textarea_field( $template_data['template_body'] ?? '' ),
                 'variable_map'  => array_map( 'sanitize_text_field', $template_data['variable_map'] ?? array() ),
                 'custom_text'   => array_map( 'sanitize_text_field', $template_data['custom_text'] ?? array() ),
                 'image_id'      => absint( $template_data['image_id'] ?? 0 ),

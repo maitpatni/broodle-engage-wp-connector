@@ -746,6 +746,7 @@ class Broodle_Engage_Notifications {
                 }
                 $template_name = $template_config['template_name'] ?? '';
                 $template_lang = $template_config['template_lang'] ?? '';
+                $template_body = $template_config['template_body'] ?? '';
                 $variable_map = $template_config['variable_map'] ?? array();
                 $custom_text_values = $template_config['custom_text'] ?? array();
                 $config_image_id = $template_config['image_id'] ?? 0;
@@ -757,6 +758,7 @@ class Broodle_Engage_Notifications {
                 }
                 $template_name = $settings['templates'][ $notification_type ] ?? '';
                 $template_lang = '';
+                $template_body = '';
                 $variable_map = null;
                 $custom_text_values = array();
                 $config_image_id = 0;
@@ -824,7 +826,7 @@ class Broodle_Engage_Notifications {
             }
 
             // Send the notification
-            $this->send_whatsapp_message( $order_id, $phone_number, $template_name, $template_vars, $log_id, $image_url, $template_lang );
+            $this->send_whatsapp_message( $order_id, $phone_number, $template_name, $template_vars, $log_id, $image_url, $template_lang, $template_body );
 
         } catch ( Exception $e ) {
             // Log error with full context
@@ -844,7 +846,7 @@ class Broodle_Engage_Notifications {
      * @param string $image_url Optional image URL.
      * @param string $template_lang Template language code.
      */
-    private function send_whatsapp_message( $order_id, $phone_number, $template_name, $template_vars, $log_id, $image_url = '', $template_lang = '' ) {
+    private function send_whatsapp_message( $order_id, $phone_number, $template_name, $template_vars, $log_id, $image_url = '', $template_lang = '', $template_body = '' ) {
         try {
             $api = new Broodle_Engage_API();
 
@@ -854,7 +856,7 @@ class Broodle_Engage_Notifications {
                 return;
             }
 
-            $response = $api->send_template_message( $phone_number, $template_name, $template_vars, $image_url, $template_lang );
+            $response = $api->send_template_message( $phone_number, $template_name, $template_vars, $image_url, $template_lang, $template_body );
 
         if ( is_wp_error( $response ) ) {
             // Log error and schedule retry
