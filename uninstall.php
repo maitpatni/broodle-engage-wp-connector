@@ -23,7 +23,8 @@ wp_clear_scheduled_hook( 'broodle_engage_cleanup_logs' );
 global $wpdb;
 
 $table_name = esc_sql( $wpdb->prefix . 'broodle_engage_logs' );
-$wpdb->query( "DROP TABLE IF EXISTS {$table_name}" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.SchemaChange,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+$wpdb->query( "DROP TABLE IF EXISTS `{$table_name}`" );
 
 // Clear any cached data
 wp_cache_flush();

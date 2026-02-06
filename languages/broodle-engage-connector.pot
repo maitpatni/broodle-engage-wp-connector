@@ -13,15 +13,15 @@ msgstr ""
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Generator: WordPress\n"
 
-#: broodle-engage-wp-connector.php:45
+#: broodle-engage-connector.php:45
 msgid "Broodle Engage Connector"
 msgstr ""
 
-#: broodle-engage-wp-connector.php:46
+#: broodle-engage-connector.php:46
 msgid "Settings"
 msgstr ""
 
-#: broodle-engage-wp-connector.php:108
+#: broodle-engage-connector.php:108
 #, php-format
 msgid "%s requires WooCommerce to be installed and active."
 msgstr ""

@@ -679,7 +679,7 @@ class Broodle_Engage_Notifications {
                 Broodle_Engage_Logger::LOG_ERROR,
                 array(),
                 array(),
-                __( 'Customer phone number not found.', 'broodle-engage-wp-connector' )
+                __( 'Customer phone number not found.', 'broodle-engage-connector' )
             );
             return;
         }
@@ -1626,6 +1626,7 @@ class Broodle_Engage_Notifications {
         // This prevents interference with Razorpay and other payment gateways
         if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
             // Check if this is a payment-related AJAX request
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only check to identify payment AJAX actions, not processing form data.
             $action = isset( $_REQUEST['action'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ) : '';
             $payment_actions = array( 'wc_razorpay', 'razorpay', 'payment', 'checkout' );
             foreach ( $payment_actions as $payment_action ) {

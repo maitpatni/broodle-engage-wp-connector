@@ -2,7 +2,7 @@
 Contributors: broodle, maitpatni
 Tags: woocommerce, whatsapp, notifications, order notifications, whatsapp business
 Requires at least: 5.0
-Tested up to: 6.7
+Tested up to: 6.9
 Requires PHP: 7.4
 Stable tag: 3.1.1
 License: GPLv2 or later
@@ -79,7 +79,7 @@ Map dynamic data to your WhatsApp templates:
 
 == Installation ==
 
-1. Upload the plugin files to the `/wp-content/plugins/broodle-engage-wp-connector` directory, or install the plugin through the WordPress plugins screen directly.
+1. Upload the plugin files to the `/wp-content/plugins/broodle-engage-connector` directory, or install the plugin through the WordPress plugins screen directly.
 2. Activate the plugin through the 'Plugins' screen in WordPress.
 3. Navigate to **Broodle Engage** in the WordPress admin sidebar.
 4. Enter your API Access Token, Account ID, and WhatsApp Inbox ID from your [Broodle Engage dashboard](https://engage.broodle.one).
@@ -237,7 +237,7 @@ For support and documentation:
 * **Plugin Help Tab** — Built-in documentation available in the Help tab within the plugin
 * **Website:** [https://broodle.host](https://broodle.host)
 * **Dashboard:** [https://engage.broodle.one](https://engage.broodle.one)
-* **GitHub:** [https://github.com/maitpatni/broodle-engage-wp-connector](https://github.com/maitpatni/broodle-engage-wp-connector)
+* **GitHub:** [https://github.com/maitpatni/broodle-engage-connector](https://github.com/maitpatni/broodle-engage-connector)
 
 == Privacy Policy ==
 

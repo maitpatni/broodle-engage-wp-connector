@@ -61,9 +61,11 @@ class Broodle_Engage_Logger {
 
         // STABILITY: Safely handle database operations
         try {
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery -- Custom log table requires direct insert.
             $result = $wpdb->insert( $table_name, $data, $formats );
 
             if ( false === $result ) {
+                // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Intentional debug logging for DB failures.
                 error_log( 'Broodle Engage Connector: Failed to insert log entry - ' . $wpdb->last_error );
                 return false;
             }
@@ -71,6 +73,7 @@ class Broodle_Engage_Logger {
             return $wpdb->insert_id;
         } catch ( Exception $e ) {
             // STABILITY: Database error shouldn't break anything
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Intentional debug logging for exceptions.
             error_log( 'Broodle Engage Connector: Database exception - ' . $e->getMessage() );
             return false;
         }
@@ -122,34 +125,39 @@ class Broodle_Engage_Logger {
         $limit = absint( $args['limit'] );
         $offset = absint( $args['offset'] );
 
-        // Build main query
-        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- $table_name uses wpdb prefix, $orderby/$order are from allow-lists, $where_clause built from prepare placeholders.
+        // Build main query -- $table_name uses $wpdb->prefix (safe), $orderby/$order from allow-lists, $where_clause from prepare placeholders.
         if ( ! empty( $where_values ) ) {
+            // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber -- array_merge provides correct count at runtime.
             $query = $wpdb->prepare(
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
                 "SELECT * FROM `" . esc_sql( $table_name ) . "` WHERE {$where_clause} ORDER BY {$orderby} {$order} LIMIT %d OFFSET %d",
                 array_merge( $where_values, array( $limit, $offset ) )
             );
         } else {
             $query = $wpdb->prepare(
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
                 "SELECT * FROM `" . esc_sql( $table_name ) . "` WHERE {$where_clause} ORDER BY {$orderby} {$order} LIMIT %d OFFSET %d",
                 $limit,
                 $offset
             );
         }
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared -- $query is built with $wpdb->prepare() above.
         $results = $wpdb->get_results( $query );
 
-        // Get total count
-        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- Same safe values as above.
+        // Get total count -- same safe values as main query.
         if ( ! empty( $where_values ) ) {
             $count_query = $wpdb->prepare(
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
                 "SELECT COUNT(*) FROM `" . esc_sql( $table_name ) . "` WHERE {$where_clause}",
                 $where_values
             );
         } else {
+            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
             $count_query = "SELECT COUNT(*) FROM `" . esc_sql( $table_name ) . "` WHERE {$where_clause}";
         }
-        $total = $wpdb->get_var( $count_query ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
+        $total = $wpdb->get_var( $count_query );
 
         return array(
             'logs' => $results,
@@ -168,8 +176,10 @@ class Broodle_Engage_Logger {
 
         $table_name = $wpdb->prefix . self::TABLE_NAME;
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
         return $wpdb->get_row(
             $wpdb->prepare(
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
                 "SELECT * FROM `" . esc_sql( $table_name ) . "` WHERE id = %d",
                 absint( $log_id )
             )
@@ -189,14 +199,17 @@ class Broodle_Engage_Logger {
 
         $cutoff_date = gmdate( 'Y-m-d H:i:s', strtotime( "-{$retention_days} days" ) );
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
         $deleted = $wpdb->query(
             $wpdb->prepare(
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
                 "DELETE FROM `" . esc_sql( $table_name ) . "` WHERE created_at < %s",
                 $cutoff_date
             )
         );
 
         if ( false === $deleted ) {
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Intentional debug logging for DB failures.
             error_log( 'Broodle Engage Connector: Failed to cleanup old logs - ' . $wpdb->last_error );
             return 0;
         }
@@ -216,8 +229,10 @@ class Broodle_Engage_Logger {
         $table_name = $wpdb->prefix . self::TABLE_NAME;
         $cutoff_date = gmdate( 'Y-m-d H:i:s', strtotime( "-{$days} days" ) );
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
         $stats = $wpdb->get_results(
             $wpdb->prepare(
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
                 "SELECT status, COUNT(*) as count FROM `" . esc_sql( $table_name ) . "` WHERE created_at >= %s GROUP BY status",
                 $cutoff_date
             ),
@@ -269,8 +284,10 @@ class Broodle_Engage_Logger {
 
         $table_name = $wpdb->prefix . self::TABLE_NAME;
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
         $count = $wpdb->get_var(
             $wpdb->prepare(
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
                 "SELECT COUNT(*) FROM `" . esc_sql( $table_name ) . "` WHERE order_id = %d AND template_name = %s AND status = %s",
                 absint( $order_id ),
                 sanitize_text_field( $template_name ),
@@ -318,6 +335,7 @@ class Broodle_Engage_Logger {
             $formats[] = '%s';
         }
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
         $result = $wpdb->update(
             $table_name,
             $data,
@@ -342,7 +360,7 @@ class Broodle_Engage_Logger {
     public static function log_scheduled( $order_id, $phone, $notification_type, $scheduled_time, $delay_minutes ) {
         $message = sprintf(
             /* translators: %1$s: delay minutes, %2$s: scheduled time */
-            __( 'Notification scheduled to send in %1$s minutes at %2$s', 'broodle-engage-wp-connector' ),
+            __( 'Notification scheduled to send in %1$s minutes at %2$s', 'broodle-engage-connector' ),
             $delay_minutes,
             $scheduled_time
         );
@@ -368,8 +386,10 @@ class Broodle_Engage_Logger {
 
         $table_name = $wpdb->prefix . self::TABLE_NAME;
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
         $result = $wpdb->get_row( $wpdb->prepare(
-            "SELECT * FROM {$table_name}
+            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            "SELECT * FROM `" . esc_sql( $table_name ) . "`
              WHERE order_id = %d
              AND template_name = %s
              AND status = %s

@@ -80,23 +80,23 @@ class Broodle_Engage_API {
     public function send_template_message( $phone_number, $template_name, $template_vars = array(), $media_uri = '', $template_lang = '', $template_body = '' ) {
         // Validate credentials
         if ( empty( $this->api_key ) ) {
-            return new WP_Error( 'missing_credentials', __( 'API access token is not configured.', 'broodle-engage-wp-connector' ) );
+            return new WP_Error( 'missing_credentials', __( 'API access token is not configured.', 'broodle-engage-connector' ) );
         }
 
         if ( empty( $this->account_id ) ) {
-            return new WP_Error( 'missing_account_id', __( 'Account ID is not configured.', 'broodle-engage-wp-connector' ) );
+            return new WP_Error( 'missing_account_id', __( 'Account ID is not configured.', 'broodle-engage-connector' ) );
         }
 
         if ( empty( $this->inbox_id ) ) {
-            return new WP_Error( 'missing_inbox_id', __( 'WhatsApp Inbox ID is not configured.', 'broodle-engage-wp-connector' ) );
+            return new WP_Error( 'missing_inbox_id', __( 'WhatsApp Inbox ID is not configured.', 'broodle-engage-connector' ) );
         }
 
         if ( empty( $phone_number ) ) {
-            return new WP_Error( 'missing_phone', __( 'Phone number is required.', 'broodle-engage-wp-connector' ) );
+            return new WP_Error( 'missing_phone', __( 'Phone number is required.', 'broodle-engage-connector' ) );
         }
 
         if ( empty( $template_name ) ) {
-            return new WP_Error( 'missing_template', __( 'Template name is required.', 'broodle-engage-wp-connector' ) );
+            return new WP_Error( 'missing_template', __( 'Template name is required.', 'broodle-engage-connector' ) );
         }
 
         // Format phone number
@@ -138,6 +138,7 @@ class Broodle_Engage_API {
             }
 
             // If sending to existing conversation failed, fall through to create new one
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Intentional fallback debug logging.
             error_log( 'Broodle Engage: Failed to send to existing conversation #' . $existing_conversation_id . ', creating new one. Error: ' . $result->get_error_message() );
         }
 
@@ -207,7 +208,7 @@ class Broodle_Engage_API {
             }
         }
 
-        return new WP_Error( 'contact_not_found', __( 'Contact not found.', 'broodle-engage-wp-connector' ) );
+        return new WP_Error( 'contact_not_found', __( 'Contact not found.', 'broodle-engage-connector' ) );
     }
 
     /**
@@ -242,7 +243,7 @@ class Broodle_Engage_API {
             return $response;
         }
 
-        return new WP_Error( 'contact_creation_failed', __( 'Failed to create contact.', 'broodle-engage-wp-connector' ) );
+        return new WP_Error( 'contact_creation_failed', __( 'Failed to create contact.', 'broodle-engage-connector' ) );
     }
 
     /**
@@ -642,7 +643,7 @@ class Broodle_Engage_API {
         $test_api_key = ! empty( $api_key ) ? $api_key : $this->api_key;
 
         if ( empty( $test_api_key ) ) {
-            return new WP_Error( 'missing_credentials', __( 'API access token is required.', 'broodle-engage-wp-connector' ) );
+            return new WP_Error( 'missing_credentials', __( 'API access token is required.', 'broodle-engage-connector' ) );
         }
 
         // Test by fetching user profile - works with any valid API token
@@ -654,7 +655,7 @@ class Broodle_Engage_API {
         if ( is_wp_error( $response ) ) {
             $error_message = $response->get_error_message();
             if ( strpos( $error_message, '401' ) !== false || strpos( $error_message, '403' ) !== false ) {
-                return new WP_Error( 'invalid_api_key', __( 'Invalid API access token.', 'broodle-engage-wp-connector' ) );
+                return new WP_Error( 'invalid_api_key', __( 'Invalid API access token.', 'broodle-engage-connector' ) );
             }
             return $response;
         }
@@ -664,7 +665,7 @@ class Broodle_Engage_API {
             return true;
         }
 
-        return new WP_Error( 'connection_failed', __( 'API connection test failed.', 'broodle-engage-wp-connector' ) );
+        return new WP_Error( 'connection_failed', __( 'API connection test failed.', 'broodle-engage-connector' ) );
     }
 
     /**
@@ -771,7 +772,7 @@ class Broodle_Engage_API {
                 'http_request_failed',
                 sprintf(
                     /* translators: %s: Error message */
-                    __( 'HTTP request failed: %s', 'broodle-engage-wp-connector' ),
+                    __( 'HTTP request failed: %s', 'broodle-engage-connector' ),
                     $response->get_error_message()
                 )
             );
@@ -788,7 +789,7 @@ class Broodle_Engage_API {
                 'api_error',
                 sprintf(
                     /* translators: %1$d: HTTP status code, %2$s: Response body */
-                    __( 'API request failed with status %1$d: %2$s', 'broodle-engage-wp-connector' ),
+                    __( 'API request failed with status %1$d: %2$s', 'broodle-engage-connector' ),
                     $response_code,
                     $response_body
                 )
@@ -802,7 +803,7 @@ class Broodle_Engage_API {
                 'invalid_response',
                 sprintf(
                     /* translators: %s: Raw response body */
-                    __( 'Invalid JSON response from API. Raw response: %s', 'broodle-engage-wp-connector' ),
+                    __( 'Invalid JSON response from API. Raw response: %s', 'broodle-engage-connector' ),
                     substr( $response_body, 0, 200 ) . ( strlen( $response_body ) > 200 ? '...' : '' )
                 )
             );
@@ -856,7 +857,7 @@ class Broodle_Engage_API {
 
         return new WP_Error(
             'unexpected_response',
-            __( 'Unexpected API response format.', 'broodle-engage-wp-connector' ) . ' Response: ' . wp_json_encode( $response )
+            __( 'Unexpected API response format.', 'broodle-engage-connector' ) . ' Response: ' . wp_json_encode( $response )
         );
     }
 
@@ -871,7 +872,7 @@ class Broodle_Engage_API {
         $cleaned = preg_replace( '/[^\d+]/', '', $phone_number );
 
         if ( empty( $cleaned ) ) {
-            return new WP_Error( 'invalid_phone', __( 'Invalid phone number format.', 'broodle-engage-wp-connector' ) );
+            return new WP_Error( 'invalid_phone', __( 'Invalid phone number format.', 'broodle-engage-connector' ) );
         }
 
         // If no country code, add default
@@ -882,7 +883,7 @@ class Broodle_Engage_API {
 
         // Validate format (allow 10-15 digits after +)
         if ( ! preg_match( '/^\+\d{10,15}$/', $cleaned ) ) {
-            return new WP_Error( 'invalid_phone_format', __( 'Phone number must be 10-15 digits with country code.', 'broodle-engage-wp-connector' ) );
+            return new WP_Error( 'invalid_phone_format', __( 'Phone number must be 10-15 digits with country code.', 'broodle-engage-connector' ) );
         }
 
         return $cleaned;
@@ -911,6 +912,7 @@ class Broodle_Engage_API {
 
         // Optionally log to error_log in debug mode
         if ( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) {
+            // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Guarded by WP_DEBUG_LOG.
             error_log( 'Broodle Engage API Request: ' . wp_json_encode( $log_data ) );
         }
     }
@@ -984,15 +986,15 @@ class Broodle_Engage_API {
      */
     public function get_whatsapp_templates() {
         if ( empty( $this->api_key ) ) {
-            return new WP_Error( 'missing_credentials', __( 'API access token is not configured.', 'broodle-engage-wp-connector' ) );
+            return new WP_Error( 'missing_credentials', __( 'API access token is not configured.', 'broodle-engage-connector' ) );
         }
 
         if ( empty( $this->account_id ) ) {
-            return new WP_Error( 'missing_account_id', __( 'Account ID is not configured.', 'broodle-engage-wp-connector' ) );
+            return new WP_Error( 'missing_account_id', __( 'Account ID is not configured.', 'broodle-engage-connector' ) );
         }
 
         if ( empty( $this->inbox_id ) ) {
-            return new WP_Error( 'missing_inbox_id', __( 'WhatsApp Inbox ID is not configured.', 'broodle-engage-wp-connector' ) );
+            return new WP_Error( 'missing_inbox_id', __( 'WhatsApp Inbox ID is not configured.', 'broodle-engage-connector' ) );
         }
 
         $url = sprintf(
@@ -1025,7 +1027,7 @@ class Broodle_Engage_API {
             return new WP_Error(
                 'api_error',
                 /* translators: %s: error message */
-                sprintf( __( 'Failed to fetch templates: %s', 'broodle-engage-wp-connector' ), $data['error'] ?? 'Unknown error' )
+                sprintf( __( 'Failed to fetch templates: %s', 'broodle-engage-connector' ), $data['error'] ?? 'Unknown error' )
             );
         }
 

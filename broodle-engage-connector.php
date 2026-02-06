@@ -6,7 +6,7 @@
  * Version: 3.1.1
  * Author: Broodle
  * Author URI: https://broodle.host
- * Text Domain: broodle-engage-wp-connector
+ * Text Domain: broodle-engage-connector
  * Domain Path: /languages
  * Requires at least: 5.0
  * Tested up to: 6.7
@@ -142,8 +142,8 @@ class Broodle_Engage_Connector {
                 <?php
                 printf(
                     /* translators: %s: Plugin name */
-                    esc_html__( '%s requires WooCommerce to be installed and active.', 'broodle-engage-wp-connector' ),
-                    '<strong>' . esc_html__( 'Broodle Engage Connector', 'broodle-engage-wp-connector' ) . '</strong>'
+                    esc_html__( '%s requires WooCommerce to be installed and active.', 'broodle-engage-connector' ),
+                    '<strong>' . esc_html__( 'Broodle Engage Connector', 'broodle-engage-connector' ) . '</strong>'
                 );
                 ?>
             </p>
@@ -191,18 +191,18 @@ class Broodle_Engage_Connector {
     public function add_settings_link( $links ) {
         $settings_link = sprintf(
             '<a href="%s">%s</a>',
-            admin_url( 'admin.php?page=broodle-engage-wp-connector' ),
-            esc_html__( 'Settings', 'broodle-engage-wp-connector' )
+            admin_url( 'admin.php?page=broodle-engage-connector' ),
+            esc_html__( 'Settings', 'broodle-engage-connector' )
         );
         $signup_link = sprintf(
             '<a href="%s" target="_blank" style="color: #0E5ECE; font-weight: 500;">%s</a>',
             'https://broodle.host/engage',
-            esc_html__( 'Sign Up for Broodle Engage', 'broodle-engage-wp-connector' )
+            esc_html__( 'Sign Up for Broodle Engage', 'broodle-engage-connector' )
         );
         $login_link = sprintf(
             '<a href="%s" target="_blank" style="color: #0E5ECE; font-weight: 500;">%s</a>',
             'https://engage.broodle.one',
-            esc_html__( 'Login to Dashboard', 'broodle-engage-wp-connector' )
+            esc_html__( 'Login to Dashboard', 'broodle-engage-connector' )
         );
         array_unshift( $links, $settings_link );
         $links[] = $signup_link;
@@ -276,8 +276,10 @@ class Broodle_Engage_Connector {
         $table_name = $wpdb->prefix . 'broodle_engage_logs';
 
         // Check if api_response column exists
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
         $column_exists = $wpdb->get_results(
             $wpdb->prepare(
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
                 "SHOW COLUMNS FROM `" . esc_sql( $table_name ) . "` LIKE %s",
                 'api_response'
             )
@@ -285,6 +287,7 @@ class Broodle_Engage_Connector {
 
         // Add column if it doesn't exist
         if ( empty( $column_exists ) ) {
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
             $wpdb->query(
                 "ALTER TABLE `" . esc_sql( $table_name ) . "` ADD COLUMN api_response text AFTER response_data"
             );

@@ -1,0 +1,14 @@
+.git
+.gitignore
+.distignore
+.editorconfig
+.github
+README.md
+node_modules
+tests
+phpunit.xml
+phpcs.xml
+composer.json
+composer.lock
+package.json
+package-lock.json

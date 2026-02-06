@@ -301,14 +301,14 @@ class Broodle_Engage_Settings {
      */
     public static function get_order_status_options() {
         $statuses = array(
-            'order_received' => __( 'Order Received', 'broodle-engage-wp-connector' ),
-            'order_processing' => __( 'Order Processing', 'broodle-engage-wp-connector' ),
-            'order_shipped' => __( 'Order Shipped', 'broodle-engage-wp-connector' ),
-            'order_delivered' => __( 'Order Delivered', 'broodle-engage-wp-connector' ),
-            'order_completed' => __( 'Order Completed', 'broodle-engage-wp-connector' ),
-            'order_cancelled' => __( 'Order Cancelled', 'broodle-engage-wp-connector' ),
-            'order_failed' => __( 'Order Failed', 'broodle-engage-wp-connector' ),
-            'order_refunded' => __( 'Order Refunded', 'broodle-engage-wp-connector' ),
+            'order_received' => __( 'Order Received', 'broodle-engage-connector' ),
+            'order_processing' => __( 'Order Processing', 'broodle-engage-connector' ),
+            'order_shipped' => __( 'Order Shipped', 'broodle-engage-connector' ),
+            'order_delivered' => __( 'Order Delivered', 'broodle-engage-connector' ),
+            'order_completed' => __( 'Order Completed', 'broodle-engage-connector' ),
+            'order_cancelled' => __( 'Order Cancelled', 'broodle-engage-connector' ),
+            'order_failed' => __( 'Order Failed', 'broodle-engage-connector' ),
+            'order_refunded' => __( 'Order Refunded', 'broodle-engage-connector' ),
         );
 
         return apply_filters( 'broodle_engage_order_status_options', $statuses );
@@ -321,8 +321,8 @@ class Broodle_Engage_Settings {
      */
     public static function get_phone_field_options() {
         $fields = array(
-            'billing_phone' => __( 'Billing Phone', 'broodle-engage-wp-connector' ),
-            'shipping_phone' => __( 'Shipping Phone', 'broodle-engage-wp-connector' ),
+            'billing_phone' => __( 'Billing Phone', 'broodle-engage-connector' ),
+            'shipping_phone' => __( 'Shipping Phone', 'broodle-engage-connector' ),
         );
 
         return apply_filters( 'broodle_engage_phone_field_options', $fields );
@@ -336,7 +336,7 @@ class Broodle_Engage_Settings {
      */
     public static function validate_api_credentials( $api_key ) {
         if ( empty( $api_key ) ) {
-            return new WP_Error( 'missing_api_key', __( 'API key is required.', 'broodle-engage-wp-connector' ) );
+            return new WP_Error( 'missing_api_key', __( 'API key is required.', 'broodle-engage-connector' ) );
         }
 
         // Test API connection
@@ -367,15 +367,15 @@ class Broodle_Engage_Settings {
      */
     public static function get_template_variable_options() {
         return array(
-            '' => __( 'None', 'broodle-engage-wp-connector' ),
-            'first_name' => __( 'First Name', 'broodle-engage-wp-connector' ),
-            'last_name' => __( 'Last Name', 'broodle-engage-wp-connector' ),
-            'full_name' => __( 'Full Name', 'broodle-engage-wp-connector' ),
-            'order_id' => __( 'Order ID', 'broodle-engage-wp-connector' ),
-            'order_total' => __( 'Order Total Amount', 'broodle-engage-wp-connector' ),
-            'order_items' => __( 'Order Item Names', 'broodle-engage-wp-connector' ),
-            'payment_url' => __( 'Payment URL', 'broodle-engage-wp-connector' ),
-            'product_url' => __( 'Product URL', 'broodle-engage-wp-connector' ),
+            '' => __( 'None', 'broodle-engage-connector' ),
+            'first_name' => __( 'First Name', 'broodle-engage-connector' ),
+            'last_name' => __( 'Last Name', 'broodle-engage-connector' ),
+            'full_name' => __( 'Full Name', 'broodle-engage-connector' ),
+            'order_id' => __( 'Order ID', 'broodle-engage-connector' ),
+            'order_total' => __( 'Order Total Amount', 'broodle-engage-connector' ),
+            'order_items' => __( 'Order Item Names', 'broodle-engage-connector' ),
+            'payment_url' => __( 'Payment URL', 'broodle-engage-connector' ),
+            'product_url' => __( 'Product URL', 'broodle-engage-connector' ),
         );
     }
 }
