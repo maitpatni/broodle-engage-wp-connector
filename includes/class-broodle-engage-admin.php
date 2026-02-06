@@ -4640,6 +4640,7 @@ class Broodle_Engage_Admin {
         <div class="broodle-dashboard-widget">
             <style>
             .broodle-dashboard-widget { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+            #dashboard-widgets h3, #dashboard-widgets h4, #dashboard_quick_press .drafts h2 { margin: 0 !important; }
             .broodle-widget-header {
                 display: flex;
                 flex-direction: row;
