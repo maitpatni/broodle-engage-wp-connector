@@ -2402,9 +2402,10 @@ class Broodle_Engage_Admin {
             });
 
             // Image selection
+            var currentImageCard = null;
             $(document).on('click', '.select-image-btn', function() {
-                var status = $(this).data('status');
                 var button = $(this);
+                currentImageCard = button.closest('.status-card');
                 
                 if (mediaFrame) {
                     mediaFrame.open();
@@ -2419,7 +2420,7 @@ class Broodle_Engage_Admin {
                 
                 mediaFrame.on('select', function() {
                     var attachment = mediaFrame.state().get('selection').first().toJSON();
-                    var card = button.closest('.status-card');
+                    var card = currentImageCard;
                     var thumb = card.find('.image-thumb');
                     
                     thumb.html('<img src="' + attachment.url + '" alt="">');
@@ -2619,6 +2620,27 @@ class Broodle_Engage_Admin {
                 if (hasImageHeader) {
                     preview.find('.preview-image').show();
                     imageSelection.addClass('visible');
+
+                    // Restore saved image_id and thumbnail
+                    var savedImageId = savedConfig[status] ? savedConfig[status].image_id : '';
+                    if (savedImageId && parseInt(savedImageId) > 0) {
+                        card.find('.image-id-input').val(savedImageId);
+                        card.find('.remove-image-btn').show();
+                        // Fetch thumbnail via WP REST API
+                        $.ajax({
+                            url: '<?php echo esc_url( rest_url( 'wp/v2/media/' ) ); ?>' + savedImageId,
+                            method: 'GET',
+                            beforeSend: function(xhr) {
+                                xhr.setRequestHeader('X-WP-Nonce', '<?php echo esc_js( wp_create_nonce( 'wp_rest' ) ); ?>');
+                            },
+                            success: function(media) {
+                                var thumbUrl = media.media_details && media.media_details.sizes && media.media_details.sizes.thumbnail
+                                    ? media.media_details.sizes.thumbnail.source_url
+                                    : media.source_url;
+                                card.find('.image-thumb').html('<img src="' + thumbUrl + '" alt="">');
+                            }
+                        });
+                    }
                 } else {
                     preview.find('.preview-image').hide();
                     imageSelection.removeClass('visible');
