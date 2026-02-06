@@ -4642,9 +4642,9 @@ class Broodle_Engage_Admin {
             .broodle-dashboard-widget { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
             .broodle-widget-header {
                 display: flex;
-                flex-direction: column;
+                flex-direction: row;
                 align-items: center;
-                justify-content: center;
+                justify-content: space-between;
                 margin-bottom: 18px;
                 padding: 18px;
                 background: linear-gradient(135deg, #0E5ECE 0%, #0a4aa3 100%);
@@ -4668,7 +4668,7 @@ class Broodle_Engage_Admin {
                 font-size: 16px;
                 font-weight: 600;
                 color: white;
-                margin: 0 0 8px 0;
+                margin: 0;
                 display: flex;
                 align-items: center;
                 gap: 8px;
