@@ -3788,8 +3788,13 @@ class Broodle_Engage_Admin {
                     ?>
                         <tr>
                             <td>
-                                <strong><?php echo esc_html( wp_date( 'M j, Y', strtotime( $log->created_at ) ) ); ?></strong>
-                                <br><span style="color: #646970; font-size: 11px;"><?php echo esc_html( wp_date( 'g:i A', strtotime( $log->created_at ) ) ); ?></span>
+                                <?php
+                                $log_tz = new DateTimeZone( wp_timezone_string() );
+                                $log_dt = date_create( $log->created_at, $log_tz );
+                                $log_ts = $log_dt ? $log_dt->getTimestamp() : strtotime( $log->created_at );
+                                ?>
+                                <strong><?php echo esc_html( wp_date( 'M j, Y', $log_ts ) ); ?></strong>
+                                <br><span style="color: #646970; font-size: 11px;"><?php echo esc_html( wp_date( 'g:i A', $log_ts ) ); ?></span>
                             </td>
                             <td>
                                 <a href="<?php echo esc_url( admin_url( 'post.php?post=' . $log->order_id . '&action=edit' ) ); ?>" class="logs-order-link">
