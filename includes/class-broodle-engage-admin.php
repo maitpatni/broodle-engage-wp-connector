@@ -3777,10 +3777,12 @@ class Broodle_Engage_Admin {
      * @return array
      */
     public function sanitize_settings( $input ) {
-        // Verify nonce
+        // This callback runs on EVERY update_option() call for this option
+        // (registered via register_setting). Only apply Settings-tab sanitization
+        // when the Settings form nonce is present. Otherwise, pass through
+        // unchanged — the AJAX handler has its own sanitization.
         if ( ! isset( $_POST['broodle_engage_settings_nonce'] ) || ! wp_verify_nonce( $_POST['broodle_engage_settings_nonce'], 'broodle_engage_settings_nonce' ) ) {
-            add_settings_error( 'broodle_engage_settings', 'nonce_error', __( 'Security check failed.', 'broodle-engage-connector' ) );
-            return get_option( 'broodle_engage_settings' );
+            return $input;
         }
 
         $current_settings = Broodle_Engage_Settings::get_settings();
