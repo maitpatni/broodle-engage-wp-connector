@@ -1384,7 +1384,10 @@ class Broodle_Engage_Notifications {
             return $url;
         }
 
-        return add_query_arg( 'engage', 'whatsapp', $url );
+        return add_query_arg( array(
+            'utm_source' => 'engage',
+            'utm_medium' => 'whatsapp',
+        ), $url );
     }
 
     /**
