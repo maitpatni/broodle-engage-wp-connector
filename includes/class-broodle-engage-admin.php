@@ -4667,19 +4667,21 @@ class Broodle_Engage_Admin {
             .broodle-widget-title {
                 font-size: 16px;
                 font-weight: 600;
-                color: white;
+                color: #ffffff !important;
                 margin: 0;
                 display: flex;
                 align-items: center;
                 gap: 8px;
                 position: relative;
                 z-index: 1;
+                line-height: 1;
             }
             .broodle-widget-title .dashicons {
                 font-size: 22px;
                 width: 22px;
                 height: 22px;
-                color: white;
+                color: #ffffff !important;
+                line-height: 1;
             }
             .broodle-widget-status {
                 font-size: 12px;
