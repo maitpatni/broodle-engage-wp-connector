@@ -1752,6 +1752,56 @@ class Broodle_Engage_Admin {
             width: 32px;
             height: 32px;
         }
+        .image-selection-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        .image-preview-box {
+            flex: 1;
+        }
+        .image-preview-box.disabled {
+            opacity: 0.35;
+            pointer-events: none;
+        }
+        .use-product-image-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 12px 14px;
+            background: #f0f6ff;
+            border: 2px solid #cde0f7;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 11px;
+            color: #1d2327;
+            text-align: center;
+            min-width: 110px;
+            transition: all 0.2s;
+            line-height: 1.3;
+        }
+        .use-product-image-label:hover {
+            background: #e0edff;
+            border-color: var(--brand-primary);
+        }
+        .use-product-image-label.active {
+            background: var(--brand-primary-translucent);
+            border-color: var(--brand-primary);
+            color: var(--brand-primary);
+            font-weight: 600;
+        }
+        .use-product-image-label input[type="checkbox"] {
+            margin: 0;
+            accent-color: var(--brand-primary);
+        }
+        .use-product-image-label .dashicons {
+            font-size: 20px;
+            width: 20px;
+            height: 20px;
+            color: var(--brand-primary);
+        }
 
         /* Add Notification Type Button */
         .add-status-section {
@@ -2160,25 +2210,27 @@ class Broodle_Engage_Admin {
                                 <span class="dashicons dashicons-format-image"></span>
                                 <h5><?php esc_html_e( 'Header Image (Optional)', 'broodle-engage-connector' ); ?></h5>
                             </div>
-                            <div class="image-preview-box">
-                                <div class="image-thumb">
-                                    <span class="dashicons dashicons-format-image"></span>
+                            <div class="image-selection-row">
+                                <div class="image-preview-box">
+                                    <div class="image-thumb">
+                                        <span class="dashicons dashicons-format-image"></span>
+                                    </div>
+                                    <div>
+                                        <button type="button" class="button select-image-btn" data-status="<?php echo esc_attr( $status ); ?>">
+                                            <?php esc_html_e( 'Select Image', 'broodle-engage-connector' ); ?>
+                                        </button>
+                                        <button type="button" class="button remove-image-btn" data-status="<?php echo esc_attr( $status ); ?>" style="display: none;">
+                                            <?php esc_html_e( 'Remove', 'broodle-engage-connector' ); ?>
+                                        </button>
+                                        <input type="hidden" class="image-id-input" data-status="<?php echo esc_attr( $status ); ?>" value="">
+                                    </div>
                                 </div>
-                                <div>
-                                    <button type="button" class="button select-image-btn" data-status="<?php echo esc_attr( $status ); ?>">
-                                        <?php esc_html_e( 'Select Image', 'broodle-engage-connector' ); ?>
-                                    </button>
-                                    <button type="button" class="button remove-image-btn" data-status="<?php echo esc_attr( $status ); ?>" style="display: none;">
-                                        <?php esc_html_e( 'Remove', 'broodle-engage-connector' ); ?>
-                                    </button>
-                                    <input type="hidden" class="image-id-input" data-status="<?php echo esc_attr( $status ); ?>" value="">
-                                </div>
+                                <label class="use-product-image-label">
+                                    <input type="checkbox" class="use-product-image-check" data-status="<?php echo esc_attr( $status ); ?>">
+                                    <span class="dashicons dashicons-products"></span>
+                                    <?php esc_html_e( 'Use product image', 'broodle-engage-connector' ); ?>
+                                </label>
                             </div>
-                            <label class="use-product-image-label">
-                                <input type="checkbox" class="use-product-image-check" data-status="<?php echo esc_attr( $status ); ?>">
-                                <span class="dashicons dashicons-products"></span>
-                                <?php esc_html_e( 'Use featured image from order product', 'broodle-engage-connector' ); ?>
-                            </label>
                         </div>
 
                         <!-- Variable Mapping Section -->
@@ -2259,25 +2311,27 @@ class Broodle_Engage_Admin {
                                 <span class="dashicons dashicons-format-image"></span>
                                 <h5><?php esc_html_e( 'Header Image (Optional)', 'broodle-engage-connector' ); ?></h5>
                             </div>
-                            <div class="image-preview-box">
-                                <div class="image-thumb">
-                                    <span class="dashicons dashicons-format-image"></span>
+                            <div class="image-selection-row">
+                                <div class="image-preview-box">
+                                    <div class="image-thumb">
+                                        <span class="dashicons dashicons-format-image"></span>
+                                    </div>
+                                    <div>
+                                        <button type="button" class="button select-image-btn" data-status="<?php echo esc_attr( $custom_status['id'] ); ?>">
+                                            <?php esc_html_e( 'Select Image', 'broodle-engage-connector' ); ?>
+                                        </button>
+                                        <button type="button" class="button remove-image-btn" data-status="<?php echo esc_attr( $custom_status['id'] ); ?>" style="display: none;">
+                                            <?php esc_html_e( 'Remove', 'broodle-engage-connector' ); ?>
+                                        </button>
+                                        <input type="hidden" class="image-id-input" data-status="<?php echo esc_attr( $custom_status['id'] ); ?>" value="">
+                                    </div>
                                 </div>
-                                <div>
-                                    <button type="button" class="button select-image-btn" data-status="<?php echo esc_attr( $custom_status['id'] ); ?>">
-                                        <?php esc_html_e( 'Select Image', 'broodle-engage-connector' ); ?>
-                                    </button>
-                                    <button type="button" class="button remove-image-btn" data-status="<?php echo esc_attr( $custom_status['id'] ); ?>" style="display: none;">
-                                        <?php esc_html_e( 'Remove', 'broodle-engage-connector' ); ?>
-                                    </button>
-                                    <input type="hidden" class="image-id-input" data-status="<?php echo esc_attr( $custom_status['id'] ); ?>" value="">
-                                </div>
+                                <label class="use-product-image-label">
+                                    <input type="checkbox" class="use-product-image-check" data-status="<?php echo esc_attr( $custom_status['id'] ); ?>">
+                                    <span class="dashicons dashicons-products"></span>
+                                    <?php esc_html_e( 'Use product image', 'broodle-engage-connector' ); ?>
+                                </label>
                             </div>
-                            <label class="use-product-image-label">
-                                <input type="checkbox" class="use-product-image-check" data-status="<?php echo esc_attr( $custom_status['id'] ); ?>">
-                                <span class="dashicons dashicons-products"></span>
-                                <?php esc_html_e( 'Use featured image from order product', 'broodle-engage-connector' ); ?>
-                            </label>
                         </div>
                         <div class="config-section variable-mapping" data-status="<?php echo esc_attr( $custom_status['id'] ); ?>" style="display: none;">
                             <h4 class="config-section-title">
@@ -2414,11 +2468,9 @@ class Broodle_Engage_Admin {
             // Toggle upload disabled when use-product-image checkbox changes
             $(document).on('change', '.use-product-image-check', function() {
                 var card = $(this).closest('.status-card');
-                if ($(this).is(':checked')) {
-                    card.find('.image-preview-box').addClass('disabled');
-                } else {
-                    card.find('.image-preview-box').removeClass('disabled');
-                }
+                var isChecked = $(this).is(':checked');
+                card.find('.image-preview-box').toggleClass('disabled', isChecked);
+                $(this).closest('.use-product-image-label').toggleClass('active', isChecked);
             });
 
             // Image selection
@@ -2667,6 +2719,7 @@ class Broodle_Engage_Admin {
                     if (useProductImage) {
                         card.find('.use-product-image-check').prop('checked', true);
                         card.find('.image-preview-box').addClass('disabled');
+                        card.find('.use-product-image-label').addClass('active');
                     }
                 } else {
                     preview.find('.preview-image').hide();
@@ -2856,25 +2909,27 @@ class Broodle_Engage_Admin {
                                 <span class="dashicons dashicons-format-image"></span>
                                 <h5><?php esc_html_e( 'Header Image (Optional)', 'broodle-engage-connector' ); ?></h5>
                             </div>
-                            <div class="image-preview-box">
-                                <div class="image-thumb">
-                                    <span class="dashicons dashicons-format-image"></span>
+                            <div class="image-selection-row">
+                                <div class="image-preview-box">
+                                    <div class="image-thumb">
+                                        <span class="dashicons dashicons-format-image"></span>
+                                    </div>
+                                    <div>
+                                        <button type="button" class="button select-image-btn" data-status="${id}">
+                                            <?php esc_html_e( 'Select Image', 'broodle-engage-connector' ); ?>
+                                        </button>
+                                        <button type="button" class="button remove-image-btn" data-status="${id}" style="display: none;">
+                                            <?php esc_html_e( 'Remove', 'broodle-engage-connector' ); ?>
+                                        </button>
+                                        <input type="hidden" class="image-id-input" data-status="${id}" value="">
+                                    </div>
                                 </div>
-                                <div>
-                                    <button type="button" class="button select-image-btn" data-status="${id}">
-                                        <?php esc_html_e( 'Select Image', 'broodle-engage-connector' ); ?>
-                                    </button>
-                                    <button type="button" class="button remove-image-btn" data-status="${id}" style="display: none;">
-                                        <?php esc_html_e( 'Remove', 'broodle-engage-connector' ); ?>
-                                    </button>
-                                    <input type="hidden" class="image-id-input" data-status="${id}" value="">
-                                </div>
+                                <label class="use-product-image-label">
+                                    <input type="checkbox" class="use-product-image-check" data-status="${id}">
+                                    <span class="dashicons dashicons-products"></span>
+                                    <?php esc_html_e( 'Use product image', 'broodle-engage-connector' ); ?>
+                                </label>
                             </div>
-                            <label class="use-product-image-label">
-                                <input type="checkbox" class="use-product-image-check" data-status="${id}">
-                                <span class="dashicons dashicons-products"></span>
-                                <?php esc_html_e( 'Use featured image from order product', 'broodle-engage-connector' ); ?>
-                            </label>
                         </div>
                         <div class="config-section variable-mapping" data-status="${id}" style="display: none;">
                             <h4 class="config-section-title">
